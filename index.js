@@ -5,6 +5,9 @@
   | |     \ V  V /    ___) | |  __/ | |   
   |_|      \_/\_/    |____/   \___| |_|    
 */
+
+Error.stackTraceLimit = Infinity;
+
 const pmp = require('./protocol');
 const fs = require('fs');
 const Log = require('./utils/logger');

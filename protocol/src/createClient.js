@@ -16,7 +16,7 @@ function createClient(options) {
 
   assert.ok(options.username, 'username is required');
 
-  options.customPackets=require('minecraft-data')('pe_0.14').protocol;
+  options.customPackets=require('minecraft-data')('pe_0.15').protocol;
   options.customTypes=require('./datatypes/minecraft');
 
   var client=raknet.createClient(options);
