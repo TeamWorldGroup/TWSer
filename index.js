@@ -6,7 +6,7 @@
   |_|      \_/\_/    |____/   \___| |_|    
 */
 const pmp = require('./protocol');
-// const fs = require('fs');
+const fs = require('fs');
 const Log = require('./utils/logger');
 const nconf = require('nconf');
 nconf.file('config/config.json');
