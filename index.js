@@ -43,9 +43,9 @@ server.on('connection', function (client) {
 
 	client.on('mcpe', packet => console.log(packet));
 
-	client.on('login_mcpe', packet => {
+	client.on(/* 'login_mcpe' */'game_login', packet => {
 		Log.log('Новая аутентификация');
-		client.writeMCPE('player_status', {
+		client.writeMCPE('play_status', {
 			status: 0
 		});
 
@@ -115,7 +115,7 @@ server.on('connection', function (client) {
 			}
 		}
 
-		client.writeMCPE('player_status', {
+		client.writeMCPE('play_status', {
 			status: 3
 		});
 

@@ -77,6 +77,40 @@
                 ]
             }
         ],
+        "open_connection_request_1_packet": [
+            "container",
+            [
+                {
+                    "name": "magic",
+                    "type": "u64"
+                },
+                {
+                    "name": "version",
+                    "type": "u8"
+                }
+            ]
+        ],
+        "open_connection_reply_1_packet": [
+            "container",
+            [
+                {
+                    "name": "magic",
+                    "type": "u64"
+                },
+                {
+                    "name": "id",
+                    "type": "u64"
+                },
+                {
+                    "name": "sec",
+                    "type": "u8"
+                },
+                {
+                    "name": "mtu",
+                    "type": "u16"
+                }
+            ]
+        ],
         "encapsulated_packet": [
             "container",
             [
@@ -87,7 +121,9 @@
                         {
                             "type": "u8",
                             "mappings": {
-                                "0xfe": "mcpe"
+                                "0xfe": "mcpe",
+                                "0x05": "open_connection_request_1",
+                                "0x06": "open_connection_reply_1"
                             }
                         }
                     ]
@@ -99,7 +135,9 @@
                         {
                             "compareTo": "name",
                             "fields": {
-                                "mcpe": "mcpe_packet"
+                                "mcpe": "mcpe_packet",
+                                "open_connection_request_1": "open_connection_request_1_packet",
+                                "open_connection_reply_1": "open_connection_reply_1_packet"
                             }
                         }
                     ]
@@ -207,7 +245,7 @@
                                 "0x59": "set_title",
                                 "0x5a": "add_behavior_tree_packet",
                                 "0x5b": "structure_block_update_packet",
-                                "0x78": "unknown_packet_78"
+                                "0x78": "game_login"
                             }
                         }
                     ]
@@ -309,16 +347,12 @@
                                 "stop_sound": "packet_stop_sound",
                                 "set_title": "packet_set_title",
                                 "add_behavior_tree_packet": "packet_add_behavior_tree_packet",
-                                "structure_block_update_packet": "packet_structure_block_update_packet",
-                                "unknown_packet_78": "packet_unknown_packet_78"
+                                "structure_block_update_packet": "packet_structure_block_update_packet"
                             }
                         }
                     ]
                 }
             ]
-        ],
-        "packet_unknown_packet_78": [
-            "container", []
         ],
         "packet_game_login": [
             "container",

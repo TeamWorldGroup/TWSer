@@ -100,6 +100,7 @@ function createServer(options, encryption) {
         };
 
         client.on('game_login', function (packet) {
+            console.warn('Not implemented!');
             try {
                 let dataProto = new ProtoDef();
                 dataProto.addType('data_chain', ['container', [{
