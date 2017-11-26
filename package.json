@@ -4,6 +4,7 @@
   "description": "MCPE server engine by TeamWorld",
   "main": "index.js",
   "dependencies": {
+    "chalk": "^2.3.0",
     "raknet": "^1.8.0"
   },
   "devDependencies": {},
