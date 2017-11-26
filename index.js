@@ -13,7 +13,8 @@ nconf.file('config/config.json');
 
 const PORT = nconf.get('port');
 const NAME = nconf.get('name');
-if(!PORT || !NAME){
+const VERSION = nconf.get('version');
+if(!PORT || !NAME || !VERSION){
 	require('./config/init')();
 	process.exit(0);
 }
@@ -28,11 +29,12 @@ Log.log(
 
 Log.info(`Сервер: ${NAME}`);
 Log.info(`Порт: ${PORT}`);
+Log.info(`Версия MCPE: ${VERSION}`);
 
 Log.log('Запускаем...');
 
 const server = pmp.createServer({
-	name: `MCPE;${NAME.replace(/;/g,'')};81 81;0.15.0;0;20`,
+	name: `MCPE;${NAME.replace(/;/g,'')};81 81;${VERSION};0;20`,
 	port: PORT
 });
 
@@ -94,7 +96,8 @@ server.on('connection', function (client) {
 		});
 	});
 
-	/* client.on('chunk_radius_update', () => {
+	client.on('chunk_radius_update', () => {
+		Log.log('chunk_radius_update');
 		client.writeMCPE('chunk_radius_update', {
 			chunk_radius: 1
 		});
@@ -121,7 +124,7 @@ server.on('connection', function (client) {
 			started: 1
 		});
 
-	}); */
+	});
 
 	client.on('error', function (err) {
 		Log.error(err.stack);

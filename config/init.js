@@ -12,10 +12,14 @@ function init(){
 	Log.log('OK');
 	let port = prompt('Укажите порт для вашего сервера: ');
 	Log.log('OK');
+	let version = prompt('Укажите версию MCPE: ');
+	Log.log('OK');
 	nconf.set('name', name);
 	nconf.set('port', port);
+	nconf.set('version', version);
 	nconf.save();
 	Log.info('Всё ;)');
+	Log.warn('Перезапустите TWSer для запуска сервера');
 }
 
 module.exports = init;
