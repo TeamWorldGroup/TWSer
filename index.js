@@ -5,8 +5,18 @@
   | |     \ V  V /    ___) | |  __/ | |   
   |_|      \_/\_/    |____/   \___| |_|    
 */
-
+const pmp = require('./protocol');
+// const fs = require('fs');
 const Log = require('./utils/logger');
+const nconf = require('nconf');
+nconf.file('config/config.json');
+
+const PORT = nconf.get('port');
+const NAME = nconf.get('name');
+if(!PORT || !NAME){
+	require('./config/init')();
+	process.exit(0);
+}
 
 Log.log(
 	` _____  __        __  ____                
@@ -16,19 +26,23 @@ Log.log(
   |_|      \\_/\\_/    |____/   \\___| |_|    
 `, true);
 
-var pmp = require('./protocol');
-var fs = require('fs');
+Log.info(`Сервер: ${NAME}`);
+Log.info(`Порт: ${PORT}`);
 
-var server = pmp.createServer({
-	name: 'MCPE;Minecraft: PE Server;81 81;0.15.0;0;20'
+Log.log('Запускаем...');
+
+const server = pmp.createServer({
+	name: `MCPE;${NAME.replace(/;/g,'')};81 81;0.15.0;0;20`,
+	port: PORT
 });
 
 server.on('connection', function (client) {
-
+	Log.log('Сервер запущен!');
 
 	client.on('mcpe', packet => console.log(packet));
 
 	client.on('login_mcpe', packet => {
+		Log.log('Новая аутентификация');
 		client.writeMCPE('player_status', {
 			status: 0
 		});
@@ -80,7 +94,7 @@ server.on('connection', function (client) {
 		});
 	});
 
-	client.on('chunk_radius_update', () => {
+	/* client.on('chunk_radius_update', () => {
 		client.writeMCPE('chunk_radius_update', {
 			chunk_radius: 1
 		});
@@ -107,13 +121,13 @@ server.on('connection', function (client) {
 			started: 1
 		});
 
-	});
+	}); */
 
 	client.on('error', function (err) {
-		console.log(err.stack);
+		Log.error(err.stack);
 	});
 
 	client.on('end', function () {
-		console.log('client left');
+		Log.log('Клиент отключился');
 	});
 });
