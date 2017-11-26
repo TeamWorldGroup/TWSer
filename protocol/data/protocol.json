@@ -206,7 +206,8 @@
                                 "0x58": "stop_sound",
                                 "0x59": "set_title",
                                 "0x5a": "add_behavior_tree_packet",
-                                "0x5b": "structure_block_update_packet"
+                                "0x5b": "structure_block_update_packet",
+                                "0x78": "unknown_packet_78"
                             }
                         }
                     ]
@@ -308,12 +309,16 @@
                                 "stop_sound": "packet_stop_sound",
                                 "set_title": "packet_set_title",
                                 "add_behavior_tree_packet": "packet_add_behavior_tree_packet",
-                                "structure_block_update_packet": "packet_structure_block_update_packet"
+                                "structure_block_update_packet": "packet_structure_block_update_packet",
+                                "unknown_packet_78": "packet_unknown_packet_78"
                             }
                         }
                     ]
                 }
             ]
+        ],
+        "packet_unknown_packet_78": [
+            "container", []
         ],
         "packet_game_login": [
             "container",
