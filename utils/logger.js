@@ -3,31 +3,31 @@ const chalk = require('chalk');
 class Logger {
 	constructor(){
 		this.log = this.log.bind(this);
-		this.print = this.print.bind(this);
+		this.convert = this.convert.bind(this);
 		this.warn = this.warn.bind(this);
 		this.error = this.error.bind(this);
 		this.info = this.info.bind(this);
 		this.timestamp = this.timestamp.bind(this);
 	}
 
-	log(data){
-		let out = this.convert(data);
+	log(data, noconvert){
+		let out = !noconvert ? this.convert(data) : data;
 		console.log(chalk.cyan(out));
 		
 	}
 
-	warn(data){
-		let out = this.convert(data);
+	warn(data, noconvert){
+		let out = !noconvert ? this.convert(data) : data;
 		console.log(chalk.yellow(out));
 	}
 
-	error(data){
-		let out = this.convert(data);
+	error(data, noconvert){
+		let out = !noconvert ? this.convert(data) : data;
 		console.log(chalk.red(out));
 	}
 
-	info(data){
-		let out = this.convert(data);
+	info(data, noconvert){
+		let out = !noconvert ? this.convert(data) : data;
 		console.log(chalk.blue(out));
 	}
 

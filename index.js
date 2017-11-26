@@ -8,15 +8,15 @@
 
 
 const raknet = require('raknet');
+const Log = require('./utils/logger');
 
-console.log(
+Log.log(
 	` _____  __        __  ____                
 |_   _| \\ \\      / / / ___|    ___   _ __ 
   | |    \\ \\ /\\ / /  \\___ \\   / _ \\ | '__|
   | |     \\ V  V /    ___) | |  __/ | |   
   |_|      \\_/\\_/    |____/   \\___| |_|    
-`
-);
+`, true);
 
 raknet.createServer({
 	name: 'MCPE;TWSer server;45 45;1.2.6;0;20'
