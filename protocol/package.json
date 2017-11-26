@@ -1,0 +1,35 @@
+{
+  "name": "pocket-minecraft-protocol",
+  "version": "2.2.3",
+  "description": "Parse and serialize Minecraft PE packets",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "minecraft",
+    "pocket-edition",
+    "protocol"
+  ],
+  "author": "mhsjlw <mhsjlw@aol.com>",
+  "contributors": [
+    "rom1504"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "minecraft-data": "^2.4.0",
+    "prismarine-nbt": "^1.0.0",
+    "protodef": "^1.2.0",
+    "raknet": "^1.7.3",
+    "uuid-1345": "^0.99.6"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mhsjlw/pocket-minecraft-protocol.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mhsjlw/pocket-minecraft-protocol/issues"
+  },
+  "homepage": "https://github.com/mhsjlw/pocket-minecraft-protocol#readme"
+}
