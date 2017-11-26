@@ -1,3 +1,7 @@
+const raknet = require('raknet');
+
+raknet.createServer();
+
 // <?php
 
 // /*

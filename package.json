@@ -1,0 +1,23 @@
+{
+  "name": "twser",
+  "version": "1.0.0",
+  "description": "MCPE server engine by TeamWorld",
+  "main": "index.js",
+  "dependencies": {
+    "raknet": "^1.8.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TeamWorldGroup/TWSer.git"
+  },
+  "author": "",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/TeamWorldGroup/TWSer/issues"
+  },
+  "homepage": "https://github.com/TeamWorldGroup/TWSer#readme"
+}
