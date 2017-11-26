@@ -6,7 +6,7 @@
   |_|      \_/\_/    |____/   \___| |_|    
 */
 const pmp = require('./protocol');
-// const fs = require('fs');
+const fs = require('fs');
 const Log = require('./utils/logger');
 const nconf = require('nconf');
 nconf.file('config/config.json');
@@ -34,7 +34,7 @@ Log.info(`Версия MCPE: ${VERSION}`);
 Log.log('Запускаем...');
 
 const server = pmp.createServer({
-	name: `MCPE;${NAME.replace(/;/g,'')};81 81;${VERSION};0;20`,
+	name: `MCPE;${NAME.replace(/;/g,'')};81 81;${VERSION};20;2000000`,
 	port: PORT
 });
 
