@@ -18,4 +18,6 @@ console.log(
 `
 );
 
-raknet.createServer();
+raknet.createServer({
+	name: 'TWSer;TWSer server;45 45;1.2.6;0;20'
+});
