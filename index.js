@@ -25,7 +25,7 @@ Log.log(
   | |    \\ \\ /\\ / /  \\___ \\   / _ \\ | '__|
   | |     \\ V  V /    ___) | |  __/ | |   
   |_|      \\_/\\_/    |____/   \\___| |_|    
-`, true);
+`, false);
 
 Log.info(`Сервер: ${NAME}`);
 Log.info(`Порт: ${PORT}`);
@@ -36,12 +36,18 @@ Log.log('Запускаем...');
 const server = pmp.createServer({
 	name: `MCPE;${NAME.replace(/;/g,'')};81 81;${VERSION};20;2000000`,
 	port: PORT
-});
+}, true);
 
 server.on('connection', function (client) {
 	Log.log('Сервер запущен!');
 
 	client.on('mcpe', packet => console.log(packet));
+
+	client.writeMCPE('server_to_client_handshake', {
+		server_public_key: "",
+		token_length: 1,
+		token: Buffer.allocUnsafe(1)
+	});
 
 	client.on(/* 'login_mcpe' */'game_login', packet => {
 		Log.log('Новая аутентификация');

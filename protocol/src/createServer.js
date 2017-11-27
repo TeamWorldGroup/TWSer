@@ -52,6 +52,7 @@ function createServer(options, encryption) {
         client.mcpePacketSerializer = new Serializer(proto, 'mcpe_packet');
         
         client.on('mcpe', packet => {
+            console.log("mcpe");
             client.emit(packet.name, packet.params);
             client.emit('debug', packet.name);
         });

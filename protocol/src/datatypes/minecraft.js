@@ -93,6 +93,7 @@ function writeIpAddress(value, buffer, offset) {
 }
 
 function readEndOfArray(buffer, offset, typeArgs) {
+  console.log(offset);
   var type=typeArgs.type;
   var cursor = offset;
   var elements = [];
