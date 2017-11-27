@@ -45,7 +45,7 @@
         "playerlocation": [
             "array",
             {
-                "countType": "i16",
+                "countType": "li16",
                 "type": [
                     "container",
                     [
@@ -131,26 +131,25 @@
                                 "0x0d": "add_entity",
                                 "0x0e": "remove_entity",
                                 "0x0f": "add_item_entity",
-                                "0x10": "add_hanging_entity",
                                 "0x11": "take_item_entity",
                                 "0x12": "move_entity",
                                 "0x13": "move_player",
                                 "0x14": "rider_jump",
-                                "0x15": "remove_block",
-                                "0x16": "update_block",
-                                "0x17": "add_painting",
-                                "0x18": "explode",
-                                "0x19": "level_sound_event",
-                                "0x1a": "level_event",
-                                "0x1b": "block_event",
-                                "0x1c": "entity_event",
-                                "0x1d": "mob_effect",
-                                "0x1e": "update_attributes",
+                                "0x15": "update_block",
+                                "0x16": "add_painting",
+                                "0x17": "explode",
+                                "0x18": "level_sound_event",
+                                "0x19": "level_event",
+                                "0x1a": "block_event",
+                                "0x1b": "entity_event",
+                                "0x1c": "mob_effect",
+                                "0x1d": "update_attributes",
+                                "0x1e": "inventory_transaction",
                                 "0x1f": "mob_equipment",
                                 "0x20": "mob_armor_equipment",
                                 "0x21": "interact",
                                 "0x22": "block_pick_request",
-                                "0x23": "use_item",
+                                "0x23": "entity_pick_request",
                                 "0x24": "player_action",
                                 "0x25": "entity_fall",
                                 "0x26": "hurt_armor",
@@ -161,15 +160,15 @@
                                 "0x2b": "set_spawn_position",
                                 "0x2c": "animate",
                                 "0x2d": "respawn",
-                                "0x2e": "drop_item",
-                                "0x2f": "inventory_action",
-                                "0x30": "container_open",
-                                "0x31": "container_close",
-                                "0x32": "container_set_slot",
+                                "0x2e": "container_open",
+                                "0x2f": "container_close",
+                                "0x30": "player_hotbar",
+                                "0x31": "inventory_content",
+                                "0x32": "inventory_slot",
                                 "0x33": "container_set_data",
-                                "0x34": "container_set_content",
-                                "0x35": "crafting_data",
-                                "0x36": "crafting_event",
+                                "0x34": "crafting_data",
+                                "0x35": "crafting_event",
+                                "0x36": "gui_data_pick_item",
                                 "0x37": "adventure_settings",
                                 "0x38": "block_entity_data",
                                 "0x39": "player_input",
@@ -180,33 +179,44 @@
                                 "0x3e": "set_player_game_type",
                                 "0x3f": "player_list",
                                 "0x40": "simple_event",
-                                "0x41": "event",
+                                "0x41": "telemetry_event",
                                 "0x42": "spawn_experience_orb",
                                 "0x43": "clientbound_map_item_data_",
                                 "0x44": "map_info_request",
                                 "0x45": "request_chunk_radius",
                                 "0x46": "chunk_radius_update",
                                 "0x47": "item_frame_drop_item",
-                                "0x48": "replace_selected_item",
-                                "0x49": "game_rules_changed",
-                                "0x4a": "camera",
-                                "0x4b": "add_item",
-                                "0x4c": "boss_event",
-                                "0x4d": "show_credits",
-                                "0x4e": "available_commands",
-                                "0x4f": "command_step",
-                                "0x50": "command_block_update",
-                                "0x51": "update_trade",
-                                "0x52": "update_equip",
-                                "0x53": "resource_pack_data_info",
-                                "0x54": "resource_pack_chunk_data",
-                                "0x55": "resource_pack_chunk_request",
-                                "0x56": "transfer",
-                                "0x57": "play_sound",
-                                "0x58": "stop_sound",
-                                "0x59": "set_title",
-                                "0x5a": "add_behavior_tree_packet",
-                                "0x5b": "structure_block_update_packet"
+                                "0x48": "game_rules_changed",
+                                "0x49": "camera",
+                                "0x4a": "boss_event",
+                                "0x4b": "show_credits",
+                                "0x4c": "available_commands",
+                                "0x4d": "command_request",
+                                "0x4e": "command_block_update",
+                                "0x4f": "command_output",
+                                "0x50": "update_trade",
+                                "0x51": "update_equipment",
+                                "0x52": "resource_pack_data_info",
+                                "0x53": "resource_pack_chunk_data",
+                                "0x54": "resource_pack_chunk_request",
+                                "0x55": "transfer",
+                                "0x56": "play_sound",
+                                "0x57": "stop_sound",
+                                "0x58": "set_title",
+                                "0x59": "add_behavior_tree",
+                                "0x5a": "structure_block_update",
+                                "0x5b": "show_store_offer",
+                                "0x5c": "purchase_receipt",
+                                "0x5d": "player_skin",
+                                "0x5e": "sub_client_login",
+                                "0x5f": "initiate_web_socket_connection",
+                                "0x60": "set_last_hurt_by",
+                                "0x61": "book_edit",
+                                "0x62": "npc_request",
+                                "0x64": "modal_form_request",
+                                "0x65": "modal_form_response",
+                                "0x66": "server_settings_request",
+                                "0x67": "server_settings_response"
                             }
                         }
                     ]
@@ -233,12 +243,10 @@
                                 "add_entity": "packet_add_entity",
                                 "remove_entity": "packet_remove_entity",
                                 "add_item_entity": "packet_add_item_entity",
-                                "add_hanging_entity": "packet_add_hanging_entity",
                                 "take_item_entity": "packet_take_item_entity",
                                 "move_entity": "packet_move_entity",
                                 "move_player": "packet_move_player",
                                 "rider_jump": "packet_rider_jump",
-                                "remove_block": "packet_remove_block",
                                 "update_block": "packet_update_block",
                                 "add_painting": "packet_add_painting",
                                 "explode": "packet_explode",
@@ -248,11 +256,12 @@
                                 "entity_event": "packet_entity_event",
                                 "mob_effect": "packet_mob_effect",
                                 "update_attributes": "packet_update_attributes",
+                                "inventory_transaction": "packet_inventory_transaction",
                                 "mob_equipment": "packet_mob_equipment",
                                 "mob_armor_equipment": "packet_mob_armor_equipment",
                                 "interact": "packet_interact",
                                 "block_pick_request": "packet_block_pick_request",
-                                "use_item": "packet_use_item",
+                                "entity_pick_request": "packet_entity_pick_request",
                                 "player_action": "packet_player_action",
                                 "entity_fall": "packet_entity_fall",
                                 "hurt_armor": "packet_hurt_armor",
@@ -263,15 +272,15 @@
                                 "set_spawn_position": "packet_set_spawn_position",
                                 "animate": "packet_animate",
                                 "respawn": "packet_respawn",
-                                "drop_item": "packet_drop_item",
-                                "inventory_action": "packet_inventory_action",
                                 "container_open": "packet_container_open",
                                 "container_close": "packet_container_close",
-                                "container_set_slot": "packet_container_set_slot",
+                                "player_hotbar": "packet_player_hotbar",
+                                "inventory_content": "packet_inventory_content",
+                                "inventory_slot": "packet_inventory_slot",
                                 "container_set_data": "packet_container_set_data",
-                                "container_set_content": "packet_container_set_content",
                                 "crafting_data": "packet_crafting_data",
                                 "crafting_event": "packet_crafting_event",
+                                "gui_data_pick_item": "packet_gui_data_pick_item",
                                 "adventure_settings": "packet_adventure_settings",
                                 "block_entity_data": "packet_block_entity_data",
                                 "player_input": "packet_player_input",
@@ -282,24 +291,23 @@
                                 "set_player_game_type": "packet_set_player_game_type",
                                 "player_list": "packet_player_list",
                                 "simple_event": "packet_simple_event",
-                                "event": "packet_event",
+                                "telemetry_event": "packet_telemetry_event",
                                 "spawn_experience_orb": "packet_spawn_experience_orb",
                                 "clientbound_map_item_data_": "packet_clientbound_map_item_data_",
                                 "map_info_request": "packet_map_info_request",
                                 "request_chunk_radius": "packet_request_chunk_radius",
                                 "chunk_radius_update": "packet_chunk_radius_update",
                                 "item_frame_drop_item": "packet_item_frame_drop_item",
-                                "replace_selected_item": "packet_replace_selected_item",
                                 "game_rules_changed": "packet_game_rules_changed",
                                 "camera": "packet_camera",
-                                "add_item": "packet_add_item",
                                 "boss_event": "packet_boss_event",
                                 "show_credits": "packet_show_credits",
                                 "available_commands": "packet_available_commands",
-                                "command_step": "packet_command_step",
+                                "command_request": "packet_command_request",
                                 "command_block_update": "packet_command_block_update",
+                                "command_output": "packet_command_output",
                                 "update_trade": "packet_update_trade",
-                                "update_equip": "packet_update_equip",
+                                "update_equipment": "packet_update_equipment",
                                 "resource_pack_data_info": "packet_resource_pack_data_info",
                                 "resource_pack_chunk_data": "packet_resource_pack_chunk_data",
                                 "resource_pack_chunk_request": "packet_resource_pack_chunk_request",
@@ -307,8 +315,20 @@
                                 "play_sound": "packet_play_sound",
                                 "stop_sound": "packet_stop_sound",
                                 "set_title": "packet_set_title",
-                                "add_behavior_tree_packet": "packet_add_behavior_tree_packet",
-                                "structure_block_update_packet": "packet_structure_block_update_packet"
+                                "add_behavior_tree": "packet_add_behavior_tree",
+                                "structure_block_update": "packet_structure_block_update",
+                                "show_store_offer": "packet_show_store_offer",
+                                "purchase_receipt": "packet_purchase_receipt",
+                                "player_skin": "packet_player_skin",
+                                "sub_client_login": "packet_sub_client_login",
+                                "initiate_web_socket_connection": "packet_initiate_web_socket_connection",
+                                "set_last_hurt_by": "packet_set_last_hurt_by",
+                                "book_edit": "packet_book_edit",
+                                "npc_request": "packet_npc_request",
+                                "modal_form_request": "packet_modal_form_request",
+                                "modal_form_response": "packet_modal_form_response",
+                                "server_settings_request": "packet_server_settings_request",
+                                "server_settings_response": "packet_server_settings_response"
                             }
                         }
                     ]
@@ -350,22 +370,8 @@
             "container",
             [
                 {
-                    "name": "server_public_key",
-                    "type": "string"
-                },
-                {
-                    "name": "token_length",
-                    "type": "u32"
-                },
-                {
                     "name": "token",
-                    "type": [
-                        "buffer",
-                        {
-                            "countType": "varint",
-                            "type": "i8"
-                        }
-                    ]
+                    "type": "string"
                 }
             ]
         ],
@@ -555,8 +561,20 @@
                     "type": "lf32"
                 },
                 {
-                    "name": "lightnig_level",
+                    "name": "lightning_level",
                     "type": "lf32"
+                },
+                {
+                    "name": "is_multiplayer",
+                    "type": "bool"
+                },
+                {
+                    "name": "broadcast_to_lan",
+                    "type": "bool"
+                },
+                {
+                    "name": "broadcast_to_xbl",
+                    "type": "bool"
                 },
                 {
                     "name": "enable_commands",
@@ -569,6 +587,26 @@
                 {
                     "name": "gamerules",
                     "type": "gamerules"
+                },
+                {
+                    "name": "bonus_chest",
+                    "type": "bool"
+                },
+                {
+                    "name": "map_enabled",
+                    "type": "bool"
+                },
+                {
+                    "name": "trust_players",
+                    "type": "bool"
+                },
+                {
+                    "name": "permission_level",
+                    "type": "varint"
+                },
+                {
+                    "name": "game_publish_setting",
+                    "type": "varint"
                 },
                 {
                     "name": "level_id",
@@ -589,6 +627,10 @@
                 {
                     "name": "current_tick",
                     "type": "i64"
+                },
+                {
+                    "name": "enchantment_seed",
+                    "type": "varint"
                 }
             ]
         ],
@@ -640,11 +682,11 @@
                     "type": "lf32"
                 },
                 {
-                    "name": "head_yaw",
+                    "name": "yaw",
                     "type": "lf32"
                 },
                 {
-                    "name": "yaw",
+                    "name": "head_yaw",
                     "type": "lf32"
                 },
                 {
@@ -654,6 +696,34 @@
                 {
                     "name": "metadata",
                     "type": "varint"
+                },
+                {
+                    "name": "flags",
+                    "type": "varint"
+                },
+                {
+                    "name": "user_permission",
+                    "type": "varint"
+                },
+                {
+                    "name": "action_permissions",
+                    "type": "varint"
+                },
+                {
+                    "name": "permission_level",
+                    "type": "varint"
+                },
+                {
+                    "name": "unknown",
+                    "type": "varint"
+                },
+                {
+                    "name": "user_id",
+                    "type": "i64"
+                },
+                {
+                    "name": "links",
+                    "type": "links"
                 }
             ]
         ],
@@ -772,27 +842,6 @@
                 }
             ]
         ],
-        "packet_add_hanging_entity": [
-            "container",
-            [
-                {
-                    "name": "entity_id_self",
-                    "type": "varint"
-                },
-                {
-                    "name": "runtime_entity_id",
-                    "type": "varint"
-                },
-                {
-                    "name": "coordinates",
-                    "type": "varint"
-                },
-                {
-                    "name": "unknown",
-                    "type": "varint"
-                }
-            ]
-        ],
         "packet_take_item_entity": [
             "container",
             [
@@ -851,11 +900,11 @@
                     "type": "lf32"
                 },
                 {
-                    "name": "head_yaw",
+                    "name": "yaw",
                     "type": "lf32"
                 },
                 {
-                    "name": "yaw",
+                    "name": "head_yaw",
                     "type": "lf32"
                 },
                 {
@@ -877,15 +926,6 @@
             [
                 {
                     "name": "unknown",
-                    "type": "varint"
-                }
-            ]
-        ],
-        "packet_remove_block": [
-            "container",
-            [
-                {
-                    "name": "coordinates",
                     "type": "varint"
                 }
             ]
@@ -961,19 +1001,19 @@
                     "type": "vector3"
                 },
                 {
-                    "name": "extra_data",
+                    "name": "block_id",
                     "type": "varint"
                 },
                 {
-                    "name": "pitch",
+                    "name": "entity_type",
                     "type": "varint"
                 },
                 {
-                    "name": "unknown1",
+                    "name": "is_baby_mob",
                     "type": "bool"
                 },
                 {
-                    "name": "disable_relative_volume",
+                    "name": "is_global",
                     "type": "bool"
                 }
             ]
@@ -1024,7 +1064,7 @@
                     "type": "u8"
                 },
                 {
-                    "name": "unknown",
+                    "name": "data",
                     "type": "varint"
                 }
             ]
@@ -1071,6 +1111,15 @@
                 }
             ]
         ],
+        "packet_inventory_transaction": [
+            "container",
+            [
+                {
+                    "name": "transaction",
+                    "type": "transaction"
+                }
+            ]
+        ],
         "packet_mob_equipment": [
             "container",
             [
@@ -1091,7 +1140,7 @@
                     "type": "u8"
                 },
                 {
-                    "name": "unknown",
+                    "name": "windows_id",
                     "type": "u8"
                 }
             ]
@@ -1150,41 +1199,25 @@
                     "type": "varint"
                 },
                 {
+                    "name": "add_user_data",
+                    "type": "bool"
+                },
+                {
                     "name": "selected_slot",
                     "type": "u8"
                 }
             ]
         ],
-        "packet_use_item": [
+        "packet_entity_pick_request": [
             "container",
             [
                 {
-                    "name": "blockcoordinates",
-                    "type": "varint"
+                    "name": "runtime_entity_id",
+                    "type": "u64"
                 },
                 {
-                    "name": "block_id",
-                    "type": "varint"
-                },
-                {
-                    "name": "face",
-                    "type": "varint"
-                },
-                {
-                    "name": "facecoordinates",
-                    "type": "vector3"
-                },
-                {
-                    "name": "playerposition",
-                    "type": "vector3"
-                },
-                {
-                    "name": "slot",
-                    "type": "varint"
-                },
-                {
-                    "name": "item",
-                    "type": "varint"
+                    "name": "selected_slot",
+                    "type": "u8"
                 }
             ]
         ],
@@ -1275,6 +1308,10 @@
                 {
                     "name": "link_type",
                     "type": "u8"
+                },
+                {
+                    "name": "unknown",
+                    "type": "u8"
                 }
             ]
         ],
@@ -1334,40 +1371,6 @@
                 }
             ]
         ],
-        "packet_drop_item": [
-            "container",
-            [
-                {
-                    "name": "itemtype",
-                    "type": "u8"
-                },
-                {
-                    "name": "item",
-                    "type": "varint"
-                }
-            ]
-        ],
-        "packet_inventory_action": [
-            "container",
-            [
-                {
-                    "name": "action_id",
-                    "type": "varint"
-                },
-                {
-                    "name": "item",
-                    "type": "varint"
-                },
-                {
-                    "name": "enchantment_id",
-                    "type": "varint"
-                },
-                {
-                    "name": "enchantment_level",
-                    "type": "varint"
-                }
-            ]
-        ],
         "packet_container_open": [
             "container",
             [
@@ -1398,28 +1401,54 @@
                 }
             ]
         ],
-        "packet_container_set_slot": [
+        "packet_player_hotbar": [
             "container",
             [
                 {
+                    "name": "selected_slot",
+                    "type": "varint"
+                },
+                {
                     "name": "window_id",
                     "type": "u8"
+                },
+                {
+                    "name": "hotbar_data",
+                    "type": "varint"
+                },
+                {
+                    "name": "unknown",
+                    "type": "u8"
+                }
+            ]
+        ],
+        "packet_inventory_content": [
+            "container",
+            [
+                {
+                    "name": "inventory_id",
+                    "type": "varint"
+                },
+                {
+                    "name": "input",
+                    "type": "varint"
+                }
+            ]
+        ],
+        "packet_inventory_slot": [
+            "container",
+            [
+                {
+                    "name": "inventory_id",
+                    "type": "varint"
                 },
                 {
                     "name": "slot",
                     "type": "varint"
                 },
                 {
-                    "name": "hotbarslot",
-                    "type": "varint"
-                },
-                {
                     "name": "item",
                     "type": "varint"
-                },
-                {
-                    "name": "selected_slot",
-                    "type": "u8"
                 }
             ]
         ],
@@ -1436,27 +1465,6 @@
                 },
                 {
                     "name": "value",
-                    "type": "varint"
-                }
-            ]
-        ],
-        "packet_container_set_content": [
-            "container",
-            [
-                {
-                    "name": "window_id",
-                    "type": "varint"
-                },
-                {
-                    "name": "entity_id_self",
-                    "type": "varint"
-                },
-                {
-                    "name": "slot_data",
-                    "type": "varint"
-                },
-                {
-                    "name": "hotbar_data",
                     "type": "varint"
                 }
             ]
@@ -1495,6 +1503,10 @@
                 }
             ]
         ],
+        "packet_gui_data_pick_item": [
+            "container",
+            []
+        ],
         "packet_adventure_settings": [
             "container",
             [
@@ -1503,8 +1515,24 @@
                     "type": "varint"
                 },
                 {
-                    "name": "user_permission",
+                    "name": "command_permission",
                     "type": "varint"
+                },
+                {
+                    "name": "action_permissions",
+                    "type": "varint"
+                },
+                {
+                    "name": "permission_level",
+                    "type": "varint"
+                },
+                {
+                    "name": "custom_stored_permissions",
+                    "type": "varint"
+                },
+                {
+                    "name": "user_id",
+                    "type": "i64"
                 }
             ]
         ],
@@ -1622,7 +1650,7 @@
             "container",
             []
         ],
-        "packet_event": [
+        "packet_telemetry_event": [
             "container",
             [
                 {
@@ -1697,15 +1725,6 @@
                 }
             ]
         ],
-        "packet_replace_selected_item": [
-            "container",
-            [
-                {
-                    "name": "item",
-                    "type": "varint"
-                }
-            ]
-        ],
         "packet_game_rules_changed": [
             "container",
             [
@@ -1718,15 +1737,6 @@
         "packet_camera": [
             "container",
             []
-        ],
-        "packet_add_item": [
-            "container",
-            [
-                {
-                    "name": "item",
-                    "type": "varint"
-                }
-            ]
         ],
         "packet_boss_event": [
             "container",
@@ -1756,63 +1766,30 @@
         ],
         "packet_available_commands": [
             "container",
+            []
+        ],
+        "packet_command_request": [
+            "container",
             [
                 {
-                    "name": "commands",
+                    "name": "command",
+                    "type": "string"
+                },
+                {
+                    "name": "command_type",
+                    "type": "varint"
+                },
+                {
+                    "name": "unknown_uuid",
+                    "type": "string"
+                },
+                {
+                    "name": "request_id",
                     "type": "string"
                 },
                 {
                     "name": "unknown",
-                    "type": "string"
-                }
-            ]
-        ],
-        "packet_command_step": [
-            "container",
-            [
-                {
-                    "name": "command_name",
-                    "type": "string"
-                },
-                {
-                    "name": "command_overload",
-                    "type": "string"
-                },
-                {
-                    "name": "unknown_1",
-                    "type": "varint"
-                },
-                {
-                    "name": "current_step_",
-                    "type": "varint"
-                },
-                {
-                    "name": "is_output",
                     "type": "bool"
-                },
-                {
-                    "name": "client_id",
-                    "type": "varint"
-                },
-                {
-                    "name": "command_input_json",
-                    "type": "string"
-                },
-                {
-                    "name": "command_output_json",
-                    "type": "string"
-                },
-                {
-                    "name": "unknown_7",
-                    "type": "u8"
-                },
-                {
-                    "name": "unknown_8",
-                    "type": "u8"
-                },
-                {
-                    "name": "entity_id_self",
-                    "type": "varint"
                 }
             ]
         ],
@@ -1820,11 +1797,52 @@
             "container",
             []
         ],
-        "packet_update_trade": [
+        "packet_command_output": [
             "container",
             []
         ],
-        "packet_update_equip": [
+        "packet_update_trade": [
+            "container",
+            [
+                {
+                    "name": "window_id",
+                    "type": "u8"
+                },
+                {
+                    "name": "window_type",
+                    "type": "u8"
+                },
+                {
+                    "name": "unknown0",
+                    "type": "varint"
+                },
+                {
+                    "name": "unknown1",
+                    "type": "varint"
+                },
+                {
+                    "name": "is_willing",
+                    "type": "bool"
+                },
+                {
+                    "name": "trader_entity_id",
+                    "type": "varint"
+                },
+                {
+                    "name": "player_entity_id",
+                    "type": "varint"
+                },
+                {
+                    "name": "display_name",
+                    "type": "string"
+                },
+                {
+                    "name": "namedtag",
+                    "type": "varint"
+                }
+            ]
+        ],
+        "packet_update_equipment": [
             "container",
             []
         ],
@@ -1969,13 +1987,174 @@
                 }
             ]
         ],
-        "packet_add_behavior_tree_packet": [
+        "packet_add_behavior_tree": [
+            "container",
+            [
+                {
+                    "name": "behaviortree",
+                    "type": "string"
+                }
+            ]
+        ],
+        "packet_structure_block_update": [
             "container",
             []
         ],
-        "packet_structure_block_update_packet": [
+        "packet_show_store_offer": [
+            "container",
+            [
+                {
+                    "name": "unknown0",
+                    "type": "string"
+                },
+                {
+                    "name": "unknown1",
+                    "type": "bool"
+                }
+            ]
+        ],
+        "packet_purchase_receipt": [
             "container",
             []
+        ],
+        "packet_player_skin": [
+            "container",
+            [
+                {
+                    "name": "uuid",
+                    "type": "string"
+                },
+                {
+                    "name": "skin_id",
+                    "type": "string"
+                },
+                {
+                    "name": "skin_name",
+                    "type": "string"
+                },
+                {
+                    "name": "old_skin_name",
+                    "type": "string"
+                },
+                {
+                    "name": "skin_data",
+                    "type": [
+                        "buffer",
+                        {
+                            "countType": "varint",
+                            "type": "i8"
+                        }
+                    ]
+                },
+                {
+                    "name": "cape_data",
+                    "type": [
+                        "buffer",
+                        {
+                            "countType": "varint",
+                            "type": "i8"
+                        }
+                    ]
+                },
+                {
+                    "name": "geometry_model",
+                    "type": "string"
+                },
+                {
+                    "name": "geometry_data",
+                    "type": "string"
+                }
+            ]
+        ],
+        "packet_sub_client_login": [
+            "container",
+            []
+        ],
+        "packet_initiate_web_socket_connection": [
+            "container",
+            [
+                {
+                    "name": "server",
+                    "type": "string"
+                }
+            ]
+        ],
+        "packet_set_last_hurt_by": [
+            "container",
+            [
+                {
+                    "name": "unknown",
+                    "type": "varint"
+                }
+            ]
+        ],
+        "packet_book_edit": [
+            "container",
+            []
+        ],
+        "packet_npc_request": [
+            "container",
+            [
+                {
+                    "name": "runtime_entity_id",
+                    "type": "varint"
+                },
+                {
+                    "name": "unknown0",
+                    "type": "u8"
+                },
+                {
+                    "name": "unknown1",
+                    "type": "string"
+                },
+                {
+                    "name": "unknown2",
+                    "type": "u8"
+                }
+            ]
+        ],
+        "packet_modal_form_request": [
+            "container",
+            [
+                {
+                    "name": "form_id",
+                    "type": "varint"
+                },
+                {
+                    "name": "data",
+                    "type": "string"
+                }
+            ]
+        ],
+        "packet_modal_form_response": [
+            "container",
+            [
+                {
+                    "name": "form_id",
+                    "type": "varint"
+                },
+                {
+                    "name": "data",
+                    "type": "string"
+                }
+            ]
+        ],
+        "packet_server_settings_request": [
+            "container",
+            []
+        ],
+        "packet_server_settings_response": [
+            "container",
+            [
+                {
+                    "name": "form_id",
+                    "type": "varint"
+                },
+                {
+                    "name": "data",
+                    "type": "string"
+                }
+            ]
         ]
     }
 }
