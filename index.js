@@ -23,7 +23,6 @@ function handshakeReply(socket) {
   const buf1 = Buffer.allocUnsafe(1);
   buf1.writeUInt8(0x02); // Packet type - Handshake
   const buf2 = encodeString("-");
-  console.log(Buffer.concat([buf1, buf2]));
   socket.write(Buffer.concat([buf1, buf2]));
 }
 
@@ -81,28 +80,31 @@ function sendChunkData(socket, x, y) {
 }
 
 function sendKeepAlive(socket) {
-  const buf = Buffer.allocUnsafe(1);
-  //buf
+  /*const buf = Buffer.alloc(1);
+  const rand = crypto.randomBytes(4);
+  socket.write(Buffer.concat([buf, rand]));*/
 }
 
-const server = net.createServer((socket) => {
+const server = net.createServer(function (socket) {
+  console.log("open socket");
+  const interval = setInterval(sendKeepAlive.bind(this, socket), 1000);
   socket.on("data", (data) => {
     //console.log(data);
-    setInterval(() => {
-      sendKeepAlive(socket);
-    }, 1000);
-    if(data[0] == 0x02) { // Handshake
+    if (data[0] == 0x02) { // Handshake
       const size = data.readUInt16BE(1);
       const str = iclite.decode(data.slice(3, 3 + size * 2), "utf16be");
       console.log(str.split(";")[0] + " connects...");
       handshakeReply(socket);
-    } else if(data[0] == 0x01) { // Login
+    } else if (data[0] == 0x01) { // Login
       console.log("login...");
       loginPlayer(socket);
       allocateChunk(socket, 0, 0, 1);
       sendChunkData(socket, 0, 0);
-      playerPos(socket, 0, 0, 0, 0, 0);
+      playerPos(socket, 0, 0, 0, 0, 0); // TODO: keep alive
     }
+  });
+  socket.on("end", () => {
+    clearInterval(interval);
   });
 }).on('error', (err) => {
   // handle errors here
