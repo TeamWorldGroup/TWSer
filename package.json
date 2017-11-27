@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/TeamWorldGroup/TWSer/issues"
   },
-  "homepage": "https://github.com/TeamWorldGroup/TWSer#readme"
+  "homepage": "https://github.com/TeamWorldGroup/TWSer#readme",
+  "dependencies": {
+    "iconv-lite": "^0.4.19"
+  }
 }
