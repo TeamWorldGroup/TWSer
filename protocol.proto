@@ -1,0 +1,3 @@
+message Handshake {
+    required string data = 1;
+}
