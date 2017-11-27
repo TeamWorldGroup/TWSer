@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/TeamWorldGroup/TWSer#readme",
   "dependencies": {
-    "iconv-lite": "^0.4.19"
+    "iconv-lite": "^0.4.19",
+    "packet": "0.0.6"
   }
 }
