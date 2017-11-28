@@ -13,6 +13,8 @@
 
 'use strict';
 
+/* eslint-disable no-console */
+
 const chalk = require('chalk');
 
 class Logger {
@@ -28,36 +30,28 @@ class Logger {
 	}
 
 	log(data, options = {}) {
-		if (options.level && this.levels.indexOf(options.level) < 0) {
-			return;
-		}
+		if (options.level && this.levels.indexOf(options.level) < 0) return;
 		let out = !options.noconvert ? this.convert(data) : data;
 
 		console.log(chalk.cyan(out));
 	}
 
 	warn(data, options = {}) {
-		if (options.level && this.levels.indexOf(options.level) < 0) {
-			return;
-		}
+		if (options.level && this.levels.indexOf(options.level) < 0) return;
 		let out = !options.noconvert ? this.convert(data) : data;
 
 		console.log(chalk.yellow(out));
 	}
 
 	error(data, options = {}) {
-		if (options.level && this.levels.indexOf(options.level) < 0) {
-			return;
-		}
+		if (options.level && this.levels.indexOf(options.level) < 0) return;
 		let out = !options.noconvert ? this.convert(data) : data;
 
 		console.log(chalk.red(out));
 	}
 
 	info(data, options = {}) {
-		if (options.level && this.levels.indexOf(options.level) < 0) {
-			return;
-		}
+		if (options.level && this.levels.indexOf(options.level) < 0) return;
 		let out = !options.noconvert ? this.convert(data) : data;
 
 		console.log(chalk.blue(out));
@@ -66,9 +60,7 @@ class Logger {
 	convert(data) {
 		let out = data;
 
-		if (typeof out === 'object') {
-			out = JSON.stringify(out);
-		}
+		if (typeof out === 'object') out = JSON.stringify(out);
 
 		return this.timestamp(out);
 
