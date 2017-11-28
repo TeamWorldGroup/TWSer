@@ -16,10 +16,10 @@ class ServerAPI extends EventEmitter {
         });
     }
     sendBuffer(data) {
-        console.log(data.toString("hex").replace(/(.{2})/g, "$1 "));
         this.socket.write(data);
     }
     receivePacket(buf) {
+        console.log(buf.toString("hex").replace(/(.{2})/g, "$1 "));
         const type = buf[0];
         this.emit("generic", buf.slice(1), buf[0]);
         switch(type) {
@@ -28,12 +28,22 @@ class ServerAPI extends EventEmitter {
             break;
             case 0x02:
                 this.emit("handshake", buf.slice(1));
-            break;
+                break;
+            case 0x03:
+                this.emit("chat", this.decodeString(buf.slice(1), 0).str);
+                break;
             case 0xFE:
                 this.emit("ping", buf.slice(1));
                 this.globalAPI.remove(this);
                 this.socket.end();
             break;
+        }
+    }
+    decodeString(buf, ofs) {
+        const size = buf.readUInt16BE(ofs);
+        return {
+            end: ofs + size * 2 + 2,
+            str: iclite.decode(buf.slice(ofs + 2, ofs + 2 + size * 2), "utf16be")
         }
     }
     encodeString(s) {
