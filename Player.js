@@ -11,7 +11,7 @@ class Player {
         //this.api.allocateChunk(0, 0, 1);
         this.api.sendChunkData(0, 0);
         this.api.setPlayerPos(0, 128, 0, 0, 0);
-        this.api.globalAPI.forEach((api)=>api.sendChat(this.username + " joined the game"));
+        this.api.globalAPI.forEach((api)=>api.sendChat({text: this.username + " joined the game"}));
     }
 };
 

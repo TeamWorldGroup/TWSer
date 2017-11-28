@@ -48,10 +48,10 @@ class ServerAPI extends EventEmitter {
         const buf2 = this.encodeString(reason);
         this.sendBuffer(Buffer.concat([buf1, buf2]));
     }
-    sendChat(text) {
+    sendChat(object) {
         const buf1 = Buffer.allocUnsafe(1);
         buf1.writeUInt8(0x03); // Packet type - chat
-        const buf2 = this.encodeString(text);
+        const buf2 = this.encodeString(JSON.stringify(object));
         this.sendBuffer(Buffer.concat([buf1, buf2]));
     }
     handshakeReply() {
