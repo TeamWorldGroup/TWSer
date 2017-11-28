@@ -16,6 +16,7 @@ class Player {
         });
         this.api.on("turn", this.onTurn.bind(this));
         this.api.on("move", this.onMove.bind(this));
+        this.api.on("setBlock", this.onSetBlock.bind(this));
         //this.api.on("posUpdate", this.updatePosition.bind(this));
         this.api.loginPlayer();
         //this.api.allocateChunk(0, 0, 1);
@@ -31,6 +32,11 @@ class Player {
         
         //setInterval(() => this.updatePosition(), 1000)
         setInterval(() => this.api.setTime(this.api.globalAPI.time), 50);
+    }
+    onSetBlock(data) {
+        const x = data.readInt32BE(0);
+        const y = data.readUInt8(4);
+        const z = data.readInt32BE(5);
     }
     updatePosition() {
         //console.log(this.x, this.y, this.z, this.yaw, this.pitch);

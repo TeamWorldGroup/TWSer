@@ -1,11 +1,14 @@
 const EventEmitter = require("events").EventEmitter;
 
+const World = require("./World");
+
 class GlobalAPI extends EventEmitter {
     constructor() {
         super();
         this.apis = [];
         this.time = 0;
         this.players = [];
+        this.world = new World();
         setInterval(() => this.time++, 50);
     }
     forEach(func) {

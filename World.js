@@ -54,6 +54,10 @@ class Chunk {
         buffers.push(this.biomeBuffer);
         return Buffer.concat(buffers);
     }
+    setBlock(x, y, z, id) {
+        const pos = y * 16 * 16 + z * 16 + x;
+        this.blockBuffer[pos] = id;
+    }
     buildBuffer() {
         return zlib.deflateSync(this.buildBufferNotPacked());
     }
@@ -63,6 +67,15 @@ class World {
     constructor() {
         this.chunks = {};
         this.buildChunk = this.buildChunk.bind(this);
+    }
+    setBlock(x, y, z, id) {
+        const chunkX = Math.floor(x / 16);
+        let cx = cx % 16;
+        cx = cx < 0 ? 16 - Math.abs(cx) : cx;
+        const chunkZ = Math.floor(z / 16);
+        let cz = cz % 16;
+        cz = cz < 0 ? 16 - Math.abs(cz) : cz;
+        this.buildChunk(chunkX, chunkZ).setBlock(cx, y, cz, id);
     }
     buildChunk(x, y) {
         if (!this.chunks[`${x}_${y}`]) {

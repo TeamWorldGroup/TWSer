@@ -2,8 +2,6 @@ const iclite = require("iconv-lite");
 
 const fs = require("fs");
 const EventEmitter = require("events").EventEmitter;
-const World = require("./World");
-const world = new World();
 
 class ServerAPI extends EventEmitter {
     constructor(socket, gapi) {
@@ -16,6 +14,9 @@ class ServerAPI extends EventEmitter {
         socket.on("end", function() {
             gapi.remove(self);
         });
+    }
+    getWorld() {
+        return this.globalAPI.world;
     }
     sendBuffer(data) {
         try {
@@ -67,6 +68,9 @@ class ServerAPI extends EventEmitter {
                 this.emit("move", {
                     x, y, z
                 });
+            break;
+            case 0x0F:
+                this.emit("setBlock", buf.slice(1));
             break;
             case 0xFE:
                 this.emit("ping", buf.slice(1));
@@ -153,7 +157,7 @@ class ServerAPI extends EventEmitter {
         buf.writeInt32BE(y, 5);
         buf[9] = 1;
         buf.writeUInt16BE(0x1, 10);
-        const chunk = world.buildChunk(x, y).buildBuffer();
+        const chunk = this.getWorld().buildChunk(x, y).buildBuffer();
         console.log(chunk);
         buf.writeUInt32BE(chunk.length, 14);
         this.sendBuffer(Buffer.concat([buf, chunk]));
