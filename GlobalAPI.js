@@ -4,6 +4,8 @@ class GlobalAPI extends EventEmitter {
     constructor() {
         super();
         this.apis = [];
+        this.time = 18000;
+        setInterval(() => this.time++, 50);
     }
     forEach(func) {
         this.apis.forEach(func);

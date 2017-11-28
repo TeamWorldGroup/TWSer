@@ -38,7 +38,7 @@ const server = net.createServer(function (socket) {
   });
 }).on('error', (err) => {
   // handle errors here
-  throw err;
+  //throw err;
 });
 
 // grab an arbitrary unused port.

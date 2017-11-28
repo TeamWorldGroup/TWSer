@@ -16,10 +16,20 @@ class ServerAPI extends EventEmitter {
         });
     }
     sendBuffer(data) {
-        this.socket.write(data);
+        try {
+            this.socket.write(data);
+        } catch(e) {
+            this.globalAPI.remove(this);
+        }
+    }
+    setTime(time) {
+        const buf = Buffer.alloc(17);
+        buf[0] = 0x04;
+        buf.writeUInt32BE(time, 13);
+        this.sendBuffer(buf);
     }
     receivePacket(buf) {
-        console.log(buf.toString("hex").replace(/(.{2})/g, "$1 "));
+        //console.log(buf.toString("hex").replace(/(.{2})/g, "$1 "));
         const type = buf[0];
         this.emit("generic", buf.slice(1), buf[0]);
         switch(type) {
@@ -32,6 +42,30 @@ class ServerAPI extends EventEmitter {
             case 0x03:
                 this.emit("chat", this.decodeString(buf.slice(1), 0).str);
                 break;
+
+            case 0x0A:
+            break;
+            case 0x0C:
+                const yaw1 = buf.readFloatBE(1);
+                const pitch1 = buf.readFloatBE(5);
+                this.emit("turn", {
+                    yaw: yaw1, pitch: pitch1
+                });
+            break;
+            case 0x0D:
+                const yaw = buf.readFloatBE(29);
+                const pitch = buf.readFloatBE(33);
+                this.emit("turn", {
+                    yaw, pitch
+                });
+            case 0x0B:
+                const x = buf.readDoubleBE(1);
+                const y = buf.readDoubleBE(9);
+                const z = buf.readDoubleBE(25);
+                this.emit("move", {
+                    x, y, z
+                });
+            break;
             case 0xFE:
                 this.emit("ping", buf.slice(1));
                 this.globalAPI.remove(this);
