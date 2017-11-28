@@ -5,11 +5,14 @@
   | |     \ V  V /    ___) | |  __/ | |   
   |_|      \_/\_/    |____/   \___| |_|    
 */
+'use strict';
+
 //const pmp = require('./protocol');
 const fs = require('fs');
 const Log = require('./utils/logger');
 const nconf = require('nconf');
 const dgram = require('dgram');
+
 nconf.file('config/config.json');
 
 Log.setLevels(['debug']);
@@ -19,7 +22,8 @@ Error.stackTraceLimit = Infinity;
 const PORT = nconf.get('port');
 const NAME = nconf.get('name');
 const VERSION = nconf.get('version');
-if(!PORT || !NAME || !VERSION){
+
+if (!PORT || !NAME || !VERSION){
 	require('./config/init')();
 	process.exit(0);
 }
@@ -30,7 +34,7 @@ Log.log(
   | |    \\ \\ /\\ / /  \\___ \\   / _ \\ | '__|
   | |     \\ V  V /    ___) | |  __/ | |   
   |_|      \\_/\\_/    |____/   \\___| |_|    
-`, {noconvert:true});
+`, {'noconvert': true});
 
 Log.info(`Сервер: ${NAME}`);
 Log.info(`Порт: ${PORT}`);
@@ -153,13 +157,15 @@ server.on('error', (err) => {
 });
 
 server.on('message', (msg, rinfo) => {
-	if(msg[0] == 0x01) {
+	if (msg[0] === 0x01) {
+		const buffer = Buffer.alloc();
 	}
 	console.log(`server got: ${msg.toString('hex')} from ${rinfo.address}:${rinfo.port}`);
 });
 
 server.on('listening', () => {
 	const address = server.address();
+
 	console.log(`server listening ${address.address}:${address.port}`);
 });
 
