@@ -11,12 +11,13 @@ class Chunk {
         this.skylightBuffer = Buffer.alloc(16 * 16 * 128);
         this.biomeBuffer = Buffer.alloc(256);
         this.generate();
+        this.saveSync();
     }
     save() {
-        fs.writeFile(`world/${this.x}_${this.y}.col`, buf, () => {});
+        fs.writeFile(`world/${this.x}_${this.y}.col`, this.buildBufferNotPacked(), () => {});
     }
     saveSync() {
-        fs.writeFileSync(`world/${this.x}_${this.y}.col`, buf);
+        fs.writeFileSync(`world/${this.x}_${this.y}.col`, this.buildBufferNotPacked());
     }
     /*load() {
         fs.readFile(`world/${this.x}_${this.y}.col`, (data) => {
@@ -40,9 +41,21 @@ class Chunk {
             this.skylightBuffer[offset] = 0xFF;
         }
     }
-    buildBuffer() {
+    buildBufferNotPacked() {
         console.log(this.blockBuffer);
-        return zlib.deflateSync(Buffer.concat([this.blockBuffer, this.dataBuffer, this.lightBuffer, this.skylightBuffer, this.biomeBuffer]));
+        const buffers = [];
+        // for (let i = 0; i < 1; i++) {
+        buffers.push(this.blockBuffer.slice(0, 16 * 16 * 16));
+        buffers.push(this.dataBuffer.slice(0, 16 * 16 * 8));
+        buffers.push(this.lightBuffer.slice(0, 16 * 16 * 8));
+        buffers.push(this.skylightBuffer.slice(0, 16 * 16 * 8));
+        //buffers.push(this.biomeBuffer);
+        // }
+        buffers.push(this.biomeBuffer);
+        return Buffer.concat(buffers);
+    }
+    buildBuffer() {
+        return zlib.deflateSync(this.buildBufferNotPacked());
     }
 }
 

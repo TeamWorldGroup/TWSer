@@ -152,7 +152,7 @@ class ServerAPI extends EventEmitter {
         buf.writeInt32BE(x, 1);
         buf.writeInt32BE(y, 5);
         buf[9] = 1;
-        buf.writeUInt16BE(0xF, 10);
+        buf.writeUInt16BE(0x1, 10);
         const chunk = world.buildChunk(x, y).buildBuffer();
         console.log(chunk);
         buf.writeUInt32BE(chunk.length, 14);
