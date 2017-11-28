@@ -5,10 +5,11 @@
   | |     \ V  V /    ___) | |  __/ | |   
   |_|      \_/\_/    |____/   \___| |_|    
 */
-const pmp = require('./protocol');
+//const pmp = require('./protocol');
 const fs = require('fs');
 const Log = require('./utils/logger');
 const nconf = require('nconf');
+const dgram = require('dgram');
 nconf.file('config/config.json');
 
 Error.stackTraceLimit = Infinity;
@@ -35,7 +36,7 @@ Log.info(`Версия MCPE: ${VERSION}`);
 
 Log.log('Запускаем...');
 
-const server = pmp.createServer({
+/*const server = pmp.createServer({
 	name: `MCPE;${NAME.replace(/;/g,'')};81 81;${VERSION};20;2000000`,
 	port: PORT
 }, true);
@@ -51,7 +52,7 @@ server.on('connection', function (client) {
 		token: Buffer.allocUnsafe(1)
 	});
 
-	client.on(/* 'login_mcpe' */'game_login', packet => {
+	client.on(/* 'login_mcpe' *//*'game_login', packet => {
 		Log.log('Новая аутентификация');
 		client.writeMCPE('play_status', {
 			status: 0
@@ -141,4 +142,23 @@ server.on('connection', function (client) {
 	client.on('end', function () {
 		Log.log('Клиент отключился');
 	});
+});*/
+const server = dgram.createSocket('udp4');
+
+server.on('error', (err) => {
+	console.log(`server error:\n${err.stack}`);
+	server.close();
 });
+
+server.on('message', (msg, rinfo) => {
+	if(msg[0] == 0x01) {
+	}
+	console.log(`server got: ${msg.toString('hex')} from ${rinfo.address}:${rinfo.port}`);
+});
+
+server.on('listening', () => {
+	const address = server.address();
+	console.log(`server listening ${address.address}:${address.port}`);
+});
+
+server.bind(19132);
