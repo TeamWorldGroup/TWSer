@@ -2,6 +2,8 @@ const iclite = require("iconv-lite");
 
 const fs = require("fs");
 const EventEmitter = require("events").EventEmitter;
+const World = require("./World");
+const world = new World();
 
 class ServerAPI extends EventEmitter {
     constructor(socket, gapi) {
@@ -147,10 +149,14 @@ class ServerAPI extends EventEmitter {
     sendChunkData(x, y) {
         const buf = Buffer.alloc(18);
         buf[0] = 0x33; // Packet type - Chunk Data
-        buf.writeUInt32BE(x, 1);
-        buf.writeUInt32BE(y, 5);
+        buf.writeInt32BE(x, 1);
+        buf.writeInt32BE(y, 5);
         buf[9] = 1;
-        this.sendBuffer(buf);
+        buf.writeUInt16BE(0xF, 10);
+        const chunk = world.buildChunk(x, y).buildBuffer();
+        console.log(chunk);
+        buf.writeUInt32BE(chunk.length, 14);
+        this.sendBuffer(Buffer.concat([buf, chunk]));
     }
 }
 

@@ -20,13 +20,15 @@ class Player {
         this.api.loginPlayer();
         //this.api.allocateChunk(0, 0, 1);
         this.api.sendChunkData(0, 0);
-        this.x = 0;
-        this.y = 128;
-        this.z = 0;
+        this.api.globalAPI.addPlayer(this);
+        this.x = 8;
+        this.y = 4;
+        this.z = 8;
         this.yaw = 0;
         this.pitch = 0;
         this.updatePosition();
         this.api.globalAPI.forEach((api)=>api.sendChat({text: this.username + " joined the game"}));
+        
         //setInterval(() => this.updatePosition(), 1000)
         setInterval(() => this.api.setTime(this.api.globalAPI.time), 50);
     }
@@ -39,11 +41,15 @@ class Player {
         this.pitch = pitch;
     }
     onMove({ x, y, z }) {
+        const dist = Math.hypot(x - this.x, y - this.y, z - this.z);
+        if(dist >= 100) {
+            updatePosition();
+            this.api.sendChat({text: "Stop cheating!"})
+            return;
+        }
         this.x = x;
         this.y = y;
         this.z = z;
-
-        console.log(this.x, this.y, this.z, this.yaw, this.pitch);
     }
 };
 
