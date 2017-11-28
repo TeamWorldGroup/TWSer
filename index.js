@@ -43,20 +43,20 @@ Log.info(`Версия MCPE: ${VERSION}`);
 Log.log('Запускаем...');
 
 const server = pmp.createServer({
-	'name': `MCPE;${NAME.replace(/;/g,'')};81 81;${VERSION};20;2000000`,
+	'name': `MCPE;${NAME.replace(/;/g,'')};141 141;${VERSION};20;2000000`,
 	'port': PORT
 }, true);
 
 server.on('connection', function (client) {
 	Log.log('Сервер запущен!');
 
-	client.on('mcpe', (packet) => Log.log(packet, {'level': 'packet'}));
+	//client.on('mcpe', (packet) => Log.log(packet, {'level': 'packet'}));
 
-	client.writeMCPE('server_to_client_handshake', {
+	/*client.writeMCPE('server_to_client_handshake', {
 		'server_public_key': 'MHYwEAYHKoZIzj0CAQYFK4EEACIDYgAE8ELkixyLcwlZryUQcu1TvPOmI2B7vX83ndnWRUaXm74wFfa5f/lwQNTfrLVHa2PmenpGI6JhIMUJaWZrjmMj90NoKNFSNBuKdm8rYiXsfaz3K36x/1U26HpG0ZxK/V1V',
 		'token_length': 1,
 		'token': Buffer.allocUnsafe(1)
-	});
+	});*/
 
 	client.on(/* 'login_mcpe' */'game_login', (packet) => {
 		Log.log('Новая аутентификация');

@@ -216,7 +216,8 @@
                                 "0x64": "modal_form_request",
                                 "0x65": "modal_form_response",
                                 "0x66": "server_settings_request",
-                                "0x67": "server_settings_response"
+                                "0x67": "server_settings_response",
+                                "0x78": "zlibd"
                             }
                         }
                     ]
@@ -328,10 +329,20 @@
                                 "modal_form_request": "packet_modal_form_request",
                                 "modal_form_response": "packet_modal_form_response",
                                 "server_settings_request": "packet_server_settings_request",
-                                "server_settings_response": "packet_server_settings_response"
+                                "server_settings_response": "packet_server_settings_response",
+                                "zlibd": "packet_zlibd"
                             }
                         }
                     ]
+                }
+            ]
+        ],
+        "packet_zlibd": [
+            "container",
+            [
+                {
+                    "name": "buffer",
+                    "type": "restBuffer"
                 }
             ]
         ],
