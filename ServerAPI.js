@@ -15,6 +15,10 @@ class ServerAPI extends EventEmitter {
             gapi.remove(self);
         });
     }
+    sendBuffer(data) {
+        console.log(data.toString("hex").replace(/(.{2})/g, "$1 "));
+        this.socket.write(data);
+    }
     receivePacket(buf) {
         const type = buf[0];
         this.emit("generic", buf.slice(1), buf[0]);
@@ -42,32 +46,31 @@ class ServerAPI extends EventEmitter {
         const buf1 = Buffer.allocUnsafe(1);
         buf1.writeUInt8(0xFF); // Packet type - kick/disconnect
         const buf2 = this.encodeString(reason);
-        this.socket.write(Buffer.concat([buf1, buf2]));
+        this.sendBuffer(Buffer.concat([buf1, buf2]));
     }
     sendChat(text) {
         const buf1 = Buffer.allocUnsafe(1);
         buf1.writeUInt8(0x03); // Packet type - chat
         const buf2 = this.encodeString(text);
-        this.socket.write(Buffer.concat([buf1, buf2]));
+        this.sendBuffer(Buffer.concat([buf1, buf2]));
     }
     handshakeReply() {
         const buf1 = Buffer.allocUnsafe(1);
         buf1.writeUInt8(0x02); // Packet type - Handshake
         const buf2 = this.encodeString("-");
-        this.socket.write(Buffer.concat([buf1, buf2]));
+        this.sendBuffer(Buffer.concat([buf1, buf2]));
     }
     loginPlayer() {
         const buf1 = Buffer.allocUnsafe(5);
         buf1[0] = 0x01; // Packet type - Login
         buf1.writeUInt32BE(1, 1); // Player's EID
-        const buf2 = this.encodeString(""); // ?
-        const buf3 = this.encodeString("FLAT"); // World type (FLAT)
-        const buf4 = Buffer.allocUnsafe(11);
-        buf4.writeUInt32BE(1, 0); // Gamemode (1 == creative)
-        buf4.writeUInt32BE(0, 4); // World (0 == Overworld)
-        buf4.writeInt8(2, 8); // Normal difficulty
-        buf4.writeUInt8(255, 10); // Max 255 players
-        this.socket.write(Buffer.concat([buf1, buf2, buf3, buf4])); // Send
+        const buf2 = this.encodeString("flat"); // Flat world
+        const buf4 = Buffer.allocUnsafe(5);
+        buf4.writeInt8(1, 0); // Gamemode (1 == creative)
+        buf4.writeInt8(0, 1); // World (0 == Overworld)
+        buf4.writeInt8(2, 2); // Normal difficulty
+        buf4.writeUInt8(255, 4); // Max 255 players
+        this.sendBuffer(Buffer.concat([buf1, buf2, buf4])); // Send
 
     }
     allocateChunk(x, y, state) {
@@ -76,7 +79,7 @@ class ServerAPI extends EventEmitter {
         buf.writeUInt32BE(x, 1); // Chunk X
         buf.writeUInt32BE(y, 5); // Chunk Y
         buf[9] = state; // State
-        this.socket.write(buf); // Send
+        this.sendBuffer(buf); // Send
     }
     setPlayerPos(x, y, z, yaw, pitch) {
         const buf = Buffer.allocUnsafe(42);
@@ -95,15 +98,15 @@ class ServerAPI extends EventEmitter {
         buf.writeFloatBE(pitch, offset);
         offset += 4;
         buf[offset] = 1;
-        this.socket.write(buf);
+        this.sendBuffer(buf);
     }
     sendChunkData(x, y) {
-        const buf = Buffer.alloc(22);
+        const buf = Buffer.alloc(18);
         buf[0] = 0x33; // Packet type - Chunk Data
         buf.writeUInt32BE(x, 1);
         buf.writeUInt32BE(y, 5);
         buf[9] = 1;
-        this.socket.write(buf);
+        this.sendBuffer(buf);
     }
 }
 

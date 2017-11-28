@@ -13,10 +13,12 @@ const server = net.createServer(function (socket) {
   const api = new ServerAPI(socket, globalAPI);
   let player;
   api.on("handshake", (data) => {
-    const size = data.readUInt16BE(0);
+    /*const size = data.readUInt16BE(0);
     const str = iclite.decode(data.slice(2, 2 + size * 2), "utf16be");
     console.log(str.split(";")[0] + " connects...");
-    api.handshakeReply();
+    api.handshakeReply();*/
+    player = new Player(api);
+    player.login(data);
   });
 
   api.on("ping", (data) => {
@@ -24,7 +26,7 @@ const server = net.createServer(function (socket) {
   });
       
   api.on("login", (data) => {
-    console.log("login...");
+    /*console.log("login...");
     player = new Player(api);
     player.login(data);
     /*api.loginPlayer();

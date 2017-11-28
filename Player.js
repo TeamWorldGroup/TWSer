@@ -5,10 +5,10 @@ class Player {
         this.api = api;
     }
     login(data) {
-        const size = data.readUInt16BE(4);
-        this.username = iclite.decode(data.slice(6, 6 + size * 2), "utf16be");
+        const size = data.readUInt16BE(1);
+        this.username = iclite.decode(data.slice(3, 3 + size * 2), "utf16be");
         this.api.loginPlayer();
-        this.api.allocateChunk(0, 0, 1);
+        //this.api.allocateChunk(0, 0, 1);
         this.api.sendChunkData(0, 0);
         this.api.setPlayerPos(0, 128, 0, 0, 0);
         this.api.globalAPI.forEach((api)=>api.sendChat(this.username + " joined the game"));
