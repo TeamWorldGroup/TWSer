@@ -22,7 +22,7 @@ const server = net.createServer(function (socket) {
   });
 
   api.on("ping", (data) => {
-    api.kick("TWSer PC§0§20000");
+    api.kick("§1\00047\0001.4.2\0TWSer PC\0000\00020000");
   });
       
   api.on("login", (data) => {
