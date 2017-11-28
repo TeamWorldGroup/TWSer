@@ -11,6 +11,8 @@ const Log = require('./utils/logger');
 const nconf = require('nconf');
 nconf.file('config/config.json');
 
+Log.setLevels(['debug']);
+
 Error.stackTraceLimit = Infinity;
 
 const PORT = nconf.get('port');
@@ -27,7 +29,7 @@ Log.log(
   | |    \\ \\ /\\ / /  \\___ \\   / _ \\ | '__|
   | |     \\ V  V /    ___) | |  __/ | |   
   |_|      \\_/\\_/    |____/   \\___| |_|    
-`, true);
+`, {noconvert:true});
 
 Log.info(`Сервер: ${NAME}`);
 Log.info(`Порт: ${PORT}`);
@@ -46,7 +48,7 @@ server.on('connection', function (client) {
 	client.on('mcpe', packet => console.log(packet));
 
 	client.writeMCPE('server_to_client_handshake', {
-		server_public_key: "MHYwEAYHKoZIzj0CAQYFK4EEACIDYgAE8ELkixyLcwlZryUQcu1TvPOmI2B7vX83ndnWRUaXm74wFfa5f/lwQNTfrLVHa2PmenpGI6JhIMUJaWZrjmMj90NoKNFSNBuKdm8rYiXsfaz3K36x/1U26HpG0ZxK/V1V",
+		server_public_key: 'MHYwEAYHKoZIzj0CAQYFK4EEACIDYgAE8ELkixyLcwlZryUQcu1TvPOmI2B7vX83ndnWRUaXm74wFfa5f/lwQNTfrLVHa2PmenpGI6JhIMUJaWZrjmMj90NoKNFSNBuKdm8rYiXsfaz3K36x/1U26HpG0ZxK/V1V',
 		token_length: 1,
 		token: Buffer.allocUnsafe(1)
 	});
