@@ -51,7 +51,12 @@ function createServer(options, encryption) {
 		client.mcpePacketSerializer = new Serializer(proto, 'mcpe_packet');
 
 		client.on('mcpe', (packet) => {
-			console.log('mcpe');
+			//console.log('mcpe');
+			client.emit(packet.name, packet.params);
+			client.emit('debug', packet.name);
+		});
+		client.on('mcpe2', (packet) => {
+			//console.log('mcpe');
 			client.emit(packet.name, packet.params);
 			client.emit('debug', packet.name);
 		});
@@ -65,12 +70,16 @@ function createServer(options, encryption) {
 			let buf = zlib.inflateSync(Buffer.concat([Buffer.from([0x78]), packets.buffer]));
 
 			//console.log(buf.toString("utf8"));
-			//console.log(buf);
+			//console.log(buf.length);
 			let pack = batchProto.parsePacketBuffer('insideBatch', buf).data;
-
 			console.log(pack);
 
-			pack.forEach((packet) => client.readEncapsulatedPacket(Buffer.concat([Buffer.from([0xfe]), packet])));
+			//console.log(pack);
+
+			//pack.forEach((packet) => {
+			//console.log(packet);
+			client.readEncapsulatedPacket(Buffer.concat([Buffer.from([0xfd]), pack[0]]));
+			//});
 		});
 
 		// client.writePacket (string, object)
@@ -116,7 +125,7 @@ function createServer(options, encryption) {
 		};
 
 		client.on('game_login', function (packet) {
-			console.warn('Not implemented!');
+			//console.warn('Not implemented!');
 			try {
 				let dataProto = new ProtoDef();
 
@@ -134,7 +143,7 @@ function createServer(options, encryption) {
 
 				//FIXME: Xbox & Non-Xbox support
 				console.log(packet);
-				let body = dataProto.parsePacketBuffer('data_chain', zlib.inflateSync(packet.body)),
+				let body = dataProto.parsePacketBuffer('data_chain', /*zlib.inflateSync(*/packet.body/*)*/),
 					chain = null,
 					decode = null,
 					data = null;
