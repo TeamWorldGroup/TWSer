@@ -215,44 +215,40 @@ module.exports.player = function (player, serv, settings) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            if (!serv.uuidToPlayer[player._client.uuid]) {
-              _context2.next = 3;
-              break;
+            if (serv.uuidToPlayer[player._client.uuid]) {
+              //player.kick("You are already connected");
+              //return;
             }
 
-            player.kick("You are already connected");
-            return _context2.abrupt('return');
-
-          case 3:
             if (!serv.bannedPlayers[player._client.uuid]) {
-              _context2.next = 6;
+              _context2.next = 4;
               break;
             }
 
             player.kick(serv.bannedPlayers[player._client.uuid].reason);
             return _context2.abrupt('return');
 
-          case 6:
+          case 4:
             if (!serv.bannedIPs[player._client.socket.remoteAddress]) {
-              _context2.next = 9;
+              _context2.next = 7;
               break;
             }
 
             player.kick(serv.bannedIPs[player._client.socket.remoteAddress].reason);
             return _context2.abrupt('return');
 
-          case 9:
+          case 7:
 
             addPlayer();
-            _context2.next = 12;
+            _context2.next = 10;
             return player.findSpawnPoint();
 
-          case 12:
+          case 10:
             sendLogin();
-            _context2.next = 15;
+            _context2.next = 13;
             return player.sendMap();
 
-          case 15:
+          case 13:
             player.sendSpawnPosition();
             player.sendSelfPosition();
             player.updateHealth(player.health);
@@ -265,14 +261,14 @@ module.exports.player = function (player, serv, settings) {
             announceJoin();
             player.emit("spawned");
 
-            _context2.next = 26;
+            _context2.next = 24;
             return player.waitPlayerLogin();
 
-          case 26:
+          case 24:
             player.sendRestMap();
             sendChunkWhenMove();
 
-          case 28:
+          case 26:
           case 'end':
             return _context2.stop();
         }
