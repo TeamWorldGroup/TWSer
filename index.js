@@ -63,19 +63,21 @@ server.on('connection', function (client) {
 		client.writeMCPE('play_status', {'status': 0});
 
 		client.writeMCPE('move_player', {
-			'entityId': [0, 0],
+			'runtime_entity_id': 0,
+			'other_runtime_entity_id': 0,
 			'x': 1,
 			'y': 64 + 1.62,
 			'z': 1,
 			'yaw': 0,
-			'headYaw': 0,
+			'head_yaw': 0,
 			'pitch': 0,
 			'mode': 0,
-			'onGround': 1
+			'on_ground': 1
 		});
 
 		client.writeMCPE('start_game', {
-			'seed': -1,
+
+			/*'seed': -1,
 			'dimension': 0,
 			'generator': 1,
 			'gamemode': 1,
@@ -89,18 +91,61 @@ server.on('connection', function (client) {
 			'isLoadedInCreative': 0,
 			'dayCycleStopTime': 0,
 			'eduMode': 0,
-			'worldName': ''
+			'worldName': ''*/
+			'entity_id_self': 0,
+			'runtime_entity_id': 0,
+			'player_gamemode': 1,
+			'spawn': {
+				'x': 1,
+				'y': 1,
+				'z': 1
+			},
+			'unknown_1': {
+				'x': 0,
+				'y': 0
+			},
+			'seed': -1,
+			'dimension': 0,
+			'generator': 1,
+			'gamemode': 0,
+			'difficulty': 0,
+			'x': 0,
+			'y': 1 + 1.62,
+			'z': 0,
+			'has_achievements_disabled': false,
+			'day_cycle_stop_time': 0,
+			'edu_mode': false,
+			'rain_level': 0,
+			'lightning_level': 0,
+			'is_multiplayer': true,
+			'broadcast_to_lan': false,
+			'broadcast_to_xbl': false,
+			'enable_commands': true,
+			'is_texturepacks_required': false,
+			'gamerules': 0,
+			'bonus_chest': false,
+			'map_enabled': true,
+			'trust_players': false,
+			'permission_level': 0,
+			'game_publish_setting': 0,
+			'level_id': 'none',
+			'world_name': 'world',
+			'premium_world_template_id': '',
+			'unknown0': false,
+			'current_tick': 0,
+			'enchantment_seed': 0
 		});
 
 		client.writeMCPE('set_spawn_position', {
-			'x': 1,
-			'y': 64,
-			'z': 1
+			'spawnType': 1,
+			'coordinates': {
+				'x': 1,
+				'y': 64,
+				'z': 1
+			},
+			'forced': true
 		});
-		client.writeMCPE('set_time', {
-			'time': 0,
-			'started': 1
-		});
+		client.writeMCPE('set_time', {'time': 0});
 
 		client.writeMCPE('respawn', {
 			'x': 1,

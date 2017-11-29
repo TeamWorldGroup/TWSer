@@ -12,6 +12,23 @@
                 "countType": "li16"
             }
         ],
+        "ivec3": [
+            "container",
+            [
+                {
+                    "name": "x",
+                    "type": "varint"
+                },
+                {
+                    "name": "y",
+                    "type": "varint"
+                },
+                {
+                    "name": "z",
+                    "type": "varint"
+                }
+            ]
+        ],
         "vector3": [
             "container",
             [
@@ -830,7 +847,7 @@
                 },
                 {
                     "name": "gamerules",
-                    "type": "gamerules"
+                    "type": "varint"
                 },
                 {
                     "name": "bonus_chest",
@@ -1577,7 +1594,7 @@
                 },
                 {
                     "name": "coordinates",
-                    "type": "varint"
+                    "type": "ivec3"
                 },
                 {
                     "name": "forced",
