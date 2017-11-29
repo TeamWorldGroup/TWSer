@@ -45,7 +45,7 @@ Log.log('Запускаем...');
 const server = pmp.createServer({
 	'name': `MCPE;${NAME.replace(/;/g,'')};141 141;${VERSION};20;2000000`,
 	'port': PORT
-}, true);
+});
 
 server.on('connection', function (client) {
 	Log.log('Сервер запущен!');
@@ -60,7 +60,8 @@ server.on('connection', function (client) {
 
 	client.on(/* 'login_mcpe' */'game_login', (packet) => {
 		Log.log('Новая аутентификация');
-		client.writeMCPE('play_status', {'status': 0});
+
+		/*client.writeMCPE('play_status', {'status': 0});
 
 		client.writeMCPE('move_player', {
 			'runtime_entity_id': 0,
@@ -92,7 +93,7 @@ server.on('connection', function (client) {
 			'dayCycleStopTime': 0,
 			'eduMode': 0,
 			'worldName': ''*/
-			'entity_id_self': 0,
+		/*'entity_id_self': 0,
 			'runtime_entity_id': 0,
 			'player_gamemode': 1,
 			'spawn': {
@@ -151,9 +152,14 @@ server.on('connection', function (client) {
 			'x': 1,
 			'y': 64,
 			'z': 1
+		});*/
+		client.writeMCPE('disconnect', {
+			'hide_disconnect_reason': false,
+			'message': 'Test'
 		});
 	});
 
+	/*
 	client.on('chunk_radius_update', () => {
 		Log.log('chunk_radius_update');
 		client.writeMCPE('chunk_radius_update', {'chunk_radius': 1});
@@ -181,7 +187,7 @@ server.on('connection', function (client) {
 			'started': 1
 		});
 
-	});
+	});*/
 
 	client.on('error', function (err) {
 		Log.error(err.stack);

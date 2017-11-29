@@ -600,6 +600,10 @@
             "container",
             [
                 {
+                    "name": "unknown",
+                    "type": "i8"
+                },
+                {
                     "name": "protocol",
                     "type": "i32"
                 },

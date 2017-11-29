@@ -49,6 +49,7 @@ function createServer(options, encryption) {
 		proto.addTypes(require('./datatypes/minecraft'));
 		proto.addTypes(require('../data/protocol').types);
 		client.mcpePacketSerializer = new Serializer(proto, 'mcpe_packet');
+		client.mcpePacketSerializer2 = new Serializer(proto, 'mcpe_packet2');
 
 		client.on('mcpe', (packet) => {
 			//console.log('mcpe');
@@ -72,13 +73,14 @@ function createServer(options, encryption) {
 			//console.log(buf.toString("utf8"));
 			//console.log(buf.length);
 			let pack = batchProto.parsePacketBuffer('insideBatch', buf).data;
+
 			console.log(pack);
 
 			//console.log(pack);
 
 			//pack.forEach((packet) => {
 			//console.log(packet);
-			client.readEncapsulatedPacket(Buffer.concat([Buffer.from([0xfd]), pack[0]]));
+			client.readEncapsulatedPacket(Buffer.concat([Buffer.from([0xfe]), pack[0]]));
 			//});
 		});
 
@@ -94,10 +96,16 @@ function createServer(options, encryption) {
 					params
 				});
 			} else {
-				client.writeEncapsulated('mcpe', {
+
+				/*client.writeEncapsulatedRaw(/*'mcpe', {
 					name,
 					params
-				});
+				});*/
+
+				client.writeEncapsulatedRaw(zlib.deflateSync(client.mcpePacketSerializer.createPacketBuffer({
+					name,
+					params
+				})));
 			}
 		};
 		client.writePacket = client.writeMCPE;
