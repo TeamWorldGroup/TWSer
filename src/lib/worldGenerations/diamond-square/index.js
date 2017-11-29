@@ -90,7 +90,7 @@ class DiamondSquare {
   }
 }
 
-function generation({seed,worldHeight=128,waterline=64}={}) {
+function generation({seed,worldHeight=96,waterline=64}={}) {
   // Selected empirically
   const size = 10000000;
   const space = new DiamondSquare(size, size / 500, seed);
@@ -105,16 +105,16 @@ function generation({seed,worldHeight=128,waterline=64}={}) {
     const treeRand = seedRand(3);
     const treeLevel = Math.floor(space.value(worldX + 8, worldZ + 8) * worldHeight);
     let treeData = 0;
-    switch (seedRand(2)) {
+    /*switch (seedRand(2)) {
       case 1: treeData = 2; break;
-    }
+    }*/
 
     const treeBiome = Math.round(biomeSpace.value(worldX + 8, worldZ + 8));
 
     for (let x = 0; x < 16; x++) {
       for (let z = 0; z < 16; z++) {
         const level = Math.floor(space.value(worldX + x, worldZ + z) * worldHeight);
-        level += 4;
+        //level += 4;
         const biome = Math.round(biomeSpace.value(worldX + x, worldZ + z));
         const dirtheight = level - 4 + seedRand(3);
         const bedrockheight = 1 + seedRand(4);

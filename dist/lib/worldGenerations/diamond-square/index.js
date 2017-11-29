@@ -107,7 +107,7 @@ function generation() {
   var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
       seed = _ref.seed,
       _ref$worldHeight = _ref.worldHeight,
-      worldHeight = _ref$worldHeight === undefined ? 128 : _ref$worldHeight,
+      worldHeight = _ref$worldHeight === undefined ? 96 : _ref$worldHeight,
       _ref$waterline = _ref.waterline,
       waterline = _ref$waterline === undefined ? 64 : _ref$waterline;
 
@@ -125,16 +125,16 @@ function generation() {
     var treeRand = seedRand(3);
     var treeLevel = Math.floor(space.value(worldX + 8, worldZ + 8) * worldHeight);
     var treeData = 0;
-    switch (seedRand(2)) {
-      case 1:
-        treeData = 2;break;
-    }
+    /*switch (seedRand(2)) {
+      case 1: treeData = 2; break;
+    }*/
 
     var treeBiome = Math.round(biomeSpace.value(worldX + 8, worldZ + 8));
 
     for (var x = 0; x < 16; x++) {
       for (var z = 0; z < 16; z++) {
         var level = Math.floor(space.value(worldX + x, worldZ + z) * worldHeight);
+        //level += 4;
         var biome = Math.round(biomeSpace.value(worldX + x, worldZ + z));
         var dirtheight = level - 4 + seedRand(3);
         var bedrockheight = 1 + seedRand(4);
