@@ -1836,13 +1836,13 @@ class Server {
 	 * @return int
 	 */
 	broadcastPopup(popup, recipients = null) {
-		if (!is_array(recipients)) {
+		if (!(recipients instanceof Array)) {
 			/** @var Player[] recipients */
 			recipients = [];
 
-			foreach(const permissible of this.pluginManager.getPermissionSubscriptions(Server.BROADCAST_CHANNEL_USERS)) {
+			for(const permissible of this.pluginManager.getPermissionSubscriptions(Server.BROADCAST_CHANNEL_USERS)) {
 				if (permissible instanceof Player && permissible.hasPermission(Server.BROADCAST_CHANNEL_USERS)) {
-					recipients[spl_object_hash(permissible)] = permissible; // do not send messages directly, || some might be repeated
+					recipients[spl_object_hash(permissible)] = permissible; // do not send messages directly, || some might be repeated //TODO: spl_object_hash
 				}
 			}
 		}
@@ -1852,7 +1852,7 @@ class Server {
 			recipient.sendPopup(popup);
 		}
 
-		return count(recipients);
+		return recipients.length;
 	}
 
 	/**
@@ -1866,12 +1866,12 @@ class Server {
 	 * @return int
 	 */
 	broadcastTitle(title, subtitle = "", fadeIn = -1, stay = -1, fadeOut = -1, recipients = null) {
-		if (!is_array(recipients)) {
+		if (!(recipients instanceof Array)) {
 			/** @var Player[] recipients */
 			recipients = [];
 
-			foreach(this.pluginManager.getPermissionSubscriptions( /*static*/ this.BROADCAST_CHANNEL_USERS) as permissible) {
-				if (permissible instanceof Player && permissible.hasPermission( /*static*/ this.BROADCAST_CHANNEL_USERS)) {
+			for(const permissible of this.pluginManager.getPermissionSubscriptions(Server.BROADCAST_CHANNEL_USERS)) {
+				if (permissible instanceof Player && permissible.hasPermission(Server.BROADCAST_CHANNEL_USERS)) {
 					recipients[spl_object_hash(permissible)] = permissible; // do not send messages directly, || some might be repeated
 				}
 			}
@@ -1882,7 +1882,7 @@ class Server {
 			recipient.addTitle(title, subtitle, fadeIn, stay, fadeOut);
 		}
 
-		return count(recipients);
+		return recipients.length;
 	}
 
 	/**
@@ -1894,8 +1894,8 @@ class Server {
 	broadcast(message, permissions) {
 		/** @var CommandSender[] recipients */
 		recipients = [];
-		foreach(explode(";", permissions) as permission) {
-			foreach(this.pluginManager.getPermissionSubscriptions(permission) as permissible) {
+		for(const permission of explode(";", permissions)) { //explode
+			for(const permissible of this.pluginManager.getPermissionSubscriptions(permission)) {
 				if (permissible instanceof CommandSender && permissible.hasPermission(permission)) {
 					recipients[spl_object_hash(permissible)] = permissible; // do not send messages directly, || some might be repeated
 				}
@@ -1906,7 +1906,7 @@ class Server {
 			recipient.sendMessage(message);
 		}
 
-		return count(recipients);
+		return recipients.length;
 	}
 
 	/**
@@ -1938,14 +1938,14 @@ class Server {
 			}
 		}
 
-		if (count(targets) > 0) {
+		if (targets.length > 0) {
 			pk = new BatchPacket();
 
 			for (const p of packets) {
 				pk.addPacket(p);
 			}
 
-			if (Network.BATCH_THRESHOLD >= 0 && strlen(pk.payload) >= Network.BATCH_THRESHOLD) {
+			if (Network.BATCH_THRESHOLD >= 0 && pk.payload.length >= Network.BATCH_THRESHOLD) {
 				pk.setCompressionLevel(this.networkCompressionLevel);
 			} else {
 				pk.setCompressionLevel(0); //Do not compress packets under the threshold
@@ -1981,7 +1981,7 @@ class Server {
 	 * @param type
 	 */
 	enablePlugins(type) {
-		foreach(this.pluginManager.getPlugins() as plugin) {
+		for(const plugin of this.pluginManager.getPlugins()) {
 			if (!plugin.isEnabled() && plugin.getDescription().getOrder() === type) {
 				this.enablePlugin(plugin);
 			}
@@ -2029,15 +2029,15 @@ class Server {
 		}
 
 
-		sender.sendMessage(this.getLanguage().translateString(TextFormat.RED + "%commands+generic+notFound"));
+		sender.sendMessage(this.getLanguage().translateString(TextFormat.RED + "%commands.generic.notFound"));
 
 		return false;
 	}
 
 	reload() {
-		this.logger.info("Saving levels+++");
+		this.logger.info("Saving levels...");
 
-		foreach(this.levels as level) {
+		for(const level of this.levels) {
 			level.save();
 		}
 
@@ -2045,7 +2045,7 @@ class Server {
 		this.pluginManager.clearPlugins();
 		this.commandMap.clearCommands();
 
-		this.logger.info("Reloading properties+++");
+		this.logger.info("Reloading properties...");
 		this.properties.reload();
 		this.maxPlayers = this.getConfigInt("max-players", 20);
 
@@ -2058,7 +2058,7 @@ class Server {
 		this.reloadWhitelist();
 		this.operators.reload();
 
-		foreach(this.getIPBans().getEntries() as entry) {
+		for(const entry of this.getIPBans().getEntries()) {
 			this.getNetwork().blockAddress(entry.getName(), -1);
 		}
 
