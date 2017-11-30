@@ -761,7 +761,7 @@ class Server {
 				matchedPlayers = [player];
 				break;
 			}
-			elseif(stripos(player.getName(), partialName) !== false) {
+			else if(stripos(player.getName(), partialName) !== false) {
 				matchedPlayers[] = player;
 			}
 		}
@@ -2399,7 +2399,7 @@ class Server {
 	sendFullPlayerListData(p /*Player*/ ) {
 		pk = new PlayerListPacket();
 		pk.type = PlayerListPacket.TYPE_ADD;
-		foreach(this.playerList as player) {
+		for(const player of this.playerList) {
 			pk.entries[] = PlayerListEntry.createAdditionEntry(player.getUniqueId(), player.getId(), player.getDisplayName(), player.getSkin());
 		}
 
@@ -2407,17 +2407,17 @@ class Server {
 	}
 
 	_checkTickUpdates(currentTick, tickTime) {
-		foreach(this.players as p) {
+		for(const p of this.players) {
 			if (!p.loggedIn && (tickTime - p.creationTime) >= 10) {
 				p.close("", "Login timeout");
 			}
-			elseif(this.alwaysTickPlayers && p.spawned) {
+			else if(this.alwaysTickPlayers && p.spawned) {
 				p.onUpdate(currentTick);
 			}
 		}
 
 		//Do level ticks
-		foreach(this.getLevels() as level) {
+		for(const level of this.getLevels()) {
 			if (level.getTickRate() > this.baseTickRate && --level.tickRateCounter > 0) {
 				continue;
 			}
@@ -2435,20 +2435,20 @@ class Server {
 						}
 						this.getLogger().debug("Raising level \"{level.getName()}\" tick rate to {level.getTickRate()} ticks");
 					}
-					elseif(tickMs >= 50) {
+					else if(tickMs >= 50) {
 						if (level.getTickRate() === this.baseTickRate) {
-							level.setTickRate(Math.max(this.baseTickRate + 1, Math.min(this.autoTickRateLimit, Number(floor(tickMs) / 50))));
-							this.getLogger().debug(sprintf("Level \"%s\" took %gms, setting tick rate to %d ticks", level.getName(), (int) round(tickMs, 2), level.getTickRate()));
+							level.setTickRate(Math.max(this.baseTickRate + 1, Math.min(this.autoTickRateLimit, Number(Math.floor(tickMs) / 50))));
+							this.getLogger().debug(sprintf("Level \"%s\" took %gms, setting tick rate to %d ticks", level.getName(), Math.round(Number(tickMs)).toFixed(2), level.getTickRate()));
 						}
-						elseif((tickMs / level.getTickRate()) >= 50 && level.getTickRate() < this.autoTickRateLimit) {
+						else if((tickMs / level.getTickRate()) >= 50 && level.getTickRate() < this.autoTickRateLimit) {
 							level.setTickRate(level.getTickRate() + 1);
-							this.getLogger().debug(sprintf("Level \"%s\" took %gms, setting tick rate to %d ticks", level.getName(), (int) round(tickMs, 2), level.getTickRate()));
+							this.getLogger().debug(sprintf("Level \"%s\" took %gms, setting tick rate to %d ticks", level.getName(), Math.round(Number(tickMs)).toFixed(2), level.getTickRate()));
 						}
 						level.tickRateCounter = level.getTickRate();
 					}
 				}
 			} catch (e) {
-				this.logger.critical(this.getLanguage().translateString("pocketmine+level+tickError", [level.getName(), e.getMessage()]));
+				this.logger.critical(this.getLanguage().translateString("pocketmine.level.tickError", [level.getName(), e.getMessage()]));
 				this.logger.logException(e);
 			}
 		}
@@ -2457,16 +2457,17 @@ class Server {
 	doAutoSave() {
 		if (this.getAutoSave()) {
 			Timings.worldSaveTimer.startTiming();
-			foreach(this.players as index: player) {
+			for(let index in this.players) {
+				const player = this.players[index];
 				if (player.spawned) {
 					player.save(true);
 				}
-				elseif(!player.isConnected()) {
+				else if(!player.isConnected()) {
 					this.removePlayer(player);
 				}
 			}
 
-			foreach(this.getLevels() as level) {
+			for(const level of this.getLevels()) {
 				level.save(false);
 			}
 			Timings.worldSaveTimer.stopTiming();
@@ -2474,7 +2475,7 @@ class Server {
 	}
 
 	sendUsage(type = SendUsageTask.TYPE_STATUS) {
-		if (!!this.getProperty("anonymous-statistics+enabled", true)) {
+		if (!!this.getProperty("anonymous-statistics.enabled", true)) {
 			this.scheduler.scheduleAsyncTask(new SendUsageTask(this, type, this.uniquePlayers));
 		}
 		this.uniquePlayers = [];
@@ -2514,16 +2515,16 @@ class Server {
 		d = Utils.getRealMemoryUsage();
 
 		u = Utils.getMemoryUsage(true);
-		usage = sprintf("%g/%g/%g/%g MB @ %d threads", round((u[0] / 1024) / 1024, 2), round((d[0] / 1024) / 1024, 2), round((u[1] / 1024) / 1024, 2), round((u[2] / 1024) / 1024, 2), Utils.getThreadCount());
+		usage = sprintf("%g/%g/%g/%g MB @ %d threads", Math.round((u[0] / 1024) / 1024).toFixed(2), Math.round((d[0] / 1024) / 1024).toFixed(2), Math.round((u[1] / 1024) / 1024).toFixed(2), Math.round((u[2] / 1024) / 1024).toFixed(2), Utils.getThreadCount()); //TODO: sprintf
 
-		echo "\x1b]0;" + this.getName() + " " +
+		/* echo ?? */ console.log("\x1b]0;" + this.getName() + " " +
 			this.getPocketMineVersion() +
 			" | Online " + count(this.players) + "/" + this.getMaxPlayers() +
 			" | Memory " + usage +
 			" | U " + round(this.network.getUpload() / 1024, 2) +
 			" D " + round(this.network.getDownload() / 1024, 2) +
 			" kB/s | TPS " + this.getTicksPerSecondAverage() +
-			" | Load " + this.getTickUsageAverage() + "%\x07";
+			" | Load " + this.getTickUsageAverage() + "%\x07");
 
 		Timings.titleTickTimer.stopTiming();
 	}
@@ -2541,7 +2542,7 @@ class Server {
 				this.queryHandler.handle(address, port, payload);
 			}
 		} catch (e) {
-			if (\pocketmine\ DEBUG > 1) {
+			if (pocketmine.DEBUG > 1) {
 				this.logger.logException(e);
 			}
 
@@ -2581,7 +2582,7 @@ class Server {
 
 		this.checkTickUpdates(this.tickCounter, tickTime);
 
-		foreach(this.players as player) {
+		for(const player of this.players) {
 			player.checkNetwork();
 		}
 
@@ -2618,12 +2619,12 @@ class Server {
 		}
 
 		if ((this.tickCounter % 100) === 0) {
-			foreach(this.levels as level) {
+			for(const level of this.levels) {
 				level.clearCache();
 			}
 
 			if (this.getTicksPerSecondAverage() < 12) {
-				this.logger.warning(this.getLanguage().translateString("pocketmine+server+tickOverload"));
+				this.logger.warning(this.getLanguage().translateString("pocketmine.server.tickOverload"));
 			}
 		}
 
@@ -2675,3 +2676,5 @@ Server._instance = null;
 /** @var \Threaded */
 /* Static */
 Server._sleeper = null;
+
+module.exports = Server;
