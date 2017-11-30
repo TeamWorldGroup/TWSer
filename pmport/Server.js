@@ -1,5 +1,8 @@
 'use strict';
 
+const  fs = require('fs');
+const path = require('path');
+
 /**
  * PocketMine-MP is the Minecraft: PE multiplayer server software
  * Homepage: http://www.pocketmine.net/
@@ -474,14 +477,12 @@ class Server {
 				return "%gameMode.adventure";
 			case Player.SPECTATOR:
 				return "%gameMode.spectator";
+			default:
+				return "UNKNOWN";
 		}
-
-		return "UNKNOWN";
 	}
 
-	 static
-
-	getGamemodeName(int mode) {
+	 static getGamemodeName(mode) {
 		switch (mode) {
 			case Player.SURVIVAL:
 				return "Survival";
@@ -492,7 +493,7 @@ class Server {
 			case Player.SPECTATOR:
 				return "Spectator";
 			default:
-				throw new\ InvalidArgumentException("Invalid gamemode mode");
+				throw new Error("Invalid gamemode mode");
 		}
 	}
 
@@ -503,32 +504,31 @@ class Server {
 	 *
 	 * @return int
 	 */
-	 static
-
-	getGamemodeFromString(string str) {
-		switch (strtolower(trim(str))) {
-			case (string) Player.SURVIVAL:
+	 static getGamemodeFromString(str) {
+		switch (str.trim().toLowerCase()) {
+			case Player.SURVIVAL.toString():
 			case "survival":
 			case "s":
 				return Player.SURVIVAL;
 
-			case (string) Player.CREATIVE:
+			case Player.CREATIVE.toString():
 			case "creative":
 			case "c":
 				return Player.CREATIVE;
 
-			case (string) Player.ADVENTURE:
+			case Player.ADVENTURE.toString():
 			case "adventure":
 			case "a":
 				return Player.ADVENTURE;
 
-			case (string) Player.SPECTATOR:
+			case Player.SPECTATOR.toString():
 			case "spectator":
 			case "view":
 			case "v":
 				return Player.SPECTATOR;
+			default:
+				return -1;
 		}
-		return -1;
 	}
 
 	/**
@@ -537,9 +537,7 @@ class Server {
 	 * @param string str
 	 * @return int
 	 */
-	 static
-
-	getDifficultyFromString(string str) {
+	static getDifficultyFromString(str) {
 		return Level.getDifficultyFromString(str);
 	}
 
@@ -604,8 +602,7 @@ class Server {
 	
 
 	getMotd() {
-		return this.getConfigString("motd", \pocketmine\ NAME.
-			" Server");
+		return this.getConfigString("motd", `${pocketmine.NAME} Server`);
 	}
 
 	/**
@@ -685,7 +682,7 @@ class Server {
 	 */
 	
 
-	getResourceManager(): ResourcePackManager {
+	getResourceManager() {
 		return this.resourceManager;
 	}
 
@@ -714,7 +711,7 @@ class Server {
 	 */
 	
 
-	getTicksPerSecond(): float {
+	getTicksPerSecond() {
 		return round(this.currentTPS, 2);
 	}
 
@@ -725,8 +722,13 @@ class Server {
 	 */
 	
 
-	getTicksPerSecondAverage(): float {
-		return round(array_sum(this.tickAverage) / count(this.tickAverage), 2);
+	getTicksPerSecondAverage() {
+		function array_sum(arr){
+			let sum = 0;
+			for(let i = 0; i < arr.length; i++) sum += arr[i];
+			return sum;
+		}
+		return (array_sum(this.tickAverage) / this.tickAverage.length).toFixed(2);
 	}
 
 	/**
@@ -736,8 +738,8 @@ class Server {
 	 */
 	
 
-	getTickUsage(): float {
-		return round(this.currentUse * 100, 2);
+	getTickUsage() {
+		return (this.currentUse * 100).toFixed(2);
 	}
 
 	/**
@@ -747,8 +749,13 @@ class Server {
 	 */
 	
 
-	getTickUsageAverage(): float {
-		return round((array_sum(this.useAverage) / count(this.useAverage)) * 100, 2);
+	getTickUsageAverage() {
+		function array_sum(arr){
+			let sum = 0;
+			for(let i = 0; i < arr.length; i++) sum += arr[i];
+			return sum;
+		}
+		return ((array_sum(this.useAverage) / this.useAverage.length) * 100).toFixed(2);
 	}
 
 	/**
@@ -765,7 +772,7 @@ class Server {
 	 */
 	
 
-	getLoggedInPlayers(): array {
+	getLoggedInPlayers() {
 		return this.loggedInPlayers;
 	}
 
@@ -774,20 +781,20 @@ class Server {
 	 */
 	
 
-	getOnlinePlayers(): array {
+	getOnlinePlayers() {
 		return this.playerList;
 	}
 
 	
 
-	addRecipe(Recipe recipe) {
+	addRecipe(recipe) {//new Recipe
 		this.craftingManager.registerRecipe(recipe);
 	}
 
 	
 
 	shouldSavePlayerData() {
-		return (bool) this.getProperty("player.save-player-data", true);
+		return !!this.getProperty("player.save-player-data", true);
 	}
 
 	/**
@@ -797,8 +804,8 @@ class Server {
 	 */
 	
 
-	getOfflinePlayer(string name) {
-		name = strtolower(name);
+	getOfflinePlayer(name) {
+		name = name.toLowerCase();
 		result = this.getPlayerExact(name);
 
 		if (result === null) {
@@ -815,23 +822,22 @@ class Server {
 	 */
 	
 
-	getOfflinePlayerData(string name): CompoundTag {
-		name = strtolower(name);
-		path = this.getDataPath().
-		"players/";
+	getOfflinePlayerData(name) {
+		name = name.toLowerCase();
+		path = this.getDataPath()["players/"];
 		if (this.shouldSavePlayerData()) {
-			if (file_exists(path.
-					"name.dat")) {
+			if (fs.existsSync(path.normalize("name.dat"))) {
 				try {
-					nbt = new NBT(NBT.BIG_ENDIAN);
-					nbt.readCompressed(file_get_contents(path.
-						"name.dat"));
+					// nbt = new NBT(NBT.BIG_ENDIAN);
+					// nbt.readCompressed(file_get_contents(path.
+					// 	"name.dat"));
 
-					return nbt.getData();
-				} catch (\Throwable e) { //zlib decode error / corrupt data
-					rename(path.
-						"name.dat", path.
-						"name.dat.bak");
+					// return nbt.getData();
+					return fs.readFileSync('name.dat');
+				} catch (e) { //zlib decode error / corrupt data
+					fs.renameSync(path.normalize(
+						"name.dat"), path.
+						normalize("name.dat.bak"));
 					this.logger.notice(this.getLanguage().translateString("pocketmine.data.playerCorrupted", [name]));
 				}
 			} else {
@@ -839,7 +845,7 @@ class Server {
 			}
 		}
 		spawn = this.getDefaultLevel().getSafeSpawn();
-		currentTimeMillis = (int)(microtime(true) * 1000);
+		currentTimeMillis = Number((microtime(true)) * 1000);
 
 		nbt = new CompoundTag("", [
 			new LongTag("firstPlayed", currentTimeMillis),
@@ -887,7 +893,7 @@ class Server {
 	 */
 	
 
-	saveOfflinePlayerData(string name, CompoundTag nbtTag, bool async = false) {
+	saveOfflinePlayerData(name, nbtTag, async = false) {
 		ev = new PlayerDataSaveEvent(nbtTag, name);
 		ev.setCancelled(!this.shouldSavePlayerData());
 
@@ -900,14 +906,12 @@ class Server {
 
 				if (async) {
 					this.getScheduler().scheduleAsyncTask(new FileWriteTask(this.getDataPath().
-						"players/".strtolower(name).
-						".dat", nbt.writeCompressed()));
+						`players/${name.toLowerCase()}.dat`, nbt.writeCompressed()));
 				} else {
 					file_put_contents(this.getDataPath().
-						"players/".strtolower(name).
-						".dat", nbt.writeCompressed());
+						`players/${name.toLowerCase()}.dat`, nbt.writeCompressed());
 				}
-			} catch (\Throwable e) {
+			} catch (e) {
 				this.logger.critical(this.getLanguage().translateString("pocketmine.data.saveError", [name, e.getMessage()]));
 				this.logger.logException(e);
 			}
@@ -921,13 +925,13 @@ class Server {
 	 */
 	
 
-	getPlayer(string name) {
+	getPlayer(name) {
 		found = null;
-		name = strtolower(name);
-		delta = PHP_INT_MAX;
-		foreach(this.getOnlinePlayers() as player) {
-			if (stripos(player.getName(), name) === 0) {
-				curDelta = strlen(player.getName()) - strlen(name);
+		name = name.toLowerCase();
+		delta = PHP_INT_MAX; //FIXME:
+		for(const player of this.getOnlinePlayers()) {
+			if (player.getName().indexOf(name) < 0) { //FIXME: ?
+				curDelta = player.getName().length - name.lenght;
 				if (curDelta < delta) {
 					found = player;
 					delta = curDelta;
@@ -948,9 +952,9 @@ class Server {
 	 */
 	
 
-	getPlayerExact(string name) {
-		name = strtolower(name);
-		foreach(this.getOnlinePlayers() as player) {
+	getPlayerExact(name) {
+		name = name.toLowerCase();
+		for(const player of this.getOnlinePlayers()) {
 			if (player.getLowerCaseName() === name) {
 				return player;
 			}
@@ -964,9 +968,9 @@ class Server {
 	 *
 	 * @return Player[]
 	 */
-	
+//TODO: Я остановился здесь	
 
-	matchPlayer(string partialName): array {
+	matchPlayer(string partialName) {
 		partialName = strtolower(partialName);
 		matchedPlayers = [];
 		foreach(this.getOnlinePlayers() as player) {
@@ -1009,7 +1013,7 @@ class Server {
 	 */
 	
 
-	getLevels(): array {
+	getLevels() {
 		return this.levels;
 	}
 
@@ -1556,7 +1560,7 @@ class Server {
 	 */
 	
 
-	getCommandAliases(): array {
+	getCommandAliases() {
 		section = this.getProperty("aliases");
 		result = [];
 		if (is_array(section)) {
