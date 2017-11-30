@@ -22,7 +22,8 @@
 //extends pocketmine;
 
 //import pocketmine\Server TODO:
-//import pocketmine\event\TranslationContainer; TODO:
+//import pocketmine\event\TranslationContainer;
+const TranslationContainer = require('./event/TranslationContainer');
 //import pocketmine\utils\TextFormat;
 const TextFormat = require('./utils/TextFormat');
 
