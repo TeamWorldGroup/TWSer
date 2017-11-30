@@ -1,7 +1,3 @@
-import {
-	Buffer
-} from 'buffer';
-
 //PHP API for JS
 const array_sum = x => {
 	let sum = 0;
@@ -762,7 +758,7 @@ class Server {
 				break;
 			}
 			else if(stripos(player.getName(), partialName) !== false) {
-				matchedPlayers[] = player;
+				matchedPlayers/* [] */ = player;
 			}
 		}
 
@@ -986,7 +982,7 @@ class Server {
 
 		for (X = -3; X <= 3; ++X) {
 			for (Z = -3; Z <= 3; ++Z) {
-				distance = X ** 2 + Z ** 2;
+				distance = Math.pow(X, 2) + Math.pow(Z, 2); //TODO: Eslint doesn't know ES7
 				chunkX = X + centerX;
 				chunkZ = Z + centerZ;
 				index = Level.chunkHash(chunkX, chunkZ);
@@ -1279,7 +1275,7 @@ class Server {
 				if (value instanceof Array) {
 					commands = value;
 				} else {
-					commands[] = String(value);
+					commands/* [] */ = String(value);
 				}
 
 				result[key] = commands;
@@ -1934,7 +1930,7 @@ class Server {
 		targets = [];
 		for (const p of players) {
 			if (p.isConnected()) {
-				targets[] = this.identifiers[spl_object_hash(p)];
+				targets/* [] */ = this.identifiers[spl_object_hash(p)];
 			}
 		}
 
@@ -2378,7 +2374,7 @@ class Server {
 		pk = new PlayerListPacket();
 		pk.type = PlayerListPacket.TYPE_ADD;
 
-		pk.entries[] = PlayerListEntry.createAdditionEntry(uuid, entityId, name, skin);
+		pk.entries/* [] */ = PlayerListEntry.createAdditionEntry(uuid, entityId, name, skin);
 		this.broadcastPacket(players || this.playerList, pk);
 	}
 
@@ -2389,7 +2385,7 @@ class Server {
 	removePlayerListData(uuid /*UUID*/ , players = null) {
 		pk = new PlayerListPacket();
 		pk.type = PlayerListPacket.TYPE_REMOVE;
-		pk.entries[] = PlayerListEntry.createRemovalEntry(uuid);
+		pk.entries/* [] */ = PlayerListEntry.createRemovalEntry(uuid);
 		this.broadcastPacket(players || this.playerList, pk);
 	}
 
@@ -2400,7 +2396,7 @@ class Server {
 		pk = new PlayerListPacket();
 		pk.type = PlayerListPacket.TYPE_ADD;
 		for(const player of this.playerList) {
-			pk.entries[] = PlayerListEntry.createAdditionEntry(player.getUniqueId(), player.getId(), player.getDisplayName(), player.getSkin());
+			pk.entries/* [] */ = PlayerListEntry.createAdditionEntry(player.getUniqueId(), player.getId(), player.getDisplayName(), player.getSkin());
 		}
 
 		p.dataPacket(pk);
@@ -2643,9 +2639,9 @@ class Server {
 		TimingsHandler.tick(this.currentTPS <= this.profilingTickRate);
 
 		array_shift(this.tickAverage);
-		this.tickAverage[] = this.currentTPS;
+		this.tickAverage/* [] */ = this.currentTPS;
 		array_shift(this.useAverage);
-		this.useAverage[] = this.currentUse;
+		this.useAverage/* [] */ = this.currentUse;
 
 		if ((this.nextTick - tickTime) < -1) {
 			this.nextTick = tickTime;
