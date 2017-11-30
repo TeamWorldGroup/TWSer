@@ -21,6 +21,7 @@ class Translator {
 			}
 			return sum;
 		};
+		const count = x => x.length;
 		const round = (x, y) => x.toFixed(y);`;
 	}
 
@@ -68,7 +69,20 @@ F.translate((x) => x.replace(/\./g, '+')) //Гребанная пхпшная к
 	//TODO: Увы, кастомные типы я не буду сюда пихать
 	//Убираем типизацию
 	.translate((x) => x.replace(/min\(/g,'Math.min(')
-		.replace(/max\(/g,'Math.max('));
+		.replace(/max\(/g,'Math.max('))
 	//Mathermatika
+	.translate((x) => x.replace(/class /g, '//TODO: Оберни константы в конструктор!\nclass '))
+	//Лучше ещё раз напомнить
+	.translate((x) => x.replace(/foreach\((.+) as (.+)\)/g, 'for(const $2 of $1)'))
+	//Переработка циклов
+	.translate((x) => x.replace(/throw new .+\(/g,'throw new Error('))
+	//Нам и одного типа ошибок хватит
+	.translate((x) => x.replace(/\((int|float)\) (.+)\s+([:|;?<>=!,.^%+-/*&~])/g, 'Number($2) $3'))
+	//По-любому какой-то символ не доглядел
+	//Заменяет (int) her на Number(her)
+	.translate((x) => x.replace(/\((string)\) (.+)\s+([:|;?<>=!,.^%+-/*&~])/g, 'String($2) $3'))
+	//(string) her -> String(her)
+	.translate((x) => x.replace(/\(bool\) /g, '!!'));
+	//(bool) her -> !!her
 
 F.save('./Translate/server.js');
