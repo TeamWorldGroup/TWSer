@@ -48,7 +48,7 @@ const trim = x => x.trim();`;
 	}
 }
 
-const F = new Translator('./Translate/server.php');
+const F = new Translator('./Translate/Normal.php');
 
 /* eslint-disable dot-location */
 
@@ -104,7 +104,8 @@ F.translate((x) => x.replace(/\./g, '+')) //Гребанная пхпшная к
 	//Логические операторы прямиком из Basic'а
 	.translate(x=>x.replace(/catch\((.+) (\w+)\)/g, 'catch($2)'))
 	//Убирает всякие \Throwable и прочее
-	.translate(/Binary\./g, 'Buffer.')
+	.translate(x=>x.replace(/Binary\./g, 'Buffer.'))
 	//Думаю, в тексте никто не будет писать с большой буквы перед точкой
+	.translate(x=>x.replace(/static /g, '/* static */ '))
 
-F.save('./Translate/server.js');
+F.save('./Translate/Normal.js');
