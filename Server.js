@@ -2104,12 +2104,12 @@ class Server {
 				this.pluginManager.disablePlugins();
 			}
 
-			foreach(this.players as player) {
-				player.close(player.getLeaveMessage(), this.getProperty("settings+shutdown-message", "Server closed"));
+			for(const player of this.players) {
+				player.close(player.getLeaveMessage(), this.getProperty("settings.shutdown-message", "Server closed"));
 			}
 
 			this.getLogger().debug("Unloading all levels");
-			foreach(this.getLevels() as level) {
+			for(const level of this.getLevels()) {
 				this.unloadLevel(level, true);
 			}
 
@@ -2133,7 +2133,7 @@ class Server {
 
 			if (this.network instanceof Network) {
 				this.getLogger().debug("Stopping network interfaces");
-				foreach(this.network.getInterfaces() as interface) {
+				for(const interface of this.network.getInterfaces()) {
 					interface.shutdown();
 					this.network.unregisterInterface(interface);
 				}
@@ -2143,7 +2143,8 @@ class Server {
 		} catch (e) {
 			this.logger.logException(e);
 			this.logger.emergency("Crashed while crashing, killing process");
-			@kill(getmypid());
+			// @kill(getmypid()); //@
+			process.exit(1);
 		}
 
 	}
@@ -2163,18 +2164,18 @@ class Server {
 			this.queryHandler = new QueryHandler();
 		}
 
-		foreach(this.getIPBans().getEntries() as entry) {
+		for(const entry of this.getIPBans().getEntries()) {
 			this.network.blockAddress(entry.getName(), -1);
 		}
 
-		if (this.getProperty("settings+send-usage", true)) {
+		if (this.getProperty("settings.send-usage", true)) {
 			this.sendUsageTicker = 6000;
 			this.sendUsage(SendUsageTask.TYPE_OPEN);
 		}
 
 
-		if (this.getProperty("network+upnp-forwarding", false)) {
-			this.logger.info("[UPnP] Trying to port forward+++");
+		if (this.getProperty("network.upnp-forwarding", false)) {
+			this.logger.info("[UPnP] Trying to port forward...");
 			UPnP.PortForward(this.getPort());
 		}
 
@@ -2187,9 +2188,9 @@ class Server {
 			this.dispatchSignals = true;
 		}
 
-		this.logger.info(this.getLanguage().translateString("pocketmine+server+defaultGameMode", [ /*static*/ this.getGamemodeString(this.getGamemode())]));
+		this.logger.info(this.getLanguage().translateString("pocketmine.server+defaultGameMode", [ /*static*/ this.getGamemodeString(this.getGamemode())]));
 
-		this.logger.info(this.getLanguage().translateString("pocketmine+server+startFinished", [round(microtime(true) - \pocketmine\ START_TIME, 3)]));
+		this.logger.info(this.getLanguage().translateString("pocketmine.server.startFinished", [Math.round(microtime(true) - pocketmine.START_TIME).toFixed(3)]));
 
 		this.tickProcessor();
 		this.forceShutdown();
@@ -2205,40 +2206,40 @@ class Server {
 	 * @param \Throwable e
 	 * @param array|null trace
 	 */
-	exceptionHandler(\Throwable e, trace = null) {
+	exceptionHandler(e /* Throwable */, trace = null) {
 		if (e === null) {
 			return;
 		}
 
-		global lastError;
+		// global lastError;
 
 		if (trace === null) {
 			trace = e.getTrace();
 		}
 
-		errstr = e.getMessage();
-		errfile = e.getFile();
-		errno = e.getCode();
-		errline = e.getLine();
+		let errstr = e.getMessage();
+		let errfile = e.getFile();
+		let errno = e.getCode();
+		let errline = e.getLine();
 
-		type = (errno === E_ERROR || errno === E_USER_ERROR) ? \LogLevel.ERROR : ((errno === E_USER_WARNING || errno === E_WARNING) ? \LogLevel.WARNING : \LogLevel.NOTICE);
+		let type = (errno === E_ERROR || errno === E_USER_ERROR) ? LogLevel.ERROR : ((errno === E_USER_WARNING || errno === E_WARNING) ? LogLevel.WARNING : LogLevel.NOTICE);
 
-		errstr = preg_replace('/\s+/', ' ', trim(errstr));
+		errstr = errstr.trim().replace(/\s+/g, ' ');
 
 		errfile = cleanPath(errfile);
 
 		this.logger.logException(e, trace);
 
-		lastError = [
+		lastError = {
 			"type": type,
 			"message": errstr,
 			"fullFile": e.getFile(),
 			"file": errfile,
 			"line": errline,
 			"trace": getTrace(0, trace)
-		];
+		};
 
-		global lastExceptionError, lastError;
+		// global lastExceptionError, lastError;
 		lastExceptionError = lastError;
 		this.crashDump();
 	}
@@ -2254,16 +2255,16 @@ class Server {
 
 		ini_set("error_reporting", '0');
 		ini_set("memory_limit", '-1'); //Fix error dump not dumped on memory problems
-		this.logger.emergency(this.getLanguage().translateString("pocketmine+crash+create"));
+		this.logger.emergency(this.getLanguage().translateString("pocketmine.crash.create"));
 		try {
 			dump = new CrashDump(this);
 
-			this.logger.emergency(this.getLanguage().translateString("pocketmine+crash+submit", [dump.getPath()]));
+			this.logger.emergency(this.getLanguage().translateString("pocketmine.crash.submit", [dump.getPath()]));
 
-			if (this.getProperty("auto-report+enabled", true) !== false) {
+			if (this.getProperty("auto-report.enabled", true) !== false) {
 				report = true;
 				plugin = dump.getData()["plugin"];
-				if (is_string(plugin)) {
+				if (typeof plugin === "string") {
 					p = this.pluginManager.getPlugin(plugin);
 					if (p instanceof Plugin && !(p.getPluginLoader() instanceof PharPluginLoader)) {
 						report = false;
@@ -2274,30 +2275,31 @@ class Server {
 					report = false;
 				}
 
-				if (strrpos(\pocketmine\ GIT_COMMIT, "-dirty") !== false || \pocketmine\ GIT_COMMIT === str_repeat("00", 20)) {
+				if (strrpos(pocketmine.GIT_COMMIT, "-dirty") !== false || pocketmine.GIT_COMMIT === "00".repeat(20)) {
 					this.logger.debug("Not sending crashdump due to locally modified");
 					report = false; //Don't send crashdumps for locally modified builds
 				}
 
 				if (report) {
-					url = (this.getProperty("auto-report+use-https", true) ? "https" : "http") + "://" + this.getProperty("auto-report+host", "crash+pmmp+io") + "/submit/api";
-					reply = Utils.postURL(url, [
+					return; //FIXME: Главное-не спалиться
+					url = (this.getProperty("auto-report.use-https", true) ? "https" : "http") + "://" + this.getProperty("auto-report.host", "crash.pmmp.io") + "/submit/api";
+					reply = Utils.postURL(url, {
 						"report": "yes",
 						"name": this.getName() + " " + this.getPocketMineVersion(),
-						"email": "crash@pocketmine+net",
+						"email": "crash@pocketmine.net",
 						"reportPaste": base64_encode(dump.getEncodedData())
-					]);
+					});
 
-					if (reply !== false && (data = json_decode(reply)) !== null && isset(data.crashId) && isset(data.crashUrl)) {
+					if (reply !== false && (data = JSON.parse(reply)) !== null && data.crashId && data.crashUrl) {
 						reportId = data.crashId;
 						reportUrl = data.crashUrl;
-						this.logger.emergency(this.getLanguage().translateString("pocketmine+crash+archive", [reportUrl, reportId]));
+						this.logger.emergency(this.getLanguage().translateString("pocketmine.crash.archive", [reportUrl, reportId]));
 					}
 				}
 			}
 		} catch (e) {
 			this.logger.logException(e);
-			this.logger.critical(this.getLanguage().translateString("pocketmine+crash+error", [e.getMessage()]));
+			this.logger.critical(this.getLanguage().translateString("pocketmine.crash.error", [e.getMessage()]));
 		}
 
 		//this.checkMemory();
@@ -2305,8 +2307,9 @@ class Server {
 
 		this.forceShutdown();
 		this.isRunning = false;
-		@kill(getmypid());
-		exit(1);
+		// @kill(getmypid()); //@
+		process.exit(1);
+		// exit(1);
 	}
 
 	__debugInfo() {
@@ -2320,7 +2323,7 @@ class Server {
 			next = this.nextTick - 0 + 0001;
 			if (next > microtime(true)) {
 				try {
-					@time_sleep_until(next);
+					// @time_sleep_until(next); //@
 				} catch (e) {
 					//Sometimes next is less than the current time+ High load?
 				}

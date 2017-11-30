@@ -2,5 +2,7 @@
 	"NAME":"PocketMine port by TeamWorld",
 	"CODENAME":"",
 	"VERSION":"",
-	"API_VERSION":""
+	"API_VERSION":"",
+	"START_TIME":"",
+	"GIT_COMMIT":""
 }
