@@ -20,11 +20,12 @@
 'use strict';
 
 /* eslint-disable complexity */
-// Они рили сложные, но не моя воля
+// Они рили сложные, но не моя воля... Мы портируем, а не переписываем
 
 //extends pocketmine\utils;
 
 // import pocketmint\utils\Terminal
+const Terminal = require('./Terminal');
 
 /**
  * Class used to handle Minecraft chat format, && convert it to other formats like ANSI || HTML
@@ -475,8 +476,7 @@ class TextFormat {
 }
 
 TextFormat.ESCAPE = '\xc2\xa7'; //§
-TextFormat.
-	TextFormat.BLACK = `${TextFormat.ESCAPE}0`;
+TextFormat.BLACK = `${TextFormat.ESCAPE}0`;
 TextFormat.DARK_BLUE = `${TextFormat.ESCAPE}1`;
 TextFormat.DARK_GREEN = `${TextFormat.ESCAPE}2`;
 TextFormat.DARK_AQUA = `${TextFormat.ESCAPE}3`;
@@ -492,8 +492,7 @@ TextFormat.RED = `${TextFormat.ESCAPE}c`;
 TextFormat.LIGHT_PURPLE = `${TextFormat.ESCAPE}d`;
 TextFormat.YELLOW = `${TextFormat.ESCAPE}e`;
 TextFormat.WHITE = `${TextFormat.ESCAPE}f`;
-TextFormat.
-	TextFormat.OBFUSCATED = `${TextFormat.ESCAPE}k`;
+TextFormat.OBFUSCATED = `${TextFormat.ESCAPE}k`;
 TextFormat.BOLD = `${TextFormat.ESCAPE}l`;
 TextFormat.STRIKETHROUGH = `${TextFormat.ESCAPE}m`;
 TextFormat.UNDERLINE = `${TextFormat.ESCAPE}n`;
