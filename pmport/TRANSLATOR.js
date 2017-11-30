@@ -33,7 +33,8 @@ const stripos = ( f_haystack, f_needle, f_offset=0){
 		return index;
 	}
 	return false;
-}`;
+}
+const trim = x => x.trim();`;
 	}
 
 	translate(fnc) {
@@ -52,6 +53,7 @@ const F = new Translator('./Translate/server.php');
 /* eslint-disable dot-location */
 
 F.translate((x) => x.replace(/\./g, '+')) //Гребанная пхпшная конкатенация строк
+	//FIXME: Может испортить точки в строках
 	.translate((x) => x.replace(/->/g, '.')) //Параметры
 	.translate((x) => x.replace(/::/g, '.')) //Статические параметры
 	.translate((x) => x.replace(/\$/g, ''))
@@ -98,7 +100,11 @@ F.translate((x) => x.replace(/\./g, '+')) //Гребанная пхпшная к
 	//(bool) her -> !!her
 	.translate((x) => x.replace(/ or /g, ' || ')
 		.replace(/ and /g, ' && ')
-		.replace(/ \?\? /g, ' || ')); // her || null
-//Логические операторы прямиком из Basic'а
+		.replace(/ \?\? /g, ' || ')) // her || null
+	//Логические операторы прямиком из Basic'а
+	.translate(x=>x.replace(/catch\((.+) (\w+)\)/g, 'catch($2)'))
+	//Убирает всякие \Throwable и прочее
+	.translate(/Binary\./g, 'Buffer.')
+	//Думаю, в тексте никто не будет писать с большой буквы перед точкой
 
 F.save('./Translate/server.js');
