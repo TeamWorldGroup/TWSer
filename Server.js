@@ -1,9 +1,13 @@
+'use strict';
+
 //PHP API for JS
-const array_sum = x => {
+const array_sum = (x) => {
 	let sum = 0;
+
 	for (let i = 0; i < x.length; i++) {
 		sum += x[i];
 	}
+
 	return sum;
 };
 
@@ -11,17 +15,19 @@ const stripos = (f_haystack, f_needle, f_offset = 0) => {
 	let haystack = f_haystack.toLowerCase();
 	let needle = f_needle.toLowerCase();
 	let index = 0;
+
 	if ((index = haystack.indexOf(needle, f_offset)) > -1) {
 		return index;
 	}
+
 	return false;
-}
+};
 
 function is_bool(x) {
 	try {
 		return Boolean(JSON.parse(x)) || true;
 	} catch (e) {
-		return false
+		return false;
 	}
 }
 // TODO: spl_object_hash
@@ -43,8 +49,6 @@ function is_bool(x) {
  *
  *
  */
-
-"use strict";
 
 /**
  * PocketMine-MP is the Minecraft: PE multiplayer server software
@@ -146,6 +150,7 @@ const fs = require('fs');
  */
 //TODO: Оберни константы в конструктор!
 class Server {
+
 	/**
 	 * @return string
 	 */
@@ -157,7 +162,7 @@ class Server {
 	 * @return bool
 	 */
 	isRunning() {
-		return !!this.isRunning;
+		return Boolean(this.isRunning);
 	}
 
 	/**
@@ -238,14 +243,14 @@ class Server {
 	 * @return int
 	 */
 	getPort() {
-		return this.getConfigInt("server-port", 19132);
+		return this.getConfigInt('server-port', 19132);
 	}
 
 	/**
 	 * @return int
 	 */
 	getViewDistance() {
-		return Math.max(2, this.getConfigInt("view-distance", 8));
+		return Math.max(2, this.getConfigInt('view-distance', 8));
 	}
 
 	/**
@@ -263,7 +268,7 @@ class Server {
 	 * @return string
 	 */
 	getIp() {
-		return this.getConfigString("server-ip", "0+0+0+0");
+		return this.getConfigString('server-ip', '0+0+0+0');
 	}
 
 	/**
@@ -294,28 +299,28 @@ class Server {
 	 * @return string
 	 */
 	getLevelType() {
-		return this.getConfigString("level-type", "DEFAULT");
+		return this.getConfigString('level-type', 'DEFAULT');
 	}
 
 	/**
 	 * @return bool
 	 */
 	getGenerateStructures() {
-		return this.getConfigBool("generate-structures", true);
+		return this.getConfigBool('generate-structures', true);
 	}
 
 	/**
 	 * @return int
 	 */
 	getGamemode() {
-		return this.getConfigInt("gamemode", 0) & 0b11;
+		return this.getConfigInt('gamemode', 0) & 0b11;
 	}
 
 	/**
 	 * @return bool
 	 */
 	getForceGamemode() {
-		return this.getConfigBool("force-gamemode", false);
+		return this.getConfigBool('force-gamemode', false);
 	}
 
 	/**
@@ -329,15 +334,15 @@ class Server {
 	getGamemodeString(mode) {
 		switch (mode) {
 			case Player.SURVIVAL:
-				return "%gameMode.survival";
+				return '%gameMode.survival';
 			case Player.CREATIVE:
-				return "%gameMode.creative";
+				return '%gameMode.creative';
 			case Player.ADVENTURE:
-				return "%gameMode.adventure";
+				return '%gameMode.adventure';
 			case Player.SPECTATOR:
-				return "%gameMode.spectator";
+				return '%gameMode.spectator';
 			default:
-				return "UNKNOWN";
+				return 'UNKNOWN';
 		}
 	}
 
@@ -345,15 +350,15 @@ class Server {
 	getGamemodeName(mode) {
 		switch (mode) {
 			case Player.SURVIVAL:
-				return "Survival";
+				return 'Survival';
 			case Player.CREATIVE:
-				return "Creative";
+				return 'Creative';
 			case Player.ADVENTURE:
-				return "Adventure";
+				return 'Adventure';
 			case Player.SPECTATOR:
-				return "Spectator";
+				return 'Spectator';
 			default:
-				throw new Error("Invalid gamemode mode");
+				throw new Error('Invalid gamemode mode');
 		}
 	}
 
@@ -368,24 +373,24 @@ class Server {
 	getGamemodeFromString(str) {
 		switch (strtolower(trim(str))) {
 			case String(Player.SURVIVAL):
-			case "survival":
-			case "s":
+			case 'survival':
+			case 's':
 				return Player.SURVIVAL;
 
 			case String(Player.CREATIVE):
-			case "creative":
-			case "c":
+			case 'creative':
+			case 'c':
 				return Player.CREATIVE;
 
 			case String(Player.ADVENTURE):
-			case "adventure":
-			case "a":
+			case 'adventure':
+			case 'a':
 				return Player.ADVENTURE;
 
 			case String(Player.SPECTATOR):
-			case "spectator":
-			case "view":
-			case "v":
+			case 'spectator':
+			case 'view':
+			case 'v':
 				return Player.SPECTATOR;
 			default:
 				return -1;
@@ -408,49 +413,49 @@ class Server {
 	 * @return int
 	 */
 	getDifficulty() {
-		return this.getConfigInt("difficulty", 1);
+		return this.getConfigInt('difficulty', 1);
 	}
 
 	/**
 	 * @return bool
 	 */
 	hasWhitelist() {
-		return this.getConfigBool("white-list", false);
+		return this.getConfigBool('white-list', false);
 	}
 
 	/**
 	 * @return int
 	 */
 	getSpawnRadius() {
-		return this.getConfigInt("spawn-protection", 16);
+		return this.getConfigInt('spawn-protection', 16);
 	}
 
 	/**
 	 * @return bool
 	 */
 	getAllowFlight() {
-		return this.getConfigBool("allow-flight", false);
+		return this.getConfigBool('allow-flight', false);
 	}
 
 	/**
 	 * @return bool
 	 */
 	isHardcore() {
-		return this.getConfigBool("hardcore", false);
+		return this.getConfigBool('hardcore', false);
 	}
 
 	/**
 	 * @return int
 	 */
 	getDefaultGamemode() {
-		return this.getConfigInt("gamemode", 0) & 0b11;
+		return this.getConfigInt('gamemode', 0) & 0b11;
 	}
 
 	/**
 	 * @return string
 	 */
 	getMotd() {
-		return this.getConfigString("motd", pocketmine.NAME + " Server");
+		return this.getConfigString('motd', `${pocketmine.NAME } Server`);
 	}
 
 	/**
@@ -592,7 +597,7 @@ class Server {
 	}
 
 	shouldSavePlayerData() {
-		return !!this.getProperty("player.save-player-data", true);
+		return Boolean(this.getProperty('player.save-player-data', true));
 	}
 
 	/**
@@ -618,57 +623,59 @@ class Server {
 	 */
 	getOfflinePlayerData(name) {
 		name = strtolower(name);
-		let path = this.getDataPath() + "players/";
+		let path = `${this.getDataPath()}players/`;
+
 		if (this.shouldSavePlayerData()) {
-			if (file_exists(path + "name+dat")) {
+			if (file_exists(`${path}name+dat`)) {
 				let nbt;
+
 				try {
 					nbt = new NBT(NBT.BIG_ENDIAN);
-					nbt.readCompressed(file_get_contents(path + "name.dat"));
+					nbt.readCompressed(file_get_contents(`${path }name.dat`));
 
 					return nbt.getData();
 				} catch (e) { //zlib decode error / corrupt data
-					fs.renameSync(path + "name.dat", path + "name.dat.bak");
-					this.logger.notice(this.getLanguage().translateString("pocketmine.data.playerCorrupted", [name]));
+					fs.renameSync(`${path }name.dat`, `${path }name.dat.bak`);
+					this.logger.notice(this.getLanguage().translateString('pocketmine.data.playerCorrupted', [name]));
 				}
 			} else {
-				this.logger.notice(this.getLanguage().translateString("pocketmine.data.playerNotFound", [name]));
+				this.logger.notice(this.getLanguage().translateString('pocketmine.data.playerNotFound', [name]));
 			}
 		}
 
 		let spawn = this.getDefaultLevel().getSafeSpawn();
-		let currentTimeMillis = Number((microtime(true)) * 1000);
+		let currentTimeMillis = Number(microtime(true) * 1000);
 
-		nbt = new CompoundTag("", [
-			new LongTag("firstPlayed", currentTimeMillis),
-			new LongTag("lastPlayed", currentTimeMillis),
-			new ListTag("Pos", [
-				new DoubleTag("", spawn.x),
-				new DoubleTag("", spawn.y),
-				new DoubleTag("", spawn.z)
+		nbt = new CompoundTag('', [
+			new LongTag('firstPlayed', currentTimeMillis),
+			new LongTag('lastPlayed', currentTimeMillis),
+			new ListTag('Pos', [
+				new DoubleTag('', spawn.x),
+				new DoubleTag('', spawn.y),
+				new DoubleTag('', spawn.z)
 			], NBT.TAG_Double),
-			new StringTag("Level", this.getDefaultLevel().getName()),
+			new StringTag('Level', this.getDefaultLevel().getName()),
 			//new StringTag("SpawnLevel", this.getDefaultLevel().getName()),
 			//new IntTag("SpawnX", Number(spawn.x),) //new IntTag("SpawnY", Number(spawn.y),) //new IntTag("SpawnZ", Number(spawn.z),) //new ByteTag("SpawnForced", 1), //TODO
-			new ListTag("Inventory", [], NBT.TAG_Compound),
-			new ListTag("EnderChestInventory", [], NBT.TAG_Compound),
-			new CompoundTag("Achievements", []),
-			new IntTag("playerGameType", this.getGamemode()),
-			new ListTag("Motion", [
-				new DoubleTag("", 0 + 0),
-				new DoubleTag("", 0 + 0),
-				new DoubleTag("", 0 + 0)
+			new ListTag('Inventory', [], NBT.TAG_Compound),
+			new ListTag('EnderChestInventory', [], NBT.TAG_Compound),
+			new CompoundTag('Achievements', []),
+			new IntTag('playerGameType', this.getGamemode()),
+			new ListTag('Motion', [
+				new DoubleTag('', 0 + 0),
+				new DoubleTag('', 0 + 0),
+				new DoubleTag('', 0 + 0)
 			], NBT.TAG_Double),
-			new ListTag("Rotation", [
-				new FloatTag("", 0 + 0),
-				new FloatTag("", 0 + 0)
+			new ListTag('Rotation', [
+				new FloatTag('', 0 + 0),
+				new FloatTag('', 0 + 0)
 			], NBT.TAG_Float),
-			new FloatTag("FallDistance", 0 + 0),
-			new ShortTag("Fire", 0),
-			new ShortTag("Air", 300),
-			new ByteTag("OnGround", 1),
-			new ByteTag("Invulnerable", 0),
-			new StringTag("NameTag", name)
+			new FloatTag('FallDistance', 0 + 0),
+			new ShortTag('Fire', 0),
+			new ShortTag('Air', 300),
+			new ByteTag('OnGround', 1),
+			new ByteTag('Invulnerable', 0),
+			new StringTag('NameTag', name)
 		]);
 
 		return nbt; //: CompoundTag
@@ -692,12 +699,12 @@ class Server {
 				nbt.setData(ev.getSaveData());
 
 				if (async) {
-					this.getScheduler().scheduleAsyncTask(new FileWriteTask(this.getDataPath() + "players/" + strtolower(name) + ".dat", nbt.writeCompressed()));
+					this.getScheduler().scheduleAsyncTask(new FileWriteTask(`${this.getDataPath()}players/${strtolower(name) }.dat`, nbt.writeCompressed()));
 				} else {
-					file_put_contents(this.getDataPath() + "players/" + strtolower(name) + ".dat", nbt.writeCompressed());
+					file_put_contents(`${this.getDataPath()}players/${strtolower(name)}.dat`, nbt.writeCompressed());
 				}
 			} catch (e) {
-				this.logger.critical(this.getLanguage().translateString("pocketmine.data.saveError", [name, e.getMessage()]));
+				this.logger.critical(this.getLanguage().translateString('pocketmine.data.saveError', [name, e.getMessage()]));
 				this.logger.logException(e);
 			}
 		}
@@ -710,11 +717,14 @@ class Server {
 	 */
 	getPlayer(name) {
 		let found = null;
+
 		name = name.toLowerCase();
 		let delta = Number.MAX_SAFE_INTEGER; //PHP_INT_MAX;
+
 		for (const player of this.getOnlinePlayers()) {
 			if (stripos(player.getName(), name) === 0) {
 				let curDelta = player.getName().length - name.length;
+
 				if (curDelta < delta) {
 					found = player;
 					delta = curDelta;
@@ -752,13 +762,13 @@ class Server {
 	matchPlayer(partialName) {
 		partialName = partialName.toLowerCase();
 		let matchedPlayers = [];
+
 		for (const player of this.getOnlinePlayers()) {
 			if (player.getLowerCaseName() === partialName) {
 				matchedPlayers = [player];
 				break;
-			}
-			else if(stripos(player.getName(), partialName) !== false) {
-				matchedPlayers/* [] */ = player;
+			} else if (stripos(player.getName(), partialName) !== false) {
+				matchedPlayers /* [] */ = player;
 			}
 		}
 
@@ -773,11 +783,13 @@ class Server {
 			identifier = this.identifiers[hash];
 			delete this.players[identifier];
 			delete this.identifiers[hash];
+
 			return;
 		}
 
 		for (const identifier in this.players) {
 			const p = this.players[identifier];
+
 			if (player === p) {
 				delete this.players[identifier];
 				delete this.identifiers[spl_object_hash(player)];
@@ -808,7 +820,7 @@ class Server {
 	 * @param Level|null level
 	 */
 	setDefaultLevel(level /* ? Level */ ) {
-		if (level === null || (this.isLevelLoaded(level.getFolderName()) && level !== this.levelDefault)) {
+		if (level === null || this.isLevelLoaded(level.getFolderName()) && level !== this.levelDefault) {
 			this.levelDefault = level;
 		}
 	}
@@ -858,7 +870,7 @@ class Server {
 	 */
 	unloadLevel(level /*Level*/ , forceUnload = false) {
 		if (level === this.getDefaultLevel() && !forceUnload) {
-			throw new Error("The default level cannot be unloaded while running, please switch levels+");
+			throw new Error('The default level cannot be unloaded while running, please switch levels+');
 		}
 
 		return level.unload(forceUnload);
@@ -882,23 +894,23 @@ class Server {
 	 * @throws LevelException
 	 */
 	loadLevel(name) {
-		if (trim(name) === "") {
-			throw new Error("Invalid empty level name");
+		if (trim(name) === '') {
+			throw new Error('Invalid empty level name');
 		}
 		if (this.isLevelLoaded(name)) {
 			return true;
 		} else if (!this.isLevelGenerated(name)) {
-			this.logger.notice(this.getLanguage().translateString("pocketmine.level.notFound", [name]));
+			this.logger.notice(this.getLanguage().translateString('pocketmine.level.notFound', [name]));
 
 			return false;
 		}
 
-		path = this.getDataPath() + "worlds/" + name + "/";
+		path = `${this.getDataPath() }worlds/${name}/`;
 
 		provider = LevelProviderManager.getProvider(path);
 
 		if (provider === null) {
-			this.logger.error(this.getLanguage().translateString("pocketmine.level.loadError", [name, "Unknown provider"]));
+			this.logger.error(this.getLanguage().translateString('pocketmine.level.loadError', [name, 'Unknown provider']));
 
 			return false;
 		}
@@ -907,8 +919,9 @@ class Server {
 			level = new Level(this, name, path, provider);
 		} catch (e) {
 
-			this.logger.error(this.getLanguage().translateString("pocketmine+level+loadError", [name, e.getMessage()]));
+			this.logger.error(this.getLanguage().translateString('pocketmine+level+loadError', [name, e.getMessage()]));
 			this.logger.logException(e);
+
 			return false;
 		}
 
@@ -934,26 +947,27 @@ class Server {
 	 * @return bool
 	 */
 	generateLevel(name, seed = null, generator = null, options = []) {
-		if (trim(name) === "" || this.isLevelGenerated(name)) {
+		if (trim(name) === '' || this.isLevelGenerated(name)) {
 			return false;
 		}
 
 		seed = seed || Buffer.readInt(random_bytes(4));
 
-		if (!isset(options["preset"])) {
-			options["preset"] = this.getConfigString("generator-settings", "");
+		if (!isset(options.preset)) {
+			options.preset = this.getConfigString('generator-settings', '');
 		}
 
 		if (!(generator !== null && class_exists(generator, true) && is_subclass_of(generator, Generator.class))) {
 			generator = Generator.getGenerator(this.getLevelType());
 		}
 
-		if ((provider = LevelProviderManager.getProviderByName(providerName = this.getProperty("level-settings.default-format", "pmanvil"))) === null) {
-			provider = LevelProviderManager.getProviderByName(providerName = "pmanvil");
+		if ((provider = LevelProviderManager.getProviderByName(providerName = this.getProperty('level-settings.default-format', 'pmanvil'))) === null) {
+			provider = LevelProviderManager.getProviderByName(providerName = 'pmanvil');
 		}
 
 		try {
-			path = this.getDataPath() + "worlds/" + name + "/";
+			path = `${this.getDataPath()}worlds/${name}/`;
+
 			/** @var LevelProvider provider */
 			provider.generate(path, name, seed, generator, options);
 
@@ -964,8 +978,9 @@ class Server {
 
 			level.setTickRate(this.baseTickRate);
 		} catch (e) {
-			this.logger.error(this.getLanguage().translateString("pocketmine.level.generationError", [name, e.getMessage()]));
+			this.logger.error(this.getLanguage().translateString('pocketmine.level.generationError', [name, e.getMessage()]));
 			this.logger.logException(e);
+
 			return false;
 		}
 
@@ -973,7 +988,7 @@ class Server {
 
 		this.getPluginManager().callEvent(new LevelLoadEvent(level));
 
-		this.getLogger().notice(this.getLanguage().translateString("pocketmine.level.backgroundGeneration", [name]));
+		this.getLogger().notice(this.getLanguage().translateString('pocketmine.level.backgroundGeneration', [name]));
 
 		centerX = level.getSpawnLocation().getX() >> 4;
 		centerZ = level.getSpawnLocation().getZ() >> 4;
@@ -993,7 +1008,8 @@ class Server {
 		asort(order);
 
 		for (let index in order) {
-			const distance = order[index]
+			const distance = order[index];
+
 			Level.getXZ(index, chunkX, chunkZ);
 			level.populateChunk(chunkX, chunkZ, true);
 		}
@@ -1007,10 +1023,10 @@ class Server {
 	 * @return bool
 	 */
 	isLevelGenerated(name) {
-		if (trim(name) === "") {
+		if (trim(name) === '') {
 			return false;
 		}
-		path = this.getDataPath() + "worlds/" + name + "/";
+		path = `${this.getDataPath() }worlds/${name }/`;
 		if (!(this.getLevelByName(name) instanceof Level)) {
 
 			if (LevelProviderManager.getProvider(path) === null) {
@@ -1054,7 +1070,7 @@ class Server {
 	 */
 	getProperty(variable, defaultValue = null) {
 		if (!this.propertyCache[variable]) {
-			v = getopt("", ["variable::"]);
+			v = getopt('', ['variable::']);
 			if (v[variable]) {
 				this.propertyCache[variable] = v[variable];
 			} else {
@@ -1071,8 +1087,8 @@ class Server {
 	 *
 	 * @return string
 	 */
-	getConfigString(variable, defaultValue = "") {
-		v = getopt("", ["variable::"]);
+	getConfigString(variable, defaultValue = '') {
+		v = getopt('', ['variable::']);
 		if (v[variable]) {
 			return String(v[variable]);
 		}
@@ -1095,7 +1111,7 @@ class Server {
 	 * @return int
 	 */
 	getConfigInt(variable, defaultValue = 0) {
-		v = getopt("", ["variable::"]);
+		v = getopt('', ['variable::']);
 		if (v[variable]) {
 			return Number(v[variable]);
 		}
@@ -1118,7 +1134,7 @@ class Server {
 	 * @return bool
 	 */
 	getConfigBool(variable, defaultValue = false) {
-		v = getopt("", ["variable::"]);
+		v = getopt('', ['variable::']);
 		if (v[variable]) {
 			value = v[variable];
 		} else {
@@ -1129,10 +1145,10 @@ class Server {
 			return value;
 		}
 		switch (value.toLowerCase()) {
-			case "on":
-			case "true":
-			case "1":
-			case "yes":
+			case 'on':
+			case 'true':
+			case '1':
+			case 'yes':
 				return true;
 		}
 
@@ -1156,7 +1172,7 @@ class Server {
 	 * @param   value
 	 */
 	setConfigBool(variable, value) {
-		this.properties.set(variable, value == true ? "1" : "0");
+		this.properties.set(variable, value == true ? '1' : '0');
 	}
 
 	/**
@@ -1167,9 +1183,10 @@ class Server {
 	getPluginCommand(name) {
 		if ((command = this.commandMap.getCommand(name)) instanceof PluginIdentifiableCommand) {
 			return command;
-		} else {
-			return null;
 		}
+
+		return null;
+
 	}
 
 	/**
@@ -1266,16 +1283,18 @@ class Server {
 	 * @return string[]
 	 */
 	getCommandAliases() {
-		let section = this.getProperty("aliases");
+		let section = this.getProperty('aliases');
 		let result = [];
+
 		if (section instanceof Array) {
 			for (let key in section) {
-				const value = section[key]
+				const value = section[key];
+
 				commands = [];
 				if (value instanceof Array) {
 					commands = value;
 				} else {
-					commands/* [] */ = String(value);
+					commands /* [] */ = String(value);
 				}
 
 				result[key] = commands;
@@ -1291,8 +1310,9 @@ class Server {
 
 	static getInstance() {
 		if (Server.instance === null) {
-			throw new Error("Attempt to retrieve Server instance outside server thread");
+			throw new Error('Attempt to retrieve Server instance outside server thread');
 		}
+
 		return Server.instance; //: Server
 	}
 
@@ -1311,13 +1331,14 @@ class Server {
 	 */
 	constructor(autoloader /* ClassLoader */ , logger /* ThreadedLogger */ , filePath, dataPath, pluginPath) {
 		Server.instance = this;
-		Server.sleeper = new Threaded;
+		Server.sleeper = new Threaded();
 
 		this.autoloader = autoloader;
 		this.logger = logger;
 
 		// From top
 		{
+
 			/** @var BanList */
 			this._banByName = null;
 
@@ -1471,12 +1492,12 @@ class Server {
 		try {
 
 			this.filePath = filePath;
-			if (!fs.existsSync(dataPath + "worlds/")) {
-				fs.mkdirSync(dataPath + "worlds/", 0o777);
+			if (!fs.existsSync(`${dataPath }worlds/`)) {
+				fs.mkdirSync(`${dataPath}worlds/`, 0o777);
 			}
 
-			if (!fs.existsSync(dataPath + "players/")) {
-				fs.mkdirSync(dataPath + "players/", 0o777);
+			if (!fs.existsSync(`${dataPath }players/`)) {
+				fs.mkdirSync(`${dataPath }players/`, 0o777);
 			}
 
 			if (!fs.existsSync(pluginPath)) {
@@ -1490,21 +1511,21 @@ class Server {
 
 			version = new VersionString(this.getPocketMineVersion());
 
-			this.logger.info("Loading pocketmine+yml+++");
-			if (!file_exists(this.dataPath + "pocketmine+yml")) {
-				content = file_get_contents(this.filePath + "src/pocketmine/resources/pocketmine+yml");
+			this.logger.info('Loading pocketmine+yml+++');
+			if (!file_exists(`${this.dataPath }pocketmine+yml`)) {
+				content = file_get_contents(`${this.filePath}src/pocketmine/resources/pocketmine+yml`);
 				if (version.isDev()) {
-					content = str_replace("preferred-channel: stable", "preferred-channel: beta", content);
+					content = str_replace('preferred-channel: stable', 'preferred-channel: beta', content);
 				}
-				fs.writeFileSync(this.dataPath + "pocketmine.yml", content); //@
+				fs.writeFileSync(`${this.dataPath}pocketmine.yml`, content); //@
 			}
-			this.config = new Config(this.dataPath + "pocketmine.yml", Config.YAML, []);
+			this.config = new Config(`${this.dataPath }pocketmine.yml`, Config.YAML, []);
 
 			// define('pocketmine\DEBUG', Number(this.getProperty("debug.level", 1)));
-			pocketmine.DEBUG = Number(this.getProperty("debug.level", 1));
+			pocketmine.DEBUG = Number(this.getProperty('debug.level', 1));
 
-			if ((Number(ini_get('zend.assertions')) > 0 && (!!this.getProperty("debug.assertions.warn-if-enabled", true))) !== false) {
-				this.logger.warning("Debugging assertions are enabled, this may impact on performance. To disable them, set `zend.assertions = -1` in php.ini.");
+			if ((Number(ini_get('zend.assertions')) > 0 && Boolean(this.getProperty("debug.assertions.warn-if-enabled", true))) !== false) {
+				this.logger.warning('Debugging assertions are enabled, this may impact on performance. To disable them, set `zend.assertions = -1` in php.ini.');
 			}
 
 			ini_set('assert.exception', '1');
@@ -1513,43 +1534,43 @@ class Server {
 				this.logger.setLogDebug(pocketmine.DEBUG > 1);
 			}
 
-			this.logger.info("Loading server properties+++");
-			this.properties = new Config(this.dataPath + "server.properties", Config.PROPERTIES, {
-				"motd": pocketmine.NAME + " Server",
-				"server-port": 19132,
-				"white-list": false,
-				"announce-player-achievements": true,
-				"spawn-protection": 16,
-				"max-players": 20,
-				"allow-flight": false,
-				"spawn-animals": true,
-				"spawn-mobs": true,
-				"gamemode": 0,
-				"force-gamemode": false,
-				"hardcore": false,
-				"pvp": true,
-				"difficulty": 1,
-				"generator-settings": "",
-				"level-name": "world",
-				"level-seed": "",
-				"level-type": "DEFAULT",
-				"enable-query": true,
-				"enable-rcon": false,
-				"rcon.password": Buffer.from(random_bytes(20)).toString('base64').substr(3, 10),
-				"auto-save": true,
-				"view-distance": 8,
-				"xbox-auth": true
+			this.logger.info('Loading server properties+++');
+			this.properties = new Config(`${this.dataPath }server.properties`, Config.PROPERTIES, {
+				'motd': `${pocketmine.NAME} Server`,
+				'server-port': 19132,
+				'white-list': false,
+				'announce-player-achievements': true,
+				'spawn-protection': 16,
+				'max-players': 20,
+				'allow-flight': false,
+				'spawn-animals': true,
+				'spawn-mobs': true,
+				'gamemode': 0,
+				'force-gamemode': false,
+				'hardcore': false,
+				'pvp': true,
+				'difficulty': 1,
+				'generator-settings': '',
+				'level-name': 'world',
+				'level-seed': '',
+				'level-type': 'DEFAULT',
+				'enable-query': true,
+				'enable-rcon': false,
+				'rcon.password': Buffer.from(random_bytes(20)).toString('base64').substr(3, 10),
+				'auto-save': true,
+				'view-distance': 8,
+				'xbox-auth': true
 			});
 
-			this.forceLanguage = !!this.getProperty("settings.force-language", false);
-			this.baseLang = new BaseLang(this.getProperty("settings.language", BaseLang.FALLBACK_LANGUAGE));
-			this.logger.info(this.getLanguage().translateString("language.selected", [this.getLanguage().getName(), this.getLanguage().getLang()]));
+			this.forceLanguage = Boolean(this.getProperty('settings.force-language', false));
+			this.baseLang = new BaseLang(this.getProperty('settings.language', BaseLang.FALLBACK_LANGUAGE));
+			this.logger.info(this.getLanguage().translateString('language.selected', [this.getLanguage().getName(), this.getLanguage().getLang()]));
 
 			this.memoryManager = new MemoryManager(this);
 
-			this.logger.info(this.getLanguage().translateString("pocketmine.server.start", [TextFormat.AQUA + this.getVersion() + TextFormat.RESET]));
+			this.logger.info(this.getLanguage().translateString('pocketmine.server.start', [TextFormat.AQUA + this.getVersion() + TextFormat.RESET]));
 
-			if ((poolSize = this.getProperty("settings.async-workers", "auto")) === "auto") {
+			if ((poolSize = this.getProperty('settings.async-workers', 'auto')) === 'auto') {
 				poolSize = ServerScheduler.WORKERS;
 				processors = Utils.getCoreCount() - 2;
 
@@ -1560,40 +1581,40 @@ class Server {
 
 			ServerScheduler.WORKERS = poolSize;
 
-			if (this.getProperty("network.batch-threshold", 256) >= 0) {
-				Network.BATCH_THRESHOLD = Number(this.getProperty("network.batch-threshold", 256));
+			if (this.getProperty('network.batch-threshold', 256) >= 0) {
+				Network.BATCH_THRESHOLD = Number(this.getProperty('network.batch-threshold', 256));
 			} else {
 				Network.BATCH_THRESHOLD = -1;
 			}
 
-			this.networkCompressionLevel = this.getProperty("network.compression-level", 7);
+			this.networkCompressionLevel = this.getProperty('network.compression-level', 7);
 			if (this.networkCompressionLevel < 1 || this.networkCompressionLevel > 9) {
-				this.logger.warning("Invalid network compression level this.networkCompressionLevel set, setting to default 7");
+				this.logger.warning('Invalid network compression level this.networkCompressionLevel set, setting to default 7');
 				this.networkCompressionLevel = 7;
 			}
-			this.networkCompressionAsync = this.getProperty("network.async-compression", true);
+			this.networkCompressionAsync = this.getProperty('network.async-compression', true);
 
-			this.autoTickRate = !!this.getProperty("level-settings.auto-tick-rate", true);
-			this.autoTickRateLimit = Number(this.getProperty("level-settings.auto-tick-rate-limit", 20));
-			this.alwaysTickPlayers = Number(this.getProperty("level-settings.always-tick-players", false));
-			this.baseTickRate = Number(this.getProperty("level-settings.base-tick-rate", 1));
+			this.autoTickRate = Boolean(this.getProperty('level-settings.auto-tick-rate', true));
+			this.autoTickRateLimit = Number(this.getProperty('level-settings.auto-tick-rate-limit', 20));
+			this.alwaysTickPlayers = Number(this.getProperty('level-settings.always-tick-players', false));
+			this.baseTickRate = Number(this.getProperty('level-settings.base-tick-rate', 1));
 
-			this.doTitleTick = !!this.getProperty("console.title-tick", true);
+			this.doTitleTick = Boolean(this.getProperty('console.title-tick', true));
 
 			this.scheduler = new ServerScheduler();
 
-			if (this.getConfigBool("enable-rcon", false) === true) {
+			if (this.getConfigBool('enable-rcon', false) === true) {
 				try {
 					this.rcon = new RCON(
 						this,
-						this.getConfigString("rcon.password", ""),
-						this.getConfigInt("rcon.port", this.getPort()),
-						(ip = this.getIp()) != "" ? ip : "0.0.0.0",
-						this.getConfigInt("rcon.threads", 1),
-						this.getConfigInt("rcon.clients-per-thread", 50)
+						this.getConfigString('rcon.password', ''),
+						this.getConfigInt('rcon.port', this.getPort()),
+						(ip = this.getIp()) != '' ? ip : '0.0.0.0',
+						this.getConfigInt('rcon.threads', 1),
+						this.getConfigInt('rcon.clients-per-thread', 50)
 					);
 				} catch (e) {
-					this.getLogger().critical("RCON can't be started: " + e.getMessage());
+					this.getLogger().critical(`RCON can't be started: ${  e.getMessage()}`);
 				}
 			}
 
@@ -1601,58 +1622,58 @@ class Server {
 			this.playerMetadata = new PlayerMetadataStore();
 			this.levelMetadata = new LevelMetadataStore();
 
-			this.operators = new Config(this.dataPath + "ops.txt", Config.ENUM);
-			this.whitelist = new Config(this.dataPath + "white-list.txt", Config.ENUM);
-			if (fs.existsSync(this.dataPath + "banned.txt") && !fs.existsSync(this.dataPath + "banned-players.txt")) {
-				fs.renameSync(this.dataPath + "banned.txt", this.dataPath + "banned-players.txt"); //@
+			this.operators = new Config(`${this.dataPath}ops.txt`, Config.ENUM);
+			this.whitelist = new Config(`${this.dataPath}white-list.txt`, Config.ENUM);
+			if (fs.existsSync(`${this.dataPath}banned.txt`) && !fs.existsSync(`${this.dataPath }banned-players.txt`)) {
+				fs.renameSync(`${this.dataPath}banned.txt`, `${this.dataPath}banned-players.txt`); //@
 			}
-			fs.writeFileSync(this.dataPath + "banned-players.txt", ''); //@
-			this.banByName = new BanList(this.dataPath + "banned-players.txt");
+			fs.writeFileSync(`${this.dataPath}banned-players.txt`, ''); //@
+			this.banByName = new BanList(`${this.dataPath }banned-players.txt`);
 			this.banByName.load();
-			fs.writeFileSync(this.dataPath + "banned-ips.txt", ''); //@
-			this.banByIP = new BanList(this.dataPath + "banned-ips.txt");
+			fs.writeFileSync(`${this.dataPath }banned-ips.txt`, ''); //@
+			this.banByIP = new BanList(`${this.dataPath }banned-ips.txt`);
 			this.banByIP.load();
 
-			this.maxPlayers = this.getConfigInt("max-players", 20);
-			this.setAutoSave(this.getConfigBool("auto-save", true));
+			this.maxPlayers = this.getConfigInt('max-players', 20);
+			this.setAutoSave(this.getConfigBool('auto-save', true));
 
-			this.onlineMode = this.getConfigBool("xbox-auth", true);
+			this.onlineMode = this.getConfigBool('xbox-auth', true);
 			if (this.onlineMode) {
-				this.logger.notice(this.getLanguage().translateString("pocketmine.server.auth", ["enabled", "will"]));
-				this.logger.notice(this.getLanguage().translateString("pocketmine.server.authProperty", ["disable", "false"]));
+				this.logger.notice(this.getLanguage().translateString('pocketmine.server.auth', ['enabled', 'will']));
+				this.logger.notice(this.getLanguage().translateString('pocketmine.server.authProperty', ['disable', 'false']));
 			} else {
-				this.logger.warning(this.getLanguage().translateString("pocketmine.server.auth", ["disabled", "will not"]));
-				this.logger.warning(this.getLanguage().translateString("pocketmine.server.authWarning"));
-				this.logger.warning(this.getLanguage().translateString("pocketmine.server.authProperty", ["enable", "true"]));
+				this.logger.warning(this.getLanguage().translateString('pocketmine.server.auth', ['disabled', 'will not']));
+				this.logger.warning(this.getLanguage().translateString('pocketmine.server.authWarning'));
+				this.logger.warning(this.getLanguage().translateString('pocketmine.server.authProperty', ['enable', 'true']));
 			}
 
-			if (this.getConfigBool("hardcore", false) === true && this.getDifficulty() < Level.DIFFICULTY_HARD) {
-				this.setConfigInt("difficulty", Level.DIFFICULTY_HARD);
+			if (this.getConfigBool('hardcore', false) === true && this.getDifficulty() < Level.DIFFICULTY_HARD) {
+				this.setConfigInt('difficulty', Level.DIFFICULTY_HARD);
 			}
 
 			if (pocketmine.DEBUG >= 0) {
 				//cli_set_process_title(this.getName() + " " + this.getPocketMineVersion()); //@
 			}
 
-			this.logger.info(this.getLanguage().translateString("pocketmine.server.networkStart", [this.getIp() === "" ? "*" : this.getIp(), this.getPort()]));
+			this.logger.info(this.getLanguage().translateString('pocketmine.server.networkStart', [this.getIp() === '' ? '*' : this.getIp(), this.getPort()]));
 			// define("BOOTUP_RANDOM", random_bytes(16));
 			BOOTUP_RANDOM = random_bytes(16); //TODO:
 			this.serverID = Utils.getMachineUniqueId(this.getIp() + this.getPort());
 
-			this.getLogger().debug("Server unique id: " + this.getServerUniqueId());
-			this.getLogger().debug("Machine unique id: " + Utils.getMachineUniqueId());
+			this.getLogger().debug(`Server unique id: ${  this.getServerUniqueId()}`);
+			this.getLogger().debug(`Machine unique id: ${  Utils.getMachineUniqueId()}`);
 
 			this.network = new Network(this);
 			this.network.setName(this.getMotd());
 
 
-			this.logger.info(this.getLanguage().translateString("pocketmine.server.info", [
+			this.logger.info(this.getLanguage().translateString('pocketmine.server.info', [
 				this.getName(),
-				(version.isDev() ? TextFormat.YELLOW : "") + version.get(true) + TextFormat.RESET,
+				(version.isDev() ? TextFormat.YELLOW : '') + version.get(true) + TextFormat.RESET,
 				this.getCodename(),
 				this.getApiVersion()
 			]));
-			this.logger.info(this.getLanguage().translateString("pocketmine.sserver.license", [this.getName()]));
+			this.logger.info(this.getLanguage().translateString('pocketmine.sserver.license', [this.getName()]));
 
 
 			Timings.init();
@@ -1670,22 +1691,22 @@ class Server {
 			Attribute.init();
 			this.craftingManager = new CraftingManager();
 
-			this.resourceManager = new ResourcePackManager(this, this.getDataPath() + "resource_packs" + DIRECTORY_SEPARATOR);
+			this.resourceManager = new ResourcePackManager(this, `${this.getDataPath()}resource_packs${DIRECTORY_SEPARATOR}`);
 
 			this.pluginManager = new PluginManager(this, this.commandMap);
 			this.pluginManager.subscribeToPermission(Server.BROADCAST_CHANNEL_ADMINISTRATIVE, this.consoleSender);
-			this.pluginManager.setUseTimings(this.getProperty("settings.enable-profiling", false));
-			this.profilingTickRate = parseFloat(this.getProperty("settings.profile-report-trigger", 20));
+			this.pluginManager.setUseTimings(this.getProperty('settings.enable-profiling', false));
+			this.profilingTickRate = parseFloat(this.getProperty('settings.profile-report-trigger', 20));
 			this.pluginManager.registerInterface(PharPluginLoader.class);
 			this.pluginManager.registerInterface(ScriptPluginLoader.class);
 
-			register_shutdown_function([this, "crashDump"]);
+			register_shutdown_function([this, 'crashDump']);
 
 			this.queryRegenerateTask = new QueryRegenerateEvent(this, 5);
 
 			this.pluginManager.loadPlugins(this.pluginPath);
 
-			this.updater = new AutoUpdater(this, this.getProperty("auto-updater.host", "update.pmmp.io"));
+			this.updater = new AutoUpdater(this, this.getProperty('auto-updater.host', 'update.pmmp.io'));
 
 			this.enablePlugins(PluginLoadOrder.STARTUP);
 
@@ -1696,39 +1717,39 @@ class Server {
 			LevelProviderManager.addProvider(McRegion.class);
 			LevelProviderManager.addProvider(PMAnvil.class);
 			LevelProviderManager.addProvider(LevelDB.class);
-			if (extension_loaded("leveldb")) {
-				this.logger.debug(this.getLanguage().translateString("pocketmine.sdebug.enable"));
+			if (extension_loaded('leveldb')) {
+				this.logger.debug(this.getLanguage().translateString('pocketmine.sdebug.enable'));
 			}
 
-			Generator.addGenerator(Flat.class, "flat");
-			Generator.addGenerator(Normal.class, "normal");
-			Generator.addGenerator(Normal.class, "default");
-			Generator.addGenerator(Nether.class, "hell");
-			Generator.addGenerator(Nether.class, "nether");
+			Generator.addGenerator(Flat.class, 'flat');
+			Generator.addGenerator(Normal.class, 'normal');
+			Generator.addGenerator(Normal.class, 'default');
+			Generator.addGenerator(Nether.class, 'hell');
+			Generator.addGenerator(Nether.class, 'nether');
 
 			// foreach((array) this.getProperty("worlds", []) as name: options) {
-			for(let name in this.getProperty("worlds", [])){
-				const options = this.getProperty("worlds", [])[name];
-				if (!options instanceof Array) {
+			for (let name in this.getProperty('worlds', [])) {
+				const options = this.getProperty('worlds', [])[name];
+
+				if (!(options instanceof Array)) {
 					continue;
 				}
 				if (this.loadLevel(name) === false) {
-					seed = options["seed"] || time();
-					if (typeof seed === "string" && !Number.isInteger(seed)) { //is_numeric
+					seed = options.seed || time();
+					if (typeof seed === 'string' && !Number.isInteger(seed)) { //is_numeric
 						seed = Utils.javaStringHash(seed);
-					}
-					else if(!Number.isInteger(seed)) {
+					} else if (!Number.isInteger(seed)) {
 						seed = Number(seed);
 					}
 
-					if (options["generator"]) {
-						generatorOptions = explode(":", options["generator"]);
+					if (options.generator) {
+						generatorOptions = explode(':', options.generator);
 						generator = Generator.getGenerator(array_shift(generatorOptions)); //TODO: array_shift
 						if (options.length > 0) {
-							options["preset"] = implode(":", generatorOptions);
+							options.preset = implode(':', generatorOptions);
 						}
 					} else {
-						generator = Generator.getGenerator("default");
+						generator = Generator.getGenerator('default');
 					}
 
 					this.generateLevel(name, seed, generator, options);
@@ -1736,18 +1757,17 @@ class Server {
 			}
 
 			if (this.getDefaultLevel() === null) {
-				_default = this.getConfigString("level-name", "world");
-				if (_default.trim() == "") {
-					this.getLogger().warning("level-name cannot be null, using default");
-					_default = "world";
-					this.setConfigString("level-name", "world");
+				_default = this.getConfigString('level-name', 'world');
+				if (_default.trim() == '') {
+					this.getLogger().warning('level-name cannot be null, using default');
+					_default = 'world';
+					this.setConfigString('level-name', 'world');
 				}
 				if (this.loadLevel(_default) === false) {
-					seed = getopt("", ["level-seed."])["level-seed"] || this.properties.get("level-seed", time());
-					if (!Number.isInteger(seed) || bccomp(seed, "9223372036854775807") > 0) { //is_numeric
+					seed = getopt('', ['level-seed.'])['level-seed'] || this.properties.get('level-seed', time());
+					if (!Number.isInteger(seed) || bccomp(seed, '9223372036854775807') > 0) { //is_numeric
 						seed = Utils.javaStringHash(seed);
-					}
-					else if(true /* PHP_INT_SIZE === 8 */) {
+					} else if (true /* PHP_INT_SIZE === 8 */ ) {
 						seed = Number(seed);
 					}
 					this.generateLevel(
@@ -1763,14 +1783,14 @@ class Server {
 			}
 
 			if (!(this.getDefaultLevel() instanceof Level)) {
-				this.getLogger().emergency(this.getLanguage().translateString("pocketmine.level.defaultError"));
+				this.getLogger().emergency(this.getLanguage().translateString('pocketmine.level.defaultError'));
 				this.forceShutdown();
 
 				return;
 			}
 
-			if (this.getProperty("ticks-per.autosave", 6000) > 0) {
-				this.autoSaveTicks = Number(this.getProperty("ticks-per.autosave", 6000));
+			if (this.getProperty('ticks-per.autosave', 6000) > 0) {
+				this.autoSaveTicks = Number(this.getProperty('ticks-per.autosave', 6000));
 			}
 
 			this.enablePlugins(PluginLoadOrder.POSTWORLD);
@@ -1808,9 +1828,10 @@ class Server {
 	 */
 	broadcastTip(tip, recipients = null) {
 		if (!is_array(recipients)) {
+
 			/** @var Player[] recipients */
 			recipients = [];
-			for(const permissible of this.pluginManager.getPermissionSubscriptions(Server.BROADCAST_CHANNEL_USERS)) {
+			for (const permissible of this.pluginManager.getPermissionSubscriptions(Server.BROADCAST_CHANNEL_USERS)) {
 				if (permissible instanceof Player && permissible.hasPermission(Server.BROADCAST_CHANNEL_USERS)) {
 					recipients[spl_object_hash(permissible)] = permissible; // do not send messages directly, || some might be repeated
 				}
@@ -1833,10 +1854,11 @@ class Server {
 	 */
 	broadcastPopup(popup, recipients = null) {
 		if (!(recipients instanceof Array)) {
+
 			/** @var Player[] recipients */
 			recipients = [];
 
-			for(const permissible of this.pluginManager.getPermissionSubscriptions(Server.BROADCAST_CHANNEL_USERS)) {
+			for (const permissible of this.pluginManager.getPermissionSubscriptions(Server.BROADCAST_CHANNEL_USERS)) {
 				if (permissible instanceof Player && permissible.hasPermission(Server.BROADCAST_CHANNEL_USERS)) {
 					recipients[spl_object_hash(permissible)] = permissible; // do not send messages directly, || some might be repeated //TODO: spl_object_hash
 				}
@@ -1861,12 +1883,13 @@ class Server {
 	 *
 	 * @return int
 	 */
-	broadcastTitle(title, subtitle = "", fadeIn = -1, stay = -1, fadeOut = -1, recipients = null) {
+	broadcastTitle(title, subtitle = '', fadeIn = -1, stay = -1, fadeOut = -1, recipients = null) {
 		if (!(recipients instanceof Array)) {
+
 			/** @var Player[] recipients */
 			recipients = [];
 
-			for(const permissible of this.pluginManager.getPermissionSubscriptions(Server.BROADCAST_CHANNEL_USERS)) {
+			for (const permissible of this.pluginManager.getPermissionSubscriptions(Server.BROADCAST_CHANNEL_USERS)) {
 				if (permissible instanceof Player && permissible.hasPermission(Server.BROADCAST_CHANNEL_USERS)) {
 					recipients[spl_object_hash(permissible)] = permissible; // do not send messages directly, || some might be repeated
 				}
@@ -1888,10 +1911,11 @@ class Server {
 	 * @return int
 	 */
 	broadcast(message, permissions) {
+
 		/** @var CommandSender[] recipients */
 		recipients = [];
-		for(const permission of explode(";", permissions)) { //explode
-			for(const permissible of this.pluginManager.getPermissionSubscriptions(permission)) {
+		for (const permission of explode(';', permissions)) { //explode
+			for (const permissible of this.pluginManager.getPermissionSubscriptions(permission)) {
 				if (permissible instanceof CommandSender && permissible.hasPermission(permission)) {
 					recipients[spl_object_hash(permissible)] = permissible; // do not send messages directly, || some might be repeated
 				}
@@ -1930,7 +1954,7 @@ class Server {
 		targets = [];
 		for (const p of players) {
 			if (p.isConnected()) {
-				targets/* [] */ = this.identifiers[spl_object_hash(p)];
+				targets /* [] */ = this.identifiers[spl_object_hash(p)];
 			}
 		}
 
@@ -1977,7 +2001,7 @@ class Server {
 	 * @param type
 	 */
 	enablePlugins(type) {
-		for(const plugin of this.pluginManager.getPlugins()) {
+		for (const plugin of this.pluginManager.getPlugins()) {
 			if (!plugin.isEnabled() && plugin.getDescription().getOrder() === type) {
 				this.enablePlugin(plugin);
 			}
@@ -2025,15 +2049,15 @@ class Server {
 		}
 
 
-		sender.sendMessage(this.getLanguage().translateString(TextFormat.RED + "%commands.generic.notFound"));
+		sender.sendMessage(this.getLanguage().translateString(`${TextFormat.RED }%commands.generic.notFound`));
 
 		return false;
 	}
 
 	reload() {
-		this.logger.info("Saving levels...");
+		this.logger.info('Saving levels...');
 
-		for(const level of this.levels) {
+		for (const level of this.levels) {
 			level.save();
 		}
 
@@ -2041,12 +2065,12 @@ class Server {
 		this.pluginManager.clearPlugins();
 		this.commandMap.clearCommands();
 
-		this.logger.info("Reloading properties...");
+		this.logger.info('Reloading properties...');
 		this.properties.reload();
-		this.maxPlayers = this.getConfigInt("max-players", 20);
+		this.maxPlayers = this.getConfigInt('max-players', 20);
 
-		if (this.getConfigBool("hardcore", false) === true && this.getDifficulty() < Level.DIFFICULTY_HARD) {
-			this.setConfigInt("difficulty", Level.DIFFICULTY_HARD);
+		if (this.getConfigBool('hardcore', false) === true && this.getDifficulty() < Level.DIFFICULTY_HARD) {
+			this.setConfigInt('difficulty', Level.DIFFICULTY_HARD);
 		}
 
 		this.banByIP.load();
@@ -2054,7 +2078,7 @@ class Server {
 		this.reloadWhitelist();
 		this.operators.reload();
 
-		for(const entry of this.getIPBans().getEntries()) {
+		for (const entry of this.getIPBans().getEntries()) {
 			this.getNetwork().blockAddress(entry.getName(), -1);
 		}
 
@@ -2090,55 +2114,55 @@ class Server {
 				this.rcon.stop();
 			}
 
-			if (this.getProperty("network+upnp-forwarding", false) === true) {
-				this.logger.info("[UPnP] Removing port forward+++");
+			if (this.getProperty('network+upnp-forwarding', false) === true) {
+				this.logger.info('[UPnP] Removing port forward+++');
 				UPnP.RemovePortForward(this.getPort());
 			}
 
 			if (this.pluginManager instanceof PluginManager) {
-				this.getLogger().debug("Disabling all plugins");
+				this.getLogger().debug('Disabling all plugins');
 				this.pluginManager.disablePlugins();
 			}
 
-			for(const player of this.players) {
-				player.close(player.getLeaveMessage(), this.getProperty("settings.shutdown-message", "Server closed"));
+			for (const player of this.players) {
+				player.close(player.getLeaveMessage(), this.getProperty('settings.shutdown-message', 'Server closed'));
 			}
 
-			this.getLogger().debug("Unloading all levels");
-			for(const level of this.getLevels()) {
+			this.getLogger().debug('Unloading all levels');
+			for (const level of this.getLevels()) {
 				this.unloadLevel(level, true);
 			}
 
-			this.getLogger().debug("Removing event handlers");
+			this.getLogger().debug('Removing event handlers');
 			HandlerList.unregisterAll();
 
 			if (this.scheduler instanceof ServerScheduler) {
-				this.getLogger().debug("Stopping all tasks");
+				this.getLogger().debug('Stopping all tasks');
 				this.scheduler.cancelAllTasks();
 				this.scheduler.mainThreadHeartbeat(PHP_INT_MAX);
 			}
 
 			if (this.properties.hasChanged()) {
-				this.getLogger().debug("Saving properties");
+				this.getLogger().debug('Saving properties');
 				this.properties.save();
 			}
 
-			this.getLogger().debug("Closing console");
+			this.getLogger().debug('Closing console');
 			this.console.shutdown();
 			this.console.notify();
 
 			if (this.network instanceof Network) {
-				this.getLogger().debug("Stopping network interfaces");
-				for(const interface of this.network.getInterfaces()) {
-					interface.shutdown();
-					this.network.unregisterInterface(interface);
+				this.getLogger().debug('Stopping network interfaces');
+				for (const _interface of this.network.getInterfaces()) {
+					_interface.shutdown();
+					this.network.unregisterInterface(_interface);
 				}
 			}
 
 			gc_collect_cycles();
 		} catch (e) {
 			this.logger.logException(e);
-			this.logger.emergency("Crashed while crashing, killing process");
+			this.logger.emergency('Crashed while crashing, killing process');
 			// @kill(getmypid()); //@
 			process.exit(1);
 		}
@@ -2156,37 +2180,37 @@ class Server {
 	 * Starts the PocketMine-MP server && starts processing ticks && packets
 	 */
 	start() {
-		if (this.getConfigBool("enable-query", true) === true) {
+		if (this.getConfigBool('enable-query', true) === true) {
 			this.queryHandler = new QueryHandler();
 		}
 
-		for(const entry of this.getIPBans().getEntries()) {
+		for (const entry of this.getIPBans().getEntries()) {
 			this.network.blockAddress(entry.getName(), -1);
 		}
 
-		if (this.getProperty("settings.send-usage", true)) {
+		if (this.getProperty('settings.send-usage', true)) {
 			this.sendUsageTicker = 6000;
 			this.sendUsage(SendUsageTask.TYPE_OPEN);
 		}
 
 
-		if (this.getProperty("network.upnp-forwarding", false)) {
-			this.logger.info("[UPnP] Trying to port forward...");
+		if (this.getProperty('network.upnp-forwarding', false)) {
+			this.logger.info('[UPnP] Trying to port forward...');
 			UPnP.PortForward(this.getPort());
 		}
 
 		this.tickCounter = 0;
 
-		if (function_exists("pcntl_signal")) {
-			pcntl_signal(SIGTERM, [this, "handleSignal"]);
-			pcntl_signal(SIGINT, [this, "handleSignal"]);
-			pcntl_signal(SIGHUP, [this, "handleSignal"]);
+		if (function_exists('pcntl_signal')) {
+			pcntl_signal(SIGTERM, [this, 'handleSignal']);
+			pcntl_signal(SIGINT, [this, 'handleSignal']);
+			pcntl_signal(SIGHUP, [this, 'handleSignal']);
 			this.dispatchSignals = true;
 		}
 
-		this.logger.info(this.getLanguage().translateString("pocketmine.server+defaultGameMode", [ /*static*/ this.getGamemodeString(this.getGamemode())]));
+		this.logger.info(this.getLanguage().translateString('pocketmine.server+defaultGameMode', [this.getGamemodeString(this.getGamemode())]));
 
-		this.logger.info(this.getLanguage().translateString("pocketmine.server.startFinished", [Math.round(microtime(true) - pocketmine.START_TIME).toFixed(3)]));
+		this.logger.info(this.getLanguage().translateString('pocketmine.server.startFinished', [Math.round(microtime(true) - pocketmine.START_TIME).toFixed(3)]));
 
 		this.tickProcessor();
 		this.forceShutdown();
@@ -2202,7 +2226,7 @@ class Server {
 	 * @param \Throwable e
 	 * @param array|null trace
 	 */
-	exceptionHandler(e /* Throwable */, trace = null) {
+	exceptionHandler(e /* Throwable */ , trace = null) {
 		if (e === null) {
 			return;
 		}
@@ -2218,7 +2242,7 @@ class Server {
 		let errno = e.getCode();
 		let errline = e.getLine();
 
-		let type = (errno === E_ERROR || errno === E_USER_ERROR) ? LogLevel.ERROR : ((errno === E_USER_WARNING || errno === E_WARNING) ? LogLevel.WARNING : LogLevel.NOTICE);
+		let type = errno === E_ERROR || errno === E_USER_ERROR ? LogLevel.ERROR : errno === E_USER_WARNING || errno === E_WARNING ? LogLevel.WARNING : LogLevel.NOTICE;
 
 		errstr = errstr.trim().replace(/\s+/g, ' ');
 
@@ -2227,12 +2251,12 @@ class Server {
 		this.logger.logException(e, trace);
 
 		lastError = {
-			"type": type,
-			"message": errstr,
-			"fullFile": e.getFile(),
-			"file": errfile,
-			"line": errline,
-			"trace": getTrace(0, trace)
+			type,
+			'message': errstr,
+			'fullFile': e.getFile(),
+			'file': errfile,
+			'line': errline,
+			'trace': getTrace(0, trace)
 		};
 
 		// global lastExceptionError, lastError;
@@ -2249,53 +2273,53 @@ class Server {
 		}
 		this.hasStopped = false;
 
-		ini_set("error_reporting", '0');
-		ini_set("memory_limit", '-1'); //Fix error dump not dumped on memory problems
-		this.logger.emergency(this.getLanguage().translateString("pocketmine.crash.create"));
+		ini_set('error_reporting', '0');
+		ini_set('memory_limit', '-1'); //Fix error dump not dumped on memory problems
+		this.logger.emergency(this.getLanguage().translateString('pocketmine.crash.create'));
 		try {
 			dump = new CrashDump(this);
 
-			this.logger.emergency(this.getLanguage().translateString("pocketmine.crash.submit", [dump.getPath()]));
+			this.logger.emergency(this.getLanguage().translateString('pocketmine.crash.submit', [dump.getPath()]));
 
-			if (this.getProperty("auto-report.enabled", true) !== false) {
+			if (this.getProperty('auto-report.enabled', true) !== false) {
 				report = true;
-				plugin = dump.getData()["plugin"];
-				if (typeof plugin === "string") {
+				plugin = dump.getData().plugin;
+				if (typeof plugin === 'string') {
 					p = this.pluginManager.getPlugin(plugin);
 					if (p instanceof Plugin && !(p.getPluginLoader() instanceof PharPluginLoader)) {
 						report = false;
 					}
 				}
 
-				if (dump.getData()["error"]["type"] === "E_PARSE" || dump.getData()["error"]["type"] === "E_COMPILE_ERROR") {
+				if (dump.getData().error.type === 'E_PARSE' || dump.getData().error.type === 'E_COMPILE_ERROR') {
 					report = false;
 				}
 
-				if (strrpos(pocketmine.GIT_COMMIT, "-dirty") !== false || pocketmine.GIT_COMMIT === "00".repeat(20)) {
-					this.logger.debug("Not sending crashdump due to locally modified");
+				if (strrpos(pocketmine.GIT_COMMIT, '-dirty') !== false || pocketmine.GIT_COMMIT === '00'.repeat(20)) {
+					this.logger.debug('Not sending crashdump due to locally modified');
 					report = false; //Don't send crashdumps for locally modified builds
 				}
 
 				if (report) {
 					return; //FIXME: Главное-не спалиться
-					url = (this.getProperty("auto-report.use-https", true) ? "https" : "http") + "://" + this.getProperty("auto-report.host", "crash.pmmp.io") + "/submit/api";
+					url = `${this.getProperty('auto-report.use-https', true) ? 'https' : 'http'}://${this.getProperty('auto-report.host', 'crash.pmmp.io') }/submit/api`;
 					reply = Utils.postURL(url, {
-						"report": "yes",
-						"name": this.getName() + " " + this.getPocketMineVersion(),
-						"email": "crash@pocketmine.net",
-						"reportPaste": base64_encode(dump.getEncodedData())
+						'report': 'yes',
+						'name': `${this.getName()} ${this.getPocketMineVersion()}`,
+						'email': 'crash@pocketmine.net',
+						'reportPaste': base64_encode(dump.getEncodedData())
 					});
 
 					if (reply !== false && (data = JSON.parse(reply)) !== null && data.crashId && data.crashUrl) {
 						reportId = data.crashId;
 						reportUrl = data.crashUrl;
-						this.logger.emergency(this.getLanguage().translateString("pocketmine.crash.archive", [reportUrl, reportId]));
+						this.logger.emergency(this.getLanguage().translateString('pocketmine.crash.archive', [reportUrl, reportId]));
 					}
 				}
 			}
 		} catch (e) {
 			this.logger.logException(e);
-			this.logger.critical(this.getLanguage().translateString("pocketmine.crash.error", [e.getMessage()]));
+			this.logger.critical(this.getLanguage().translateString('pocketmine.crash.error', [e.getMessage()]));
 		}
 
 		//this.checkMemory();
@@ -2316,7 +2340,7 @@ class Server {
 		this.nextTick = microtime(true);
 		while (this.isRunning) {
 			this.tick();
-			next = this.nextTick - 0 + 0001;
+			next = this.nextTick - 0 + 0o001; //0001?
 			if (next > microtime(true)) {
 				try {
 					// @time_sleep_until(next); //@
@@ -2374,7 +2398,7 @@ class Server {
 		pk = new PlayerListPacket();
 		pk.type = PlayerListPacket.TYPE_ADD;
 
-		pk.entries/* [] */ = PlayerListEntry.createAdditionEntry(uuid, entityId, name, skin);
+		pk.entries /* [] */ = PlayerListEntry.createAdditionEntry(uuid, entityId, name, skin);
 		this.broadcastPacket(players || this.playerList, pk);
 	}
 
@@ -2385,7 +2409,7 @@ class Server {
 	removePlayerListData(uuid /*UUID*/ , players = null) {
 		pk = new PlayerListPacket();
 		pk.type = PlayerListPacket.TYPE_REMOVE;
-		pk.entries/* [] */ = PlayerListEntry.createRemovalEntry(uuid);
+		pk.entries /* [] */ = PlayerListEntry.createRemovalEntry(uuid);
 		this.broadcastPacket(players || this.playerList, pk);
 	}
 
@@ -2395,25 +2419,24 @@ class Server {
 	sendFullPlayerListData(p /*Player*/ ) {
 		pk = new PlayerListPacket();
 		pk.type = PlayerListPacket.TYPE_ADD;
-		for(const player of this.playerList) {
-			pk.entries/* [] */ = PlayerListEntry.createAdditionEntry(player.getUniqueId(), player.getId(), player.getDisplayName(), player.getSkin());
+		for (const player of this.playerList) {
+			pk.entries /* [] */ = PlayerListEntry.createAdditionEntry(player.getUniqueId(), player.getId(), player.getDisplayName(), player.getSkin());
 		}
 
 		p.dataPacket(pk);
 	}
 
 	_checkTickUpdates(currentTick, tickTime) {
-		for(const p of this.players) {
-			if (!p.loggedIn && (tickTime - p.creationTime) >= 10) {
-				p.close("", "Login timeout");
-			}
-			else if(this.alwaysTickPlayers && p.spawned) {
+		for (const p of this.players) {
+			if (!p.loggedIn && tickTime - p.creationTime >= 10) {
+				p.close('', 'Login timeout');
+			} else if (this.alwaysTickPlayers && p.spawned) {
 				p.onUpdate(currentTick);
 			}
 		}
 
 		//Do level ticks
-		for(const level of this.getLevels()) {
+		for (const level of this.getLevels()) {
 			if (level.getTickRate() > this.baseTickRate && --level.tickRateCounter > 0) {
 				continue;
 			}
@@ -2429,22 +2452,20 @@ class Server {
 						if (r > this.baseTickRate) {
 							level.tickRateCounter = level.getTickRate();
 						}
-						this.getLogger().debug("Raising level \"{level.getName()}\" tick rate to {level.getTickRate()} ticks");
-					}
-					else if(tickMs >= 50) {
+						this.getLogger().debug('Raising level "{level.getName()}" tick rate to {level.getTickRate()} ticks');
+					} else if (tickMs >= 50) {
 						if (level.getTickRate() === this.baseTickRate) {
 							level.setTickRate(Math.max(this.baseTickRate + 1, Math.min(this.autoTickRateLimit, Number(Math.floor(tickMs) / 50))));
-							this.getLogger().debug(sprintf("Level \"%s\" took %gms, setting tick rate to %d ticks", level.getName(), Math.round(Number(tickMs)).toFixed(2), level.getTickRate()));
-						}
-						else if((tickMs / level.getTickRate()) >= 50 && level.getTickRate() < this.autoTickRateLimit) {
+							this.getLogger().debug(sprintf('Level "%s" took %gms, setting tick rate to %d ticks', level.getName(), Math.round(Number(tickMs)).toFixed(2), level.getTickRate()));
+						} else if (tickMs / level.getTickRate() >= 50 && level.getTickRate() < this.autoTickRateLimit) {
 							level.setTickRate(level.getTickRate() + 1);
-							this.getLogger().debug(sprintf("Level \"%s\" took %gms, setting tick rate to %d ticks", level.getName(), Math.round(Number(tickMs)).toFixed(2), level.getTickRate()));
+							this.getLogger().debug(sprintf('Level "%s" took %gms, setting tick rate to %d ticks', level.getName(), Math.round(Number(tickMs)).toFixed(2), level.getTickRate()));
 						}
 						level.tickRateCounter = level.getTickRate();
 					}
 				}
 			} catch (e) {
-				this.logger.critical(this.getLanguage().translateString("pocketmine.level.tickError", [level.getName(), e.getMessage()]));
+				this.logger.critical(this.getLanguage().translateString('pocketmine.level.tickError', [level.getName(), e.getMessage()]));
 				this.logger.logException(e);
 			}
 		}
@@ -2453,17 +2474,17 @@ class Server {
 	doAutoSave() {
 		if (this.getAutoSave()) {
 			Timings.worldSaveTimer.startTiming();
-			for(let index in this.players) {
+			for (let index in this.players) {
 				const player = this.players[index];
+
 				if (player.spawned) {
 					player.save(true);
-				}
-				else if(!player.isConnected()) {
+				} else if (!player.isConnected()) {
 					this.removePlayer(player);
 				}
 			}
 
-			for(const level of this.getLevels()) {
+			for (const level of this.getLevels()) {
 				level.save(false);
 			}
 			Timings.worldSaveTimer.stopTiming();
@@ -2471,7 +2492,7 @@ class Server {
 	}
 
 	sendUsage(type = SendUsageTask.TYPE_STATUS) {
-		if (!!this.getProperty("anonymous-statistics.enabled", true)) {
+		if ((this.getProperty("anonymous-statistics.enabled", true))) {
 			this.scheduler.scheduleAsyncTask(new SendUsageTask(this, type, this.uniquePlayers));
 		}
 		this.uniquePlayers = [];
@@ -2511,16 +2532,17 @@ class Server {
 		d = Utils.getRealMemoryUsage();
 
 		u = Utils.getMemoryUsage(true);
-		usage = sprintf("%g/%g/%g/%g MB @ %d threads", Math.round((u[0] / 1024) / 1024).toFixed(2), Math.round((d[0] / 1024) / 1024).toFixed(2), Math.round((u[1] / 1024) / 1024).toFixed(2), Math.round((u[2] / 1024) / 1024).toFixed(2), Utils.getThreadCount()); //TODO: sprintf
+		usage = sprintf('%g/%g/%g/%g MB @ %d threads', Math.round(u[0] / 1024 / 1024).toFixed(2), Math.round(d[0] / 1024 / 1024).toFixed(2), Math.round(u[1] / 1024 / 1024).toFixed(2), Math.round(u[2] / 1024 / 1024).toFixed(2), Utils.getThreadCount()); //TODO: sprintf
 
-		/* echo ?? */ console.log("\x1b]0;" + this.getName() + " " +
-			this.getPocketMineVersion() +
-			" | Online " + count(this.players) + "/" + this.getMaxPlayers() +
-			" | Memory " + usage +
-			" | U " + round(this.network.getUpload() / 1024, 2) +
-			" D " + round(this.network.getDownload() / 1024, 2) +
-			" kB/s | TPS " + this.getTicksPerSecondAverage() +
-			" | Load " + this.getTickUsageAverage() + "%\x07");
+		/* echo ?? */
+		console.log(`\x1b]0;${  this.getName()  } ${ 
+			this.getPocketMineVersion() 
+			} | Online ${  count(this.players)  }/${  this.getMaxPlayers() 
+			} | Memory ${  usage 
+			} | U ${  round(this.network.getUpload() / 1024, 2) 
+			} D ${  round(this.network.getDownload() / 1024, 2) 
+			} kB/s | TPS ${  this.getTicksPerSecondAverage() 
+			} | Load ${  this.getTickUsageAverage()  }%\x07`);
 
 		Timings.titleTickTimer.stopTiming();
 	}
@@ -2534,7 +2556,7 @@ class Server {
 	 */
 	handlePacket(address, port, payload) {
 		try {
-			if (strlen(payload) > 2 && substr(payload, 0, 2) === "\xfe\xfd" && this.queryHandler instanceof QueryHandler) {
+			if (strlen(payload) > 2 && substr(payload, 0, 2) === '\xfe\xfd' && this.queryHandler instanceof QueryHandler) {
 				this.queryHandler.handle(address, port, payload);
 			}
 		} catch (e) {
@@ -2553,7 +2575,7 @@ class Server {
 	 */
 	_tick() {
 		tickTime = microtime(true);
-		if ((tickTime - this.nextTick) < -0 + 025) { //Allow half a tick of diff
+		if (tickTime - this.nextTick < -0 + 0o25) { //Allow half a tick of diff //025?
 			return false;
 		}
 
@@ -2578,11 +2600,11 @@ class Server {
 
 		this.checkTickUpdates(this.tickCounter, tickTime);
 
-		for(const player of this.players) {
+		for (const player of this.players) {
 			player.checkNetwork();
 		}
 
-		if ((this.tickCounter % 20) === 0) {
+		if (this.tickCounter % 20 === 0) {
 			if (this.doTitleTick && Terminal.hasFormattingCodes()) {
 				this.titleTick();
 			}
@@ -2614,13 +2636,13 @@ class Server {
 			this.sendUsage(SendUsageTask.TYPE_STATUS);
 		}
 
-		if ((this.tickCounter % 100) === 0) {
-			for(const level of this.levels) {
+		if (this.tickCounter % 100 === 0) {
+			for (const level of this.levels) {
 				level.clearCache();
 			}
 
 			if (this.getTicksPerSecondAverage() < 12) {
-				this.logger.warning(this.getLanguage().translateString("pocketmine.server.tickOverload"));
+				this.logger.warning(this.getLanguage().translateString('pocketmine.server.tickOverload'));
 			}
 		}
 
@@ -2633,20 +2655,20 @@ class Server {
 		Timings.serverTickTimer.stopTiming();
 
 		now = microtime(true);
-		this.currentTPS = Math.min(20, 1 / Math.max(0 + 001, now - tickTime));
-		this.currentUse = Math.min(1, (now - tickTime) / 0 + 05);
+		this.currentTPS = Math.min(20, 1 / Math.max(0 + 0o01, now - tickTime)); //001?
+		this.currentUse = Math.min(1, (now - tickTime) / 0 + 0o5); //05?
 
 		TimingsHandler.tick(this.currentTPS <= this.profilingTickRate);
 
 		array_shift(this.tickAverage);
-		this.tickAverage/* [] */ = this.currentTPS;
+		this.tickAverage /* [] */ = this.currentTPS;
 		array_shift(this.useAverage);
-		this.useAverage/* [] */ = this.currentUse;
+		this.useAverage /* [] */ = this.currentUse;
 
-		if ((this.nextTick - tickTime) < -1) {
+		if (this.nextTick - tickTime < -1) {
 			this.nextTick = tickTime;
 		} else {
-			this.nextTick += 0 + 05;
+			this.nextTick += 0 + 0o5; //05?
 		}
 
 		return true;
@@ -2658,12 +2680,12 @@ class Server {
 	 * @throws \BadMethodCallException beca//import Server instances cannot be serialized
 	 */
 	__sleep() {
-		throw new Error("Cannot serialize Server instance");
+		throw new Error('Cannot serialize Server instance');
 	}
 }
 
-Server.BROADCAST_CHANNEL_ADMINISTRATIVE = "pocketmine.broadcast.admin";
-Server.BROADCAST_CHANNEL_USERS = "pocketmine.broadcast.user";
+Server.BROADCAST_CHANNEL_ADMINISTRATIVE = 'pocketmine.broadcast.admin';
+Server.BROADCAST_CHANNEL_USERS = 'pocketmine.broadcast.user';
 
 /** @var Server */
 /* Static */
