@@ -1,4 +1,4 @@
-const Chunk = require('prismarine-chunk')(require("../version"));
+const Chunk = require('../chunk')(require("../version"));
 const Vec3 = require('vec3').Vec3;
 const rand = require('random-seed');
 

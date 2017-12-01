@@ -1,4 +1,4 @@
-const version = require("flying-squid").version;
+const version = require("../..").version;
 const windows = require("prismarine-windows")(version).windows;
 const Item = require("prismarine-item")(version);
 

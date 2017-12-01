@@ -1,5 +1,5 @@
 const Vec3 = require("vec3").Vec3;
-const UserError = require('flying-squid').UserError;
+const UserError = require("../..").UserError;
 
 module.exports.player = (player, serv) => {
 

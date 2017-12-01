@@ -65,7 +65,7 @@ For development see [API.md](doc/API.md), [CONTRIBUTE.md](doc/CONTRIBUTE.md) and
 flying-squid is also a server lib. Here is a basic example of usage:
 
 ```js
-var mcServer = require("flying-squid");
+var mcServer = require("../..");
 
 mcServer.createMCServer({
   "motd": "A Minecraft Server \nRunning flying-squid",

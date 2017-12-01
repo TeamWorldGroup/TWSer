@@ -2,7 +2,7 @@ const spiralloop = require('spiralloop');
 
 const World = require('prismarine-world')(require("../version"));
 
-const generations=require("flying-squid").generations;
+const generations=require("../..").generations;
 const {fs} = require('node-promise-es6');
 const {level} = require('prismarine-provider-anvil');
 

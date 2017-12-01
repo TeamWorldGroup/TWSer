@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var mcServer=require("./");
+var MCServer=require("./").MCServer;
 
 var settings;
 
@@ -11,7 +11,7 @@ catch(err) {
   settings = require('./config/default-settings');
 }
 
-module.exports=mcServer.createMCServer(settings);
+module.exports=new MCServer(settings).connect();
 
 
 process.on('unhandledRejection', err => {
