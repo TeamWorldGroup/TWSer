@@ -1,8 +1,8 @@
 'use strict';
 
-const {version} = require('flying-squid');
-const {windows} = require('prismarine-windows')(version);
-const Item = require('prismarine-item')(version);
+const {version} = require('../Server');
+const {windows} = require('../ui')(version);
+const Item = require('../items')(version);
 const {Vec3} = require('vec3');
 
 module.exports.player = function(player, serv) {

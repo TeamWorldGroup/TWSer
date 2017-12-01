@@ -1,4 +1,4 @@
-const blocks=require("minecraft-data")(require("flying-squid").version).blocks;
+const blocks=require("minecraft-data")(require("../Server").version).blocks;
 const Vec3 = require("vec3").Vec3;
 
 const materialToSound = {

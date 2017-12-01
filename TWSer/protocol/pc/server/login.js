@@ -7,7 +7,7 @@ const states = require("../states");
 
 module.exports=function(client,server,options) {
   const {
-    'online-mode' : onlineMode = true,
+    'online-mode' : onlineMode = false,
       kickTimeout = 30 * 1000,
       errorHandler : clientErrorHandler=(client,err) => client.end(),
   } = options;

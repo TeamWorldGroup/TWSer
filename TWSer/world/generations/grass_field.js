@@ -1,4 +1,4 @@
-const Chunk = require('prismarine-chunk')(require("../version"));
+const Chunk = require('prismarine-chunk')(require("../../config.json").version);
 const Vec3 = require('vec3').Vec3;
 
 function generation() {

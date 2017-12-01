@@ -11,7 +11,7 @@ class Server extends EventEmitter {
 		super(); {
 			this.run = this.run.bind(this);
 		}
-		this._options = options;
+		this.options = options;
 
 		/* const mcServer = new MCServer();
 
@@ -22,6 +22,38 @@ class Server extends EventEmitter {
 		// const plugins = requireIndex(path.join(__dirname, 'plugins'));
 
 		this._server = Protocol.createServer(this.options);
+		// FIXME: Start
+		const entity = require('./plugins/entities');
+		const spawn = require('./plugins/spawn');
+		const login = require('./plugins/login');
+		const logout = require('./plugins/logout');
+		const players = require('./plugins/players');
+		const world = require('./plugins/world');
+		const updatePositions = require('./plugins/updatePositions');
+		const moderation = require('./plugins/moderation');
+
+
+		this.plugins = {
+			entity,
+			spawn,
+			login,
+			logout,
+			players,
+			world,
+			updatePositions,
+			moderation
+		};
+
+		spawn.server(this, this.options);
+		entity.server(this, this.options);
+		players.server(this, this.options);
+		login.server(this, this.options);
+		logout.server(this, this.options);
+		world.server(this, this.options);
+		moderation.server(this, this.options);
+		// updatePosition.server(this, this.options);
+
+		// FIXME: End
 		// Object.keys(plugins)
 		// 	.filter(pluginName => plugins[pluginName].server != undefined)
 		// 	.forEach(pluginName => plugins[pluginName].server(this, this.options));
@@ -30,6 +62,10 @@ class Server extends EventEmitter {
 		this._server.on('listening', () => this.emit('listening', this._server.socketServer.address().port));
 		this.emit('asap');
 	}
+
+	static get version() {
+		return require('./config.json').version;
+	}
 }
 
 Server.Behavior = require('./behavior');
@@ -37,6 +73,6 @@ Server.Command = require('./Command');
 Server.World = require('./world');
 Server.Experience = require('./experience');
 Server.UserError = require('./user_error');
-// Server.portalDetector = require('./lib/portal_detector');
+Server.portalDetector = require('./structures/portal_detector');
 
 module.exports = Server;

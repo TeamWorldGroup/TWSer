@@ -1,10 +1,10 @@
 const spiralloop = require('spiralloop');
 
-const World = require('prismarine-world')(require("../version"));
+const World = require('prismarine-world')(require("../config.json").version);
 
-const generations=require("flying-squid").generations;
-import {fs} from 'node-promise-es6';
-import {level} from 'prismarine-provider-anvil';
+const generations=require("../world/generations");//.generations;
+const {fs} = require('node-promise-es6');
+const {level} = require('prismarine-provider-anvil');
 
 module.exports.server=async function(serv,{worldFolder,generation={"name":"diamond_square","options":{"worldHeight":80}}}={}) {
   const newSeed=generation.options.seed || Math.floor(Math.random()*Math.pow(2, 31));

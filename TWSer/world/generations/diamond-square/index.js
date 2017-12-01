@@ -1,6 +1,6 @@
 "use strict";
 
-const Chunk = require('prismarine-chunk')("1.8");
+const Chunk = require('prismarine-chunk')(require('../../../config.json').version);
 const Vec3 = require('vec3').Vec3;
 const rand = require('random-seed');
 

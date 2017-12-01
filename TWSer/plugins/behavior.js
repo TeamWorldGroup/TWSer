@@ -1,4 +1,4 @@
-const Behavior = require("flying-squid").Behavior;
+const Behavior = require("../Server").Behavior;
 
 module.exports.server = function(serv) {
   serv.behavior = new Behavior(serv);

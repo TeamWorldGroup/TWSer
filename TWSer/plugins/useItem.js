@@ -1,5 +1,5 @@
-const items=require("minecraft-data")(require("flying-squid").version).items;
-const Item = require("prismarine-item")(require("flying-squid").version);
+const items=require("minecraft-data")(require("../Server").version).items;
+const Item = require("prismarine-item")(require("../Server").version);
 const Vec3 = require("vec3").Vec3;
 
 module.exports.player=function(player,serv)
