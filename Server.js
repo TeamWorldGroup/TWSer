@@ -808,8 +808,10 @@ class Server {
 			const p = this.players[identifier];
 
 			if (player === p) {
-				delete this.players[identifier];
-				delete this.identifiers[spl_object_hash(player)];
+				// delete this.players[identifier];
+				// delete this.identifiers[spl_object_hash(player)];
+				Reflect.deleteProperty(this.players[identifier]);
+				Reflect.deleteProperty(this.identifiers[spl_object_hash(player)]);
 				break;
 			}
 		}
@@ -1064,7 +1066,7 @@ class Server {
 	 * @return Entity|null
 	 */
 	findEntity(entityId, expectedLevel = null /* Level  */) {
-		levels = this.levels;
+		levels = this.levels; //eslint-disable-line
 		if (expectedLevel !== null) {
 			array_unshift(levels, expectedLevel);
 		}
@@ -1167,9 +1169,9 @@ class Server {
 		case '1':
 		case 'yes':
 			return true;
+		default:
+			return false;
 		}
-
-		return false;
 	}
 
 	/**
@@ -1189,7 +1191,7 @@ class Server {
 	 * @param   value
 	 */
 	setConfigBool(variable, value) {
-		this.properties.set(variable, value == true ? '1' : '0');
+		this.properties.set(variable, value === true ? '1' : '0');
 	}
 
 	/**
@@ -2301,7 +2303,7 @@ class Server {
 
 			if (this.getProperty('auto-report.enabled', true) !== false) {
 				report = true;
-				plugin = dump.getData().plugin;
+				plugin = dump.getData().plugin; //eslint-disable-line
 				if (typeof plugin === 'string') {
 					p = this.pluginManager.getPlugin(plugin);
 					if (p instanceof Plugin && !(p.getPluginLoader() instanceof PharPluginLoader)) {
