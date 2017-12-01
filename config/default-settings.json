@@ -6,7 +6,7 @@
   "logging": true,
   "gameMode": 1,
   "difficulty": 1,
-  "worldFolder":"world",
+  "worldFolder":"worlds",
   "generation": {
     "name": "diamond_square",
     "options":{}
