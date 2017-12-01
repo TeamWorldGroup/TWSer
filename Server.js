@@ -1,3 +1,12 @@
+/* eslint-disable max-lines */
+/* eslint-disable camelcase */
+/* eslint-disable valid-jsdoc */
+// Да он издевается?
+/* eslint-disable max-len */
+/* eslint-disable complexity */
+/* eslint-disable max-params */
+/* eslint-disable guard-for-in */
+
 'use strict';
 
 //PHP API for JS
@@ -333,32 +342,32 @@ class Server {
 	/* static */
 	getGamemodeString(mode) {
 		switch (mode) {
-			case Player.SURVIVAL:
-				return '%gameMode.survival';
-			case Player.CREATIVE:
-				return '%gameMode.creative';
-			case Player.ADVENTURE:
-				return '%gameMode.adventure';
-			case Player.SPECTATOR:
-				return '%gameMode.spectator';
-			default:
-				return 'UNKNOWN';
+		case Player.SURVIVAL:
+			return '%gameMode.survival';
+		case Player.CREATIVE:
+			return '%gameMode.creative';
+		case Player.ADVENTURE:
+			return '%gameMode.adventure';
+		case Player.SPECTATOR:
+			return '%gameMode.spectator';
+		default:
+			return 'UNKNOWN';
 		}
 	}
 
 	/* static */
 	getGamemodeName(mode) {
 		switch (mode) {
-			case Player.SURVIVAL:
-				return 'Survival';
-			case Player.CREATIVE:
-				return 'Creative';
-			case Player.ADVENTURE:
-				return 'Adventure';
-			case Player.SPECTATOR:
-				return 'Spectator';
-			default:
-				throw new Error('Invalid gamemode mode');
+		case Player.SURVIVAL:
+			return 'Survival';
+		case Player.CREATIVE:
+			return 'Creative';
+		case Player.ADVENTURE:
+			return 'Adventure';
+		case Player.SPECTATOR:
+			return 'Spectator';
+		default:
+			throw new Error('Invalid gamemode mode');
 		}
 	}
 
@@ -372,28 +381,28 @@ class Server {
 	/* static */
 	getGamemodeFromString(str) {
 		switch (strtolower(trim(str))) {
-			case String(Player.SURVIVAL):
-			case 'survival':
-			case 's':
-				return Player.SURVIVAL;
+		case String(Player.SURVIVAL):
+		case 'survival':
+		case 's':
+			return Player.SURVIVAL;
 
-			case String(Player.CREATIVE):
-			case 'creative':
-			case 'c':
-				return Player.CREATIVE;
+		case String(Player.CREATIVE):
+		case 'creative':
+		case 'c':
+			return Player.CREATIVE;
 
-			case String(Player.ADVENTURE):
-			case 'adventure':
-			case 'a':
-				return Player.ADVENTURE;
+		case String(Player.ADVENTURE):
+		case 'adventure':
+		case 'a':
+			return Player.ADVENTURE;
 
-			case String(Player.SPECTATOR):
-			case 'spectator':
-			case 'view':
-			case 'v':
-				return Player.SPECTATOR;
-			default:
-				return -1;
+		case String(Player.SPECTATOR):
+		case 'spectator':
+		case 'view':
+		case 'v':
+			return Player.SPECTATOR;
+		default:
+			return -1;
 		}
 	}
 
@@ -455,7 +464,7 @@ class Server {
 	 * @return string
 	 */
 	getMotd() {
-		return this.getConfigString('motd', `${pocketmine.NAME } Server`);
+		return this.getConfigString('motd', `${pocketmine.NAME} Server`);
 	}
 
 	/**
@@ -592,7 +601,7 @@ class Server {
 		return this.playerList;
 	}
 
-	addRecipe(recipe /*Recipe*/ ) {
+	addRecipe(recipe /*Recipe*/) {
 		this.craftingManager.registerRecipe(recipe);
 	}
 
@@ -631,11 +640,11 @@ class Server {
 
 				try {
 					nbt = new NBT(NBT.BIG_ENDIAN);
-					nbt.readCompressed(file_get_contents(`${path }name.dat`));
+					nbt.readCompressed(file_get_contents(`${path}name.dat`));
 
 					return nbt.getData();
 				} catch (e) { //zlib decode error / corrupt data
-					fs.renameSync(`${path }name.dat`, `${path }name.dat.bak`);
+					fs.renameSync(`${path}name.dat`, `${path}name.dat.bak`);
 					this.logger.notice(this.getLanguage().translateString('pocketmine.data.playerCorrupted', [name]));
 				}
 			} else {
@@ -699,7 +708,7 @@ class Server {
 				nbt.setData(ev.getSaveData());
 
 				if (async) {
-					this.getScheduler().scheduleAsyncTask(new FileWriteTask(`${this.getDataPath()}players/${strtolower(name) }.dat`, nbt.writeCompressed()));
+					this.getScheduler().scheduleAsyncTask(new FileWriteTask(`${this.getDataPath()}players/${strtolower(name)}.dat`, nbt.writeCompressed()));
 				} else {
 					file_put_contents(`${this.getDataPath()}players/${strtolower(name)}.dat`, nbt.writeCompressed());
 				}
@@ -778,11 +787,14 @@ class Server {
 	/**
 	 * @param Player player
 	 */
-	removePlayer(player /*Player*/ ) {
+	removePlayer(player /*Player*/) {
 		if (this.identifiers[hash = spl_object_hash(player)]) {
-			identifier = this.identifiers[hash];
-			delete this.players[identifier];
-			delete this.identifiers[hash];
+			let identifier = this.identifiers[hash];
+			// delete this.players[identifier];
+			// delete this.identifiers[hash];
+
+			Reflect.deleteProperty(this.players[identifier]);
+			Reflect.deleteProperty(this.identifiers[hash]);
 
 			return;
 		}
@@ -819,7 +831,7 @@ class Server {
 	 *
 	 * @param Level|null level
 	 */
-	setDefaultLevel(level /* ? Level */ ) {
+	setDefaultLevel(level /* ? Level */) {
 		if (level === null || this.isLevelLoaded(level.getFolderName()) && level !== this.levelDefault) {
 			this.levelDefault = level;
 		}
@@ -880,7 +892,7 @@ class Server {
 	 * @internal
 	 * @param Level level
 	 */
-	removeLevel(level /*Level*/ ) {
+	removeLevel(level /*Level*/) {
 		unset(this.levels[level.getId()]);
 	}
 
@@ -905,7 +917,7 @@ class Server {
 			return false;
 		}
 
-		path = `${this.getDataPath() }worlds/${name}/`;
+		path = `${this.getDataPath()}worlds/${name}/`;
 
 		provider = LevelProviderManager.getProvider(path);
 
@@ -1026,7 +1038,7 @@ class Server {
 		if (trim(name) === '') {
 			return false;
 		}
-		path = `${this.getDataPath() }worlds/${name }/`;
+		path = `${this.getDataPath()}worlds/${name}/`;
 		if (!(this.getLevelByName(name) instanceof Level)) {
 
 			if (LevelProviderManager.getProvider(path) === null) {
@@ -1046,7 +1058,7 @@ class Server {
 	 *
 	 * @return Entity|null
 	 */
-	findEntity(entityId, expectedLevel = null /* Level  */ ) {
+	findEntity(entityId, expectedLevel = null /* Level  */) {
 		levels = this.levels;
 		if (expectedLevel !== null) {
 			array_unshift(levels, expectedLevel);
@@ -1145,11 +1157,11 @@ class Server {
 			return value;
 		}
 		switch (value.toLowerCase()) {
-			case 'on':
-			case 'true':
-			case '1':
-			case 'yes':
-				return true;
+		case 'on':
+		case 'true':
+		case '1':
+		case 'yes':
+			return true;
 		}
 
 		return false;
@@ -1387,10 +1399,10 @@ class Server {
 			this._dispatchSignals = false;
 
 			/** @var \AttachableThreadedLogger */
-			this._logger;
+			// this._logger;
 
 			/** @var MemoryManager */
-			this._memoryManager;
+			// this._memoryManager;
 
 			/** @var CommandReader */
 			this._console = null;
@@ -1399,37 +1411,37 @@ class Server {
 			this._commandMap = null;
 
 			/** @var CraftingManager */
-			this._craftingManager;
+			// this._craftingManager;
 
 			/** @var ResourcePackManager */
-			this._resourceManager;
+			// this._resourceManager;
 
 			/** @var ConsoleCommandSender */
-			this._consoleSender;
+			// this._consoleSender;
 
 			/** @var */
-			this._maxPlayers;
+			// this._maxPlayers;
 
 			/** @var */
 			this._onlineMode = true;
 
 			/** @var */
-			this._autoSave;
+			// this._autoSave;
 
 			/** @var RCON */
-			this._rcon;
+			// this._rcon;
 
 			/** @var EntityMetadataStore */
-			this._entityMetadata;
+			// this._entityMetadata;
 
 			/** @var PlayerMetadataStore */
-			this._playerMetadata;
+			// this._playerMetadata;
 
 			/** @var LevelMetadataStore */
-			this._levelMetadata;
+			// this._levelMetadata;
 
 			/** @var Network */
-			this._network;
+			// this._network;
 
 			this._networkCompressionAsync = true;
 			this.networkCompressionLevel = 7;
@@ -1443,32 +1455,32 @@ class Server {
 			this._autoSaveTicks = 6000;
 
 			/** @var BaseLang */
-			this._baseLang;
+			// this._baseLang;
 
 			this._forceLanguage = false;
 
-			this._serverID;
+			// this._serverID;
 
-			this._autoloader;
-			this._filePath;
-			this._dataPath;
-			this._pluginPath;
+			// this._autoloader;
+			// this._filePath;
+			// this._dataPath;
+			// this._pluginPath;
 
 			this._uniquePlayers = [];
 
 			/** @var QueryHandler */
-			this._queryHandler;
+			// this._queryHandler;
 
 			/** @var QueryRegenerateEvent */
 			this._queryRegenerateTask = null;
 
 			/** @var Config */
-			this._properties;
+			// this._properties;
 
 			this._propertyCache = [];
 
 			/** @var Config */
-			this._config;
+			// this._config;
 
 			/** @var Player[] */
 			this._players = [];
@@ -1492,12 +1504,12 @@ class Server {
 		try {
 
 			this.filePath = filePath;
-			if (!fs.existsSync(`${dataPath }worlds/`)) {
+			if (!fs.existsSync(`${dataPath}worlds/`)) {
 				fs.mkdirSync(`${dataPath}worlds/`, 0o777);
 			}
 
-			if (!fs.existsSync(`${dataPath }players/`)) {
-				fs.mkdirSync(`${dataPath }players/`, 0o777);
+			if (!fs.existsSync(`${dataPath}players/`)) {
+				fs.mkdirSync(`${dataPath}players/`, 0o777);
 			}
 
 			if (!fs.existsSync(pluginPath)) {
@@ -1512,19 +1524,19 @@ class Server {
 			version = new VersionString(this.getPocketMineVersion());
 
 			this.logger.info('Loading pocketmine+yml+++');
-			if (!file_exists(`${this.dataPath }pocketmine+yml`)) {
+			if (!file_exists(`${this.dataPath}pocketmine+yml`)) {
 				content = file_get_contents(`${this.filePath}src/pocketmine/resources/pocketmine+yml`);
 				if (version.isDev()) {
 					content = str_replace('preferred-channel: stable', 'preferred-channel: beta', content);
 				}
 				fs.writeFileSync(`${this.dataPath}pocketmine.yml`, content); //@
 			}
-			this.config = new Config(`${this.dataPath }pocketmine.yml`, Config.YAML, []);
+			this.config = new Config(`${this.dataPath}pocketmine.yml`, Config.YAML, []);
 
 			// define('pocketmine\DEBUG', Number(this.getProperty("debug.level", 1)));
 			pocketmine.DEBUG = Number(this.getProperty('debug.level', 1));
 
-			if ((Number(ini_get('zend.assertions')) > 0 && Boolean(this.getProperty("debug.assertions.warn-if-enabled", true))) !== false) {
+			if ((Number(ini_get('zend.assertions')) > 0 && Boolean(this.getProperty('debug.assertions.warn-if-enabled', true))) !== false) {
 				this.logger.warning('Debugging assertions are enabled, this may impact on performance. To disable them, set `zend.assertions = -1` in php.ini.');
 			}
 
@@ -1535,7 +1547,7 @@ class Server {
 			}
 
 			this.logger.info('Loading server properties+++');
-			this.properties = new Config(`${this.dataPath }server.properties`, Config.PROPERTIES, {
+			this.properties = new Config(`${this.dataPath}server.properties`, Config.PROPERTIES, {
 				'motd': `${pocketmine.NAME} Server`,
 				'server-port': 19132,
 				'white-list': false,
@@ -1614,7 +1626,7 @@ class Server {
 						this.getConfigInt('rcon.clients-per-thread', 50)
 					);
 				} catch (e) {
-					this.getLogger().critical(`RCON can't be started: ${  e.getMessage()}`);
+					this.getLogger().critical(`RCON can't be started: ${e.getMessage()}`);
 				}
 			}
 
@@ -1624,14 +1636,14 @@ class Server {
 
 			this.operators = new Config(`${this.dataPath}ops.txt`, Config.ENUM);
 			this.whitelist = new Config(`${this.dataPath}white-list.txt`, Config.ENUM);
-			if (fs.existsSync(`${this.dataPath}banned.txt`) && !fs.existsSync(`${this.dataPath }banned-players.txt`)) {
+			if (fs.existsSync(`${this.dataPath}banned.txt`) && !fs.existsSync(`${this.dataPath}banned-players.txt`)) {
 				fs.renameSync(`${this.dataPath}banned.txt`, `${this.dataPath}banned-players.txt`); //@
 			}
 			fs.writeFileSync(`${this.dataPath}banned-players.txt`, ''); //@
-			this.banByName = new BanList(`${this.dataPath }banned-players.txt`);
+			this.banByName = new BanList(`${this.dataPath}banned-players.txt`);
 			this.banByName.load();
-			fs.writeFileSync(`${this.dataPath }banned-ips.txt`, ''); //@
-			this.banByIP = new BanList(`${this.dataPath }banned-ips.txt`);
+			fs.writeFileSync(`${this.dataPath}banned-ips.txt`, ''); //@
+			this.banByIP = new BanList(`${this.dataPath}banned-ips.txt`);
 			this.banByIP.load();
 
 			this.maxPlayers = this.getConfigInt('max-players', 20);
@@ -1660,8 +1672,8 @@ class Server {
 			BOOTUP_RANDOM = random_bytes(16); //TODO:
 			this.serverID = Utils.getMachineUniqueId(this.getIp() + this.getPort());
 
-			this.getLogger().debug(`Server unique id: ${  this.getServerUniqueId()}`);
-			this.getLogger().debug(`Machine unique id: ${  Utils.getMachineUniqueId()}`);
+			this.getLogger().debug(`Server unique id: ${this.getServerUniqueId()}`);
+			this.getLogger().debug(`Machine unique id: ${Utils.getMachineUniqueId()}`);
 
 			this.network = new Network(this);
 			this.network.setName(this.getMotd());
@@ -1767,7 +1779,7 @@ class Server {
 					seed = getopt('', ['level-seed.'])['level-seed'] || this.properties.get('level-seed', time());
 					if (!Number.isInteger(seed) || bccomp(seed, '9223372036854775807') > 0) { //is_numeric
 						seed = Utils.javaStringHash(seed);
-					} else if (true /* PHP_INT_SIZE === 8 */ ) {
+					} else if (true /* PHP_INT_SIZE === 8 */) {
 						seed = Number(seed);
 					}
 					this.generateLevel(
@@ -1935,7 +1947,7 @@ class Server {
 	 * @param Player[]   players
 	 * @param DataPacket packet
 	 */
-	broadcastPacket(players, packet /*DataPacket*/ ) {
+	broadcastPacket(players, packet /*DataPacket*/) {
 		packet.encode();
 		this.batchPackets(players, [packet], false);
 	}
@@ -2016,7 +2028,7 @@ class Server {
 	/**
 	 * @param Plugin plugin
 	 */
-	enablePlugin(plugin /*Plugin*/ ) {
+	enablePlugin(plugin /*Plugin*/) {
 		this.pluginManager.enablePlugin(plugin);
 	}
 
@@ -2049,7 +2061,7 @@ class Server {
 		}
 
 
-		sender.sendMessage(this.getLanguage().translateString(`${TextFormat.RED }%commands.generic.notFound`));
+		sender.sendMessage(this.getLanguage().translateString(`${TextFormat.RED}%commands.generic.notFound`));
 
 		return false;
 	}
@@ -2302,7 +2314,7 @@ class Server {
 
 				if (report) {
 					return; //FIXME: Главное-не спалиться
-					url = `${this.getProperty('auto-report.use-https', true) ? 'https' : 'http'}://${this.getProperty('auto-report.host', 'crash.pmmp.io') }/submit/api`;
+					url = `${this.getProperty('auto-report.use-https', true) ? 'https' : 'http'}://${this.getProperty('auto-report.host', 'crash.pmmp.io')}/submit/api`;
 					reply = Utils.postURL(url, {
 						'report': 'yes',
 						'name': `${this.getName()} ${this.getPocketMineVersion()}`,
@@ -2351,7 +2363,7 @@ class Server {
 		}
 	}
 
-	onPlayerLogin(player /*Player*/ ) {
+	onPlayerLogin(player /*Player*/) {
 		if (this.sendUsageTicker > 0) {
 			this.uniquePlayers[player.getRawUniqueId()] = player.getRawUniqueId();
 		}
@@ -2359,27 +2371,27 @@ class Server {
 		this.loggedInPlayers[player.getRawUniqueId()] = player;
 	}
 
-	onPlayerCompleteLoginSequence(player /*Player*/ ) {
+	onPlayerCompleteLoginSequence(player /*Player*/) {
 		this.sendFullPlayerListData(player);
 		player.dataPacket(this.craftingManager.getCraftingDataPacket());
 	}
 
-	onPlayerLogout(player /*Player*/ ) {
+	onPlayerLogout(player /*Player*/) {
 		unset(this.loggedInPlayers[player.getRawUniqueId()]);
 	}
 
-	addPlayer(identifier, player /*Player*/ ) {
+	addPlayer(identifier, player /*Player*/) {
 		this.players[identifier] = player;
 		this.identifiers[spl_object_hash(player)] = identifier;
 	}
 
-	addOnlinePlayer(player /*Player*/ ) {
+	addOnlinePlayer(player /*Player*/) {
 		this.updatePlayerListData(player.getUniqueId(), player.getId(), player.getDisplayName(), player.getSkin());
 
 		this.playerList[player.getRawUniqueId()] = player;
 	}
 
-	removeOnlinePlayer(player /*Player*/ ) {
+	removeOnlinePlayer(player /*Player*/) {
 		if (isset(this.playerList[player.getRawUniqueId()])) {
 			unset(this.playerList[player.getRawUniqueId()]);
 
@@ -2416,7 +2428,7 @@ class Server {
 	/**
 	 * @param Player p
 	 */
-	sendFullPlayerListData(p /*Player*/ ) {
+	sendFullPlayerListData(p /*Player*/) {
 		pk = new PlayerListPacket();
 		pk.type = PlayerListPacket.TYPE_ADD;
 		for (const player of this.playerList) {
@@ -2492,7 +2504,7 @@ class Server {
 	}
 
 	sendUsage(type = SendUsageTask.TYPE_STATUS) {
-		if ((this.getProperty("anonymous-statistics.enabled", true))) {
+		if (this.getProperty('anonymous-statistics.enabled', true)) {
 			this.scheduler.scheduleAsyncTask(new SendUsageTask(this, type, this.uniquePlayers));
 		}
 		this.uniquePlayers = [];
@@ -2535,14 +2547,14 @@ class Server {
 		usage = sprintf('%g/%g/%g/%g MB @ %d threads', Math.round(u[0] / 1024 / 1024).toFixed(2), Math.round(d[0] / 1024 / 1024).toFixed(2), Math.round(u[1] / 1024 / 1024).toFixed(2), Math.round(u[2] / 1024 / 1024).toFixed(2), Utils.getThreadCount()); //TODO: sprintf
 
 		/* echo ?? */
-		console.log(`\x1b]0;${  this.getName()  } ${ 
-			this.getPocketMineVersion() 
-			} | Online ${  count(this.players)  }/${  this.getMaxPlayers() 
-			} | Memory ${  usage 
-			} | U ${  round(this.network.getUpload() / 1024, 2) 
-			} D ${  round(this.network.getDownload() / 1024, 2) 
-			} kB/s | TPS ${  this.getTicksPerSecondAverage() 
-			} | Load ${  this.getTickUsageAverage()  }%\x07`);
+		console.log(`\x1b]0;${this.getName()} ${
+			this.getPocketMineVersion()
+		} | Online ${count(this.players)}/${this.getMaxPlayers()
+		} | Memory ${usage
+		} | U ${round(this.network.getUpload() / 1024, 2)
+		} D ${round(this.network.getDownload() / 1024, 2)
+		} kB/s | TPS ${this.getTicksPerSecondAverage()
+		} | Load ${this.getTickUsageAverage()}%\x07`);
 
 		Timings.titleTickTimer.stopTiming();
 	}
