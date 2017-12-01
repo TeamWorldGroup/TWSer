@@ -9,15 +9,16 @@ class Lang {
 		try {
 			const path_ = path.join(__dirname, `locales/${lang}.json`);
 
-			console.log(path_);
-			this.file = require(path_); // TODO: normalize 
+			this.file = require(path_);
 		} catch (e) {
 			this.err = e;
-			throw new Error('Failed to open lang file'+e);
+			throw new Error('Failed to open lang file: ' + e);
 		}
 	}
 
 	translate(id = null) {
+		if (typeof id !== 'string') throw new Error('id must be a string!');
+
 		return this.file[id] || id;
 	}
 

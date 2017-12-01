@@ -5,6 +5,9 @@ const Logger = require('./utils/logger');
 const Protocol = require('./protocol');
 const requireIndex = require('requireindex');
 const path = require('path');
+const Lang = require('./Lang');
+
+const lang = new Lang('rus');
 
 require('emit-then').register();
 
@@ -22,45 +25,13 @@ class Server extends EventEmitter {
 		mcServer.connect(options);
 		return mcServer;*/
 	}
+
 	run() {
+		Logger.info(lang.translate('server-loadingplugins'));
+
 		this.plugins = requireIndex(path.join(__dirname, 'plugins'));
 
 		this._server = Protocol.createServer(this.options);
-		// FIXME: Start
-		// region her
-		/* const entity = require('./plugins/entities');
-		const spawn = require('./plugins/spawn');
-		const login = require('./plugins/login');
-		const logout = require('./plugins/logout');
-		const players = require('./plugins/players');
-		const world = require('./plugins/world');
-		const updatePositions = require('./plugins/updatePositions');
-		const moderation = require('./plugins/moderation');
-
-
-		this.plugins = {
-			entity,
-			spawn,
-			login,
-			logout,
-			players,
-			world,
-			updatePositions,
-			moderation
-		};
-
-		spawn.server(this, this.options);
-		entity.server(this, this.options);
-		players.server(this, this.options);
-		login.server(this, this.options);
-		logout.server(this, this.options);
-		world.server(this, this.options);
-		moderation.server(this, this.options); 
-		*/
-
-		// updatePosition.server(this, this.options);
-		// endregion her
-		// FIXME: End
 
 		Object.keys(this.plugins)
 			.filter(pluginName => this.plugins[pluginName].server != undefined)
@@ -69,6 +40,17 @@ class Server extends EventEmitter {
 		this._server.on('error', error => this.emit('error', error));
 		this._server.on('listening', () => this.emit('listening', this._server.socketServer.address().port));
 		this.emit('asap');
+
+		Logger.success(lang.translate('server-started'));
+
+		return this;
+	}
+
+	stop() {
+		// TODO: Save
+		Logger.warn(lang.translate('server-shutdown'));
+		// TODO: Save logs
+		process.exit(0);
 	}
 
 	static get version() {
