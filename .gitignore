@@ -1,4 +1,4 @@
 PocketMine
 node_modules
 config/config.json
-world
+/worlds
