@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "babel-runtime": "^6.5.0",
+    "chalk": "^2.3.0",
     "diamond-square": "1.0.0",
     "emit-then": "^2.0.0",
     "event-promise": "^0.0.1",
@@ -50,8 +51,7 @@
     "request-promise": "^4.1.0",
     "requireindex": "~1.1.0",
     "spiralloop": "^1.0.2",
-    "vec3": "^0.1.3",
-    "voxel-worldgen": "^1.1.0"
+    "vec3": "^0.1.3"
   },
   "license": "MIT",
   "repository": {

@@ -40,7 +40,7 @@
             "off",
             "never"
         ],
-        "class-methods-use-this": "error",
+        "class-methods-use-this": "warn",
         "comma-dangle": "error",
         "comma-spacing": [
             "error",
@@ -86,7 +86,7 @@
         "id-match": "error",
         "indent": "off",
         "indent-legacy": "off",
-        "init-declarations": "error",
+        "init-declarations": "off",
         "jsx-quotes": "error",
         "key-spacing": "error",
         "keyword-spacing": [
@@ -114,7 +114,7 @@
         "new-parens": "error",
         "newline-after-var": [
             "error",
-            "never"
+            "always"
         ],
         "newline-before-return": "off",
         "newline-per-chained-call": "error",
@@ -146,7 +146,7 @@
         "no-iterator": "error",
         "no-label-var": "error",
         "no-labels": "error",
-        "no-lone-blocks": "error",
+        "no-lone-blocks": "off",
         "no-lonely-if": "error",
         "no-loop-func": "error",
         "no-magic-numbers": "error",

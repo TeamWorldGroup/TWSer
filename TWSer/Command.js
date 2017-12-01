@@ -1,3 +1,5 @@
+'use strict';
+
 class Command {
   constructor(params, parent, hash) {
     this.params = params;
@@ -19,7 +21,7 @@ class Command {
     return undefined;
   }
 
-  use(command, op = true) { //async
+  async use(command, op = true) { //eslint-disable-line
     let res = this.find(command);
 
     if (res) {
