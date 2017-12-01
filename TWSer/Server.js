@@ -19,7 +19,7 @@ class Server extends EventEmitter {
 		return mcServer;*/
 	}
 	run() {
-		const plugins = requireIndex(path.join(__dirname, 'plugins'));
+		// const plugins = requireIndex(path.join(__dirname, 'plugins'));
 
 		this._server = Protocol.createServer(this.options);
 		// Object.keys(plugins)
