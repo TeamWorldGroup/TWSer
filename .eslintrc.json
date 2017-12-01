@@ -5,6 +5,9 @@
     },
     "extends": "eslint:recommended",
     "rules": {
+        "strict":"error",
+        "no-undef": "warn",
+        "no-unused-vars": "warn",
         "accessor-pairs": "error",
         "array-bracket-newline": "error",
         "array-bracket-spacing": [
@@ -34,7 +37,7 @@
         "callback-return": "error",
         "camelcase": "error",
         "capitalized-comments": [
-            "error",
+            "off",
             "never"
         ],
         "class-methods-use-this": "error",
@@ -191,7 +194,7 @@
         "no-trailing-spaces": "error",
         "no-undef-init": "error",
         "no-undefined": "off",
-        "no-underscore-dangle": "error",
+        "no-underscore-dangle": "off",
         "no-unmodified-loop-condition": "error",
         "no-unneeded-ternary": "error",
         "no-unused-expressions": "error",
