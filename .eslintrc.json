@@ -55,12 +55,7 @@
             "error",
             "never"
         ],
-        "consistent-return": [
-            "error",
-            {
-                "treatUndefinedAsUnspecified": false
-            }
-        ],
+        "consistent-return": 0,
         "consistent-this": "error",
         "curly": "off",
         "default-case": "error",
@@ -74,7 +69,7 @@
         "for-direction": "error",
         "func-call-spacing": "error",
         "func-name-matching": "error",
-        "func-names": "error",
+        "func-names": 0,
         "func-style": "error",
         "generator-star-spacing": "error",
         "getter-return": "error",
@@ -108,7 +103,7 @@
         "max-lines": "error",
         "max-nested-callbacks": "error",
         "max-params": "error",
-        "max-statements": "error",
+        "max-statements": 0,
         "max-statements-per-line": "error",
         "new-cap": "error",
         "new-parens": "error",
@@ -147,9 +142,9 @@
         "no-label-var": "error",
         "no-labels": "error",
         "no-lone-blocks": "off",
-        "no-lonely-if": "error",
+        "no-lonely-if": 0,
         "no-loop-func": "error",
-        "no-magic-numbers": "error",
+        "no-magic-numbers": 0,
         "no-mixed-operators": "error",
         "no-mixed-requires": "error",
         "no-multi-assign": "error",
@@ -240,7 +235,7 @@
         ],
         "radix": "error",
         "require-await": "error",
-        "require-jsdoc": "error",
+        "require-jsdoc": 0,
         "rest-spread-spacing": "error",
         "semi": "error",
         "semi-spacing": "error",
@@ -249,7 +244,7 @@
             "last"
         ],
         "sort-imports": "error",
-        "sort-keys": "error",
+        "sort-keys": 0,
         "sort-vars": "error",
         "space-before-blocks": "error",
         "space-before-function-paren": "off",

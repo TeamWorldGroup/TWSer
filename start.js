@@ -6,7 +6,7 @@
  * Прослойка для управления сервером
  */
 
-const Server = require('./Server');
+const Server = require('./TWSer/Server');
 const Logger = require('./TWSer/utils/logger');
 const Lang = require('./TWSer/Lang');
 const lang = new Lang('rus');
@@ -28,6 +28,7 @@ Logger.info(`Server: ${settings.motd}`);
 Logger.info(`Port: ${settings.port}`);
 Logger.info(`Max players: ${settings['max-players']}`);
 
+const server = new Server(settings).run();
 // module.exports=mcServer.createMCServer(settings);
 
 
