@@ -11,6 +11,7 @@ var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Vec3 = require("vec3").Vec3;
+var util = require("util");
 
 module.exports.player = function (player, serv) {
   var _this = this;
@@ -277,7 +278,7 @@ module.exports.player = function (player, serv) {
     player.behavior('dug', {
       position: location,
       block: currentlyDugBlock,
-      dropBlock: false,
+      dropBlock: true,
       blockDropPosition: location.offset(0.5, 0.5, 0.5),
       blockDropWorld: player.world,
       blockDropVelocity: new Vec3(Math.random() * 4 - 2, Math.random() * 2 + 2, Math.random() * 4 - 2),

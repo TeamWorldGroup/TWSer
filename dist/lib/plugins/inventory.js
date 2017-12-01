@@ -189,7 +189,8 @@ module.exports.player = function (player, serv) {
     for (var itemKey = 0; itemKey < player.inventory.slots.length; itemKey++) {
       var item = player.inventory.slots[itemKey];
       if (item == undefined) continue;
-      if (item.type == collectEntity.itemId) {
+      console.log(item.damage);
+      if (item.type == collectEntity.itemId && item.metadata == collectEntity.itemDamage && item.count < 64) {
         item.count += 1;
         player.inventory.updateSlot(itemKey, item);
         collectEntity._writeOthersNearby('collect', {
@@ -211,7 +212,7 @@ module.exports.player = function (player, serv) {
       });
       player.playSoundAtSelf('random.pop');
 
-      var newItem = new Item(collectEntity.itemId, 1, collectEntity.damage);
+      var newItem = new Item(collectEntity.itemId, 1, collectEntity.itemDamage);
       player.inventory.updateSlot(emptySlot, newItem);
       collectEntity.destroy();
     }

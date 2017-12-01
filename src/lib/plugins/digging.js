@@ -1,4 +1,5 @@
 const Vec3 = require("vec3").Vec3;
+const util = require("util");
 
 module.exports.player=function(player,serv)
 {
@@ -159,7 +160,7 @@ module.exports.player=function(player,serv)
     player.behavior('dug', {
       position: location,
       block: currentlyDugBlock,
-      dropBlock: false,
+      dropBlock: true,
       blockDropPosition: location.offset(0.5, 0.5, 0.5),
       blockDropWorld: player.world,
       blockDropVelocity: new Vec3(Math.random()*4 - 2, Math.random()*2 + 2, Math.random()*4 - 2),

@@ -3,6 +3,7 @@
 const Chunk = require('prismarine-chunk')("1.8");
 const Vec3 = require('vec3').Vec3;
 const rand = require('random-seed');
+const Ore = require('./populators/Ore');
 
 class DiamondSquare {
   constructor(size, roughness, seed) {
@@ -95,6 +96,72 @@ function generation({seed,worldHeight=96,waterline=64}={}) {
   const size = 10000000;
   const space = new DiamondSquare(size, size / 500, seed);
   const biomeSpace = new DiamondSquare(size, size / 100, seed + 1);
+  const orePopulator = Ore([
+    {
+      blockId: 16,
+      blockData: 0,
+      clusterCount: 20,
+      clusterSize: 16,
+      minHeight: 0,
+      maxHeight: 128
+    },
+    {
+      blockId: 15,
+      blockData: 0,
+      clusterCount: 20,
+      clusterSize: 8,
+      minHeight: 0,
+      maxHeight: 64
+    },
+    {
+      blockId: 73,
+      blockData: 0,
+      clusterCount: 8,
+      clusterSize: 7,
+      minHeight: 0,
+      maxHeight: 16
+    },
+    {
+      blockId: 21,
+      blockData: 0,
+      clusterCount: 1,
+      clusterSize: 6,
+      minHeight: 0,
+      maxHeight: 32
+    },
+    {
+      blockId: 14,
+      blockData: 0,
+      clusterCount: 2,
+      clusterSize: 8,
+      minHeight: 0,
+      maxHeight: 32
+    },
+    {
+      blockId: 56,
+      blockData: 0,
+      clusterCount: 1,
+      clusterSize: 7,
+      minHeight: 0,
+      maxHeight: 16
+    },
+    {
+      blockId: 3,
+      blockData: 0,
+      clusterCount: 20,
+      clusterSize: 32,
+      minHeight: 0,
+      maxHeight: 128
+    },
+    {
+      blockId: 13,
+      blockData: 0,
+      clusterCount: 10,
+      clusterSize: 16,
+      minHeight: 0,
+      maxHeight: 128
+    }
+  ]);
 
   function generateSimpleChunk(chunkX, chunkZ) {
     const chunk = new Chunk();
@@ -105,11 +172,12 @@ function generation({seed,worldHeight=96,waterline=64}={}) {
     const treeRand = seedRand(3);
     const treeLevel = Math.floor(space.value(worldX + 8, worldZ + 8) * worldHeight);
     let treeData = 0;
-    /*switch (seedRand(2)) {
+    switch (seedRand(2)) {
       case 1: treeData = 2; break;
-    }*/
+    }
 
     const treeBiome = Math.round(biomeSpace.value(worldX + 8, worldZ + 8));
+    const treeTopPartRand = seedRand(2);
 
     for (let x = 0; x < 16; x++) {
       for (let z = 0; z < 16; z++) {
@@ -125,9 +193,11 @@ function generation({seed,worldHeight=96,waterline=64}={}) {
             block = 18;
           } else if (x == 8 && z == 8) {
             block = 17;
-          } else if (y == treeLevel + 5 && ((x == 7 && z == 8) || (x == 9 && z == 8) || (x == 8 && z == 7) || (x == 8 && z == 9))) {
+          } else if (treeTopPartRand == 0 && y == treeLevel + 6 && ((x == 7 && z == 8) || (x == 9 && z == 8) || (x == 8 && z == 7) || (x == 8 && z == 9))) {
             block = 18;
-          } else if (y <= treeLevel + 4 && y >= treeLevel + 3 && x >= 6 && x <= 10 && z >= 6 && z <= 10 && !((x == 6 || x == 10) && (z == 6 || z == 10))) {
+          } else if(y == treeLevel + 5 && x >= 7 && x <= 9 && z >= 7 && z <= 9) {
+            block = 18;
+          } else if (y <= treeLevel + 4 && y >= treeLevel + 3 && x >= 6 && x <= 10 && z >= 6 && z <= 10 && !((y == treeLevel + 3 ? seedRand(2) == 0 : true) && (x == 6 || x == 10) && (z == 6 || z == 10))) {
             block = 18;
           }
           if (block) chunk.setBlockType(pos, block);
@@ -144,7 +214,7 @@ function generation({seed,worldHeight=96,waterline=64}={}) {
           else if (y < level && y >= dirtheight) block = belowblock; // Dirt/sand below surface
           else if (y < level)  {
             block = 1; // Set stone inbetween
-            const rand = seedRand(10);
+            /*const rand = seedRand(10);
             switch(rand) {
               case 0: block = 16; break;
               case 1: block = 15; break;
@@ -152,7 +222,7 @@ function generation({seed,worldHeight=96,waterline=64}={}) {
               case 3: block = 14; break;
               case 4: block = 56; break;
               case 5: block = 73; break;
-            }
+            }*/
           }
           else if (y == level) {
             block = surfaceblock; // Set surface sand/grass
@@ -185,6 +255,7 @@ function generation({seed,worldHeight=96,waterline=64}={}) {
         }
       }
     }
+    orePopulator(chunk, chunkX, chunkZ, seedRand);
 
     return chunk;
   }

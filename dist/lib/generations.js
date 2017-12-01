@@ -5,6 +5,7 @@ module.exports = {
   'diamond_square': require("./worldGenerations/diamond-square"),
   'superflat': require("./worldGenerations/superflat"),
   'all_the_blocks': require("./worldGenerations/all_the_blocks"),
-  'nether': require("./worldGenerations/nether")
+  'nether': require("./worldGenerations/nether"),
+  'pocketmine': require("./worldGenerations/pocketmine")
 };
 //# sourceMappingURL=../maps/lib/generations.js.map

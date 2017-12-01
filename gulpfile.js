@@ -4,7 +4,7 @@ var plumber = require('gulp-plumber');
 var babel = require('gulp-babel');
 var options = {
   presets: ['babel-preset-stage-0','es2015'],
-  plugins:['transform-runtime']
+  plugins: ['transform-runtime', 'transform-class-properties']
 };
 
 var sourcemaps = require('gulp-sourcemaps');

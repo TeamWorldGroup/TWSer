@@ -35,9 +35,12 @@ module.exports.player=function(player,serv)
       }
       
       player.inventory.slots[36+player.heldItemSlot]--;
-      
+      console.log("place block id " + id + " damage " + damage);
       if(heldItem.blockId!=323){
           player.changeBlock(position, id, damage);
+          if (heldItem.blockId == 175) {
+            player.changeBlock(position.plus(new Vec3(0, 1, 0)), id, 8);
+          }
       }else if(direction==1){
         player.setBlock(position, 63, 0);
           player._client.write('open_sign_entity', {
