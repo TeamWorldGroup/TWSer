@@ -7,7 +7,7 @@ class Lang {
 		this.lang = lang;
 		this.err = false;
 		try {
-			const path_ = path.join(__dirname, `locals/${lang}.json`);
+			const path_ = path.join(__dirname, `locales/${lang}.json`);
 
 			console.log(path_);
 			this.file = require(path_); // TODO: normalize 
