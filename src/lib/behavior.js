@@ -1,4 +1,4 @@
-module.exports = (obj) => {
+module.exports = function(obj) {
   return async (eventName, data, func, cancelFunc) => {
     let hiddenCancelled = false;
     let cancelled = false;

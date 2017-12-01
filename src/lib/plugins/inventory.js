@@ -184,7 +184,6 @@ module.exports.player = function(player,serv)
     for(let itemKey=0;itemKey<player.inventory.slots.length;itemKey++) {
       const item = player.inventory.slots[itemKey];
       if(item == undefined) continue;
-      console.log(item.damage);
       if (item.type == collectEntity.itemId && item.metadata == collectEntity.itemDamage && item.count < 64){
         item.count += 1;
         player.inventory.updateSlot(itemKey, item);

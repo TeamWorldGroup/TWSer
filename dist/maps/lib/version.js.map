@@ -1,1 +1,0 @@
-{"version":3,"sources":["lib/version.js"],"names":["module","exports"],"mappings":";;AAAAA,OAAOC,OAAP,GAAe,KAAf","file":"../../lib/version.js","sourcesContent":["module.exports=\"1.8\";"]}
