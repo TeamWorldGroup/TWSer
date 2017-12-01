@@ -1,1 +1,0 @@
-{"version":3,"sources":["lib/plugins/signs.js"],"names":["module","exports","player"],"mappings":";;AAAAA,OAAOC,OAAP,CAAeC,MAAf,GAAsB,UAASA,MAAT,EACtB;AACA;AACC,CAHD","file":"../../../lib/plugins/signs.js","sourcesContent":["module.exports.player=function(player)\n{\n//WIP: temporary removed\n};"]}
