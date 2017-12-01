@@ -1,7 +1,7 @@
 'use strict';
 
-const {version} = require('../Server');
-const {windows} = require('../ui')(version);
+const {version} = require('../config.json');
+const windows = require('../ui')(version);
 const Item = require('../items')(version);
 const {Vec3} = require('vec3');
 

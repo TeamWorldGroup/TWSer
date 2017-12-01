@@ -19,7 +19,7 @@ module.exports.server=function(serv,options) {
     const entity = new Entity(serv.entityMaxId);
 
     Object.keys(plugins)
-      .filter(pluginName => plugins[pluginName].entity!=undefined)
+      .filter(pluginName => (plugins[pluginName].entity!=undefined))
       .forEach(pluginName => plugins[pluginName].entity(entity, serv, options));
 
     entity.initEntity(type, entityType, world, position);

@@ -6,6 +6,10 @@ const Protocol = require('./protocol');
 const requireIndex = require('requireindex');
 const path = require('path');
 
+require('emit-then').register();
+
+Error.stackTraceLimit = Infinity;
+
 class Server extends EventEmitter {
 	constructor(options = {}) {
 		super(); {
@@ -19,11 +23,12 @@ class Server extends EventEmitter {
 		return mcServer;*/
 	}
 	run() {
-		// const plugins = requireIndex(path.join(__dirname, 'plugins'));
+		this.plugins = requireIndex(path.join(__dirname, 'plugins'));
 
 		this._server = Protocol.createServer(this.options);
 		// FIXME: Start
-		const entity = require('./plugins/entities');
+		// region her
+		/* const entity = require('./plugins/entities');
 		const spawn = require('./plugins/spawn');
 		const login = require('./plugins/login');
 		const logout = require('./plugins/logout');
@@ -50,13 +55,16 @@ class Server extends EventEmitter {
 		login.server(this, this.options);
 		logout.server(this, this.options);
 		world.server(this, this.options);
-		moderation.server(this, this.options);
-		// updatePosition.server(this, this.options);
+		moderation.server(this, this.options); 
+		*/
 
+		// updatePosition.server(this, this.options);
+		// endregion her
 		// FIXME: End
-		// Object.keys(plugins)
-		// 	.filter(pluginName => plugins[pluginName].server != undefined)
-		// 	.forEach(pluginName => plugins[pluginName].server(this, this.options));
+
+		Object.keys(this.plugins)
+			.filter(pluginName => this.plugins[pluginName].server != undefined)
+			.forEach(pluginName => this.plugins[pluginName].server(this, this.options));
 		// if (this.options.logging == true) Logger.setLevels(['debug']);
 		this._server.on('error', error => this.emit('error', error));
 		this._server.on('listening', () => this.emit('listening', this._server.socketServer.address().port));
