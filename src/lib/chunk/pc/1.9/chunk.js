@@ -10,7 +10,7 @@ var { readUInt4LE, writeUInt4LE } = require('uint4');
 module.exports = loader;
 
 function loader(mcVersion) {
-  Block = require('prismarine-block')(mcVersion);
+  Block = require('../block')(mcVersion);
 
   // MC counts the longs, protodef wants the bytes. This is responsible for that conversion.
   let longToByte = [

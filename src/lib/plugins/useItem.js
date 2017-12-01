@@ -1,5 +1,5 @@
 const items=require("minecraft-data")(require("../..").version).items;
-const Item = require("prismarine-item")(require("../..").version);
+const Item = require("../item")(require("../..").version);
 const Vec3 = require("vec3").Vec3;
 
 module.exports.player=function(player,serv)

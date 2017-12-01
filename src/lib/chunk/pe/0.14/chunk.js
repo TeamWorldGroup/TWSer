@@ -17,7 +17,7 @@ const writeUInt4LE = require('uint4').writeUInt4LE;
 module.exports = loader;
 
 function loader(mcVersion) {
-  Block = require('prismarine-block')(mcVersion);
+  Block = require('../block')(mcVersion);
   Chunk.w=w;
   Chunk.l=l;
   Chunk.h=h;

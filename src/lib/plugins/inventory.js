@@ -1,6 +1,6 @@
 const version = require("../..").version;
-const windows = require("prismarine-windows")(version).windows;
-const Item = require("prismarine-item")(version);
+const windows = require("../windows")(version);
+const Item = require("../item")(version);
 
 module.exports.player = function(player,serv)
 {

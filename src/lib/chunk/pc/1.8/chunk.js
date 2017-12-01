@@ -14,7 +14,7 @@ const BUFFER_SIZE = SECTION_SIZE*sectionCount + BIOME_SIZE; // max
 module.exports = loader;
 
 function loader(mcVersion) {
-  Block = require('prismarine-block')(mcVersion);
+  Block = require('../block')(mcVersion);
   Chunk.w=w;
   Chunk.l=l;
   Chunk.h=h;

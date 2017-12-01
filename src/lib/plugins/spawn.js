@@ -6,7 +6,7 @@ const Entity = require("prismarine-entity");
 const path = require('path');
 const requireIndex = require('requireindex');
 const plugins = requireIndex(path.join(__dirname,'..', 'plugins'));
-const Item = require("prismarine-item")(version);
+const Item = require("../item")(version);
 const UserError = require("../..").UserError;
 
 const Vec3 = require("vec3").Vec3;
