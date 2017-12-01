@@ -1,6 +1,6 @@
 /*
  * Logger library by PROPHESSOR (2017)
- *  
+ *
  * Simple usage:
  * Log.setLevels(["name of level"]);
  * Log.log/warn/error/info("message", { //optional object
@@ -12,13 +12,13 @@
  */
 // /* eslint-disable */
 
-"use strict";
+'use strict';
 
 /* eslint-disable no-console */
 /* eslint-disable no-negated-condition */
 
 
-const chalk = require("chalk");
+const chalk = require('chalk');
 
 class Logger {
 	constructor() {
@@ -35,8 +35,9 @@ class Logger {
 			log() {},
 			error() {},
 			warn() {},
-			info() {}
-		}
+			info() {},
+			success() {}
+		};
 	}
 
 	log(data, options = {}) {
@@ -79,6 +80,16 @@ class Logger {
 		return this;
 	}
 
+	success(data, options = {}) {
+		if (options.level && this.levels.indexOf(options.level) < 0) return;
+		const out = !options.noconvert ? Logger.convert(data) : data;
+
+		console.log(chalk.green(out));
+		this.callbacks.success(out);
+
+		return this;
+	}
+
 	setLevels(levels) {
 		this.levels = levels;
 
@@ -106,7 +117,7 @@ class Logger {
 	static convert(data) {
 		let out = data;
 
-		if (typeof out === "object") out = JSON.stringify(out);
+		if (typeof out === 'object') out = JSON.stringify(out);
 
 		return Logger.timestamp(out);
 
