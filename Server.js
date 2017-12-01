@@ -6,6 +6,11 @@
 /* eslint-disable complexity */
 /* eslint-disable max-params */
 /* eslint-disable guard-for-in */
+/* eslint-disable no-bitwise */
+/* eslint-disable no-mixed-operators */
+/* eslint-disable new-cap */
+/* eslint-disable no-continue */
+/* eslint-disable init-declarations */
 
 'use strict';
 
@@ -1568,7 +1573,8 @@ class Server {
 				'level-type': 'DEFAULT',
 				'enable-query': true,
 				'enable-rcon': false,
-				'rcon.password': Buffer.from(random_bytes(20)).toString('base64').substr(3, 10),
+				'rcon.password': Buffer.from(random_bytes(20)).toString('base64').
+					substr(3, 10),
 				'auto-save': true,
 				'view-distance': 8,
 				'xbox-auth': true
@@ -1621,7 +1627,7 @@ class Server {
 						this,
 						this.getConfigString('rcon.password', ''),
 						this.getConfigInt('rcon.port', this.getPort()),
-						(ip = this.getIp()) != '' ? ip : '0.0.0.0',
+						(ip = this.getIp()) !== '' ? ip : '0.0.0.0',
 						this.getConfigInt('rcon.threads', 1),
 						this.getConfigInt('rcon.clients-per-thread', 50)
 					);
@@ -1770,7 +1776,7 @@ class Server {
 
 			if (this.getDefaultLevel() === null) {
 				_default = this.getConfigString('level-name', 'world');
-				if (_default.trim() == '') {
+				if (_default.trim() === '') {
 					this.getLogger().warning('level-name cannot be null, using default');
 					_default = 'world';
 					this.setConfigString('level-name', 'world');
@@ -1779,7 +1785,7 @@ class Server {
 					seed = getopt('', ['level-seed.'])['level-seed'] || this.properties.get('level-seed', time());
 					if (!Number.isInteger(seed) || bccomp(seed, '9223372036854775807') > 0) { //is_numeric
 						seed = Utils.javaStringHash(seed);
-					} else if (true /* PHP_INT_SIZE === 8 */) {
+					} else { // if ( /* PHP_INT_SIZE === 8 */) {
 						seed = Number(seed);
 					}
 					this.generateLevel(
@@ -2314,6 +2320,7 @@ class Server {
 
 				if (report) {
 					return; //FIXME: Главное-не спалиться
+					/* eslint-disable no-unreachable */
 					url = `${this.getProperty('auto-report.use-https', true) ? 'https' : 'http'}://${this.getProperty('auto-report.host', 'crash.pmmp.io')}/submit/api`;
 					reply = Utils.postURL(url, {
 						'report': 'yes',
