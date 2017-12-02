@@ -1,6 +1,7 @@
-const Chunk = require('../chunk')(require("../version"));
+const version = require("../../version");
+const Chunk = require('../../chunk')(version);
 const Vec3 = require('vec3').Vec3;
-const blocks=require("minecraft-data")(require("../version")).blocks;
+const blocks=require("minecraft-data")(version).blocks;
 
 function generation() {
   function generateSimpleChunk() {

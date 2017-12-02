@@ -1,3 +1,5 @@
+'use strict';
+
 const Vec3 = require("vec3").Vec3;
 
 const path = require('path');

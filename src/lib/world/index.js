@@ -22,8 +22,8 @@ class World extends EventEmitter {
     this.chunkGenerator = chunkGenerator;
     this.anvil = regionFolder ? new Anvil(regionFolder) : null;
     this.savingInterval=savingInterval;
-    this.savingQueue=fifo();
-    this.finishedSaving=Promise.resolve();
+    this.savingQueue = fifo();
+    this.finishedSaving = Promise.resolve();
     if(regionFolder) this.startSaving();
   }
 

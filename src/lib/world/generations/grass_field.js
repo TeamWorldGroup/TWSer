@@ -1,4 +1,6 @@
-const Chunk = require('../chunk')(require("../version"));
+'use strict';
+
+const Chunk = require('../../chunk')(require('../../version'));
 const Vec3 = require('vec3').Vec3;
 
 function generation() {
@@ -19,4 +21,4 @@ function generation() {
   return generateSimpleChunk;
 }
 
-module.exports=generation;
+module.exports = generation;
