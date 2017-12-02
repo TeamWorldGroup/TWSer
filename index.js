@@ -1,5 +1,3 @@
-import { Server } from 'net';
-
 /*
  _____  __        __  ____                
 |_   _| \ \      / / / ___|    ___   _ __ 
@@ -13,16 +11,18 @@ import { Server } from 'net';
 Error.stackTraceLimit = Infinity;
 
 const Logger = require('./TWSer/utils/logger');
+
 Logger.setLevels(['Command']);
 
+const Server = require('./TWSer/Server');
 const Config = require('./TWSer/Config');
 
 const PORT = Config.get('port');
 const NAME = Config.get('name');
 const VERSION = Config.get('version');
 
-if (!PORT || !NAME || !VERSION){
-	require('./config/init')();
+if (!PORT || !NAME || !VERSION) {
+	Config.init();
 	process.exit(0);
 }
 

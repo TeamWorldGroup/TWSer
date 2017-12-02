@@ -15,7 +15,7 @@ class AntiStupid {
 	static testType(val, type, name) {
 		if (typeof val !== 'string' || typeof type !== 'string') throw new Error('val and type must be a Strings');
 
-		if (typeof val !== type) throw new Error(`${name||'value'} must be a ${capitalize(type)}`);
+		if (typeof val !== type) throw new Error(`${name||'variable'} must be a ${capitalize(type)}`);
 	}
 	/**
 	 * @param  {object} val - Value for test

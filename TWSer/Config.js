@@ -4,17 +4,22 @@ const nconf = require('nconf');
 const fs = require('fs');
 const prompt = require('prompt-sync')();
 const Logger = require('./utils/logger');
+const assert = require('./utils/AntiStupid');
 
 nconf.file('../config.json');
 
 class Config {
 	static get(key) {
-		if(typeof key !== 'string') throw new Error('key must be a String!');
+		assert.testType(key, 'string', 'key');
 
 		return nconf.get(key);
 	}
 
-	static set(key, value) {}
+	static set(key, value) {
+		assert.testType(key, 'string', 'key');
+
+		nconf.set(key, value);
+	}
 
 	static get config() {
 		try {
@@ -30,13 +35,13 @@ class Config {
 		Logger.info('Для начала, нужно создать конфигурационный файл');
 		Logger.info('Давайте этим и займёмся:!');
 
-		let name = prompt('Укажите название для вашего сервера: ');
+		const name = prompt('Укажите название для вашего сервера: ');
 
 		Logger.log('OK');
-		let port = prompt('Укажите порт для вашего сервера: ');
+		const port = prompt('Укажите порт для вашего сервера: ');
 
 		Logger.log('OK');
-		let version = prompt('Укажите версию MCPE: ');
+		const version = prompt('Укажите версию MCPE: ');
 
 		Logger.log('OK');
 		nconf.set('name', name);
@@ -47,3 +52,5 @@ class Config {
 		Logger.warn('Перезапустите TWSer для запуска сервера');
 	}
 }
+
+module.exports = Config;

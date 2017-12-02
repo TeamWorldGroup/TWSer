@@ -2,7 +2,7 @@
 
 const {EventEmitter} = require('events');
 const Logger = require('./utils/logger');
-const Protocol = require('./protocol');
+// const Protocol = require('./protocol');
 const lang = new (require('./Lang'))('rus');
 
 class Server extends EventEmitter {
@@ -20,14 +20,14 @@ class Server extends EventEmitter {
 
 	run() {
 		Logger.info(lang.translate('server-loadingplugins'));
+		/*
+				this._server = Protocol.createServer(this.options);
 
-		this._server = Protocol.createServer(this.options);
-
-		this._server.on('error', error => this.emit('error', error));
-		this._server.on('listening', () => this.emit('listening',
-			this._server.socketServer.address().port));
-		this.emit('asap');
-
+				this._server.on('error', error => this.emit('error', error));
+				this._server.on('listening', () => this.emit('listening',
+					this._server.socketServer.address().port));
+				this.emit('asap');
+		 */
 		Logger.success(lang.translate('server-started'));
 
 		return this;
