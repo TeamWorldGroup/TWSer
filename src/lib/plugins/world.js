@@ -4,7 +4,7 @@ const World = require('../world')(require("../version"));
 
 const generations=require("../..").generations;
 const {fs} = require('node-promise-es6');
-const {level} = require('prismarine-provider-anvil');
+const {level} = require('../anvil');
 
 module.exports.server=async function(serv,{worldFolder,generation={"name":"diamond_square","options":{"worldHeight":80}}}={}) {
   const newSeed=generation.options.seed || Math.floor(Math.random()*Math.pow(2, 31));

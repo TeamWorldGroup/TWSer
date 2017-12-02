@@ -204,7 +204,7 @@ class World extends EventEmitter {
 
 
 function loader(mcVersion) {
-  Anvil = require("prismarine-provider-anvil").Anvil(mcVersion);
+  Anvil = require("./anvil").Anvil(mcVersion);
   return World;
 }
 

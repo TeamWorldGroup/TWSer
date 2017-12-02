@@ -11,7 +11,7 @@ const BUFFER_SIZE = BIOME_ID_SIZE + HEIGHT_SIZE;
 module.exports = loader;
 
 function loader(mcVersion) {
-  Block = require('prismarine-block')(mcVersion);
+  Block = require('../../../block')(mcVersion);
   Chunk.w = 16;
   Chunk.l = 16;
   Chunk.h = 256;
