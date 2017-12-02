@@ -130,3 +130,9 @@ class Logger {
 }
 
 module.exports = new Logger();
+
+
+/* 
+ * TODO:
+ * {rule:'console/file'}
+*/

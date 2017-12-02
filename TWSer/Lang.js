@@ -1,11 +1,13 @@
 'use strict';
 
 const path = require('path');
+const assert = require('./utils/AntiStupid');
 
 class Lang {
 	constructor(lang) {
 		this.lang = lang;
 		this.err = false;
+		this.name = 'Lang';
 		try {
 			const path_ = path.join(__dirname, `locales/${lang}.json`);
 
@@ -16,14 +18,14 @@ class Lang {
 		}
 	}
 
-	translate(id = null) {
-		if (typeof id !== 'string') throw new Error('id must be a string!');
+	translate(id) {
+		assert.testType(id, 'string', 'id');
 
 		return this.file[id] || id;
 	}
 
 	idExist(id) {
-		if (typeof id !== 'string') throw new Error('id must be a string!');
+		assert.testType(id, 'string', 'id');
 
 		return Boolean(this.file[id]);
 	}
@@ -33,8 +35,8 @@ class Lang {
 	}
 
 	static idExist(id, lang) {
-		if (typeof id !== 'string') throw new Error('id must be a string!');
-		if (typeof lang !== 'string') throw new Error('lang must be a string!');
+		assert.testType(id, 'string', 'id');
+		assert.testType(lang, 'string', 'lang');
 
 		return (new Lang(lang)).idExist(id);
 	}

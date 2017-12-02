@@ -10,25 +10,23 @@ import { Server } from 'net';
 
 'use strict';
 
-const Log = require('./utils/logger');
-const nconf = require('nconf');
-
-nconf.file('config.json');
-
-Log.setLevels(['debug', 'packet']);
-
 Error.stackTraceLimit = Infinity;
 
-const PORT = nconf.get('port');
-const NAME = nconf.get('name');
-const VERSION = nconf.get('version');
+const Logger = require('./TWSer/utils/logger');
+Logger.setLevels(['Command']);
+
+const Config = require('./TWSer/Config');
+
+const PORT = Config.get('port');
+const NAME = Config.get('name');
+const VERSION = Config.get('version');
 
 if (!PORT || !NAME || !VERSION){
 	require('./config/init')();
 	process.exit(0);
 }
 
-Log.log(
+Logger.log(
 	` _____  __        __  ____                
 |_   _| \\ \\      / / / ___|    ___   _ __ 
   | |    \\ \\ /\\ / /  \\___ \\   / _ \\ | '__|
@@ -36,11 +34,11 @@ Log.log(
   |_|      \\_/\\_/    |____/   \\___| |_|    
 `, {'noconvert': true});
 
-Log.info(`Сервер: ${NAME}`);
-Log.info(`Порт: ${PORT}`);
-Log.info(`Версия MCPE: ${VERSION}`);
+Logger.info(`Сервер: ${NAME}`);
+Logger.info(`Порт: ${PORT}`);
+Logger.info(`Версия MCPE: ${VERSION}`);
 
-Log.log('Запускаем...');
+Logger.log('Запускаем...');
 
 const server = new Server();
 

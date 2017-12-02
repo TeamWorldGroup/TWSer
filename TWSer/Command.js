@@ -1,22 +1,29 @@
 'use strict';
 
+const Logger = require('./utils/logger');
+const assert = require('./utils/AntiStupid');
+
 const Commands = {};
 
 class Command {
-	constructor(name, func) {
-		if (typeof name !== 'string') throw new Error('name must be a String');
-		if (typeof func !== 'function') throw new Error('func must be a Function');
+	constructor(cmd, func) {
+		assert.testType(cmd, 'string', 'cmd');
+		assert.testType(func, 'function', 'func');
 
-		this.name = name;
+		this.cmd = cmd;
 		this.func = func;
+
+		this.name = 'Command';
 	}
 
-	run(){
+	run() {
 		return this.func();
 	}
 
 	static add(command /* Command */) {
-		if (command instanceof Command) throw new Error('command must be a Command');
+		assert.test(command, Command, 'command');
+		if (Commands[command.name]) Logger.warn(`Command ${command.name} already exists but will be rewrited!`, {'level': 'Command'});
+
 		Commands[command.name] = command.func;
 	}
 }
