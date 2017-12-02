@@ -5,7 +5,7 @@
     },
     "extends": "eslint:recommended",
     "rules": {
-        "strict":"error",
+        "strict": "error",
         "no-undef": "warn",
         "no-unused-vars": "warn",
         "accessor-pairs": "error",
@@ -50,7 +50,7 @@
             }
         ],
         "comma-style": "error",
-        "complexity": "error",
+        "complexity": "off",
         "computed-property-spacing": [
             "error",
             "never"
@@ -70,7 +70,9 @@
         "func-call-spacing": "error",
         "func-name-matching": "error",
         "func-names": 0,
-        "func-style": "error",
+        "func-style": ["error", "declaration", {
+            "allowArrowFunctions": true
+        }],
         "generator-star-spacing": "error",
         "getter-return": "error",
         "global-require": "off",
@@ -98,11 +100,11 @@
         ],
         "lines-around-comment": "off",
         "lines-around-directive": "error",
-        "max-depth": "error",
+        "max-depth": ["error", 7],
         "max-len": "off",
         "max-lines": "error",
         "max-nested-callbacks": "error",
-        "max-params": "error",
+        "max-params": "off",
         "max-statements": 0,
         "max-statements-per-line": "error",
         "new-cap": "error",
@@ -116,7 +118,7 @@
         "no-alert": "error",
         "no-array-constructor": "error",
         "no-await-in-loop": "error",
-        "no-bitwise": "error",
+        "no-bitwise": "off",
         "no-buffer-constructor": "error",
         "no-caller": "error",
         "no-catch-shadow": "error",
@@ -161,9 +163,9 @@
         "no-new-require": "error",
         "no-new-wrappers": "error",
         "no-octal-escape": "error",
-        "no-param-reassign": "error",
+        "no-param-reassign": "off",
         "no-path-concat": "error",
-        "no-plusplus": "error",
+        "no-plusplus": "off",
         "no-process-env": "error",
         "no-process-exit": "off",
         "no-proto": "error",
