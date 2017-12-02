@@ -7,7 +7,7 @@ class Lang {
 	constructor(lang) {
 		this.lang = lang;
 		this.err = false;
-		this.name = 'Lang';
+
 		try {
 			const path_ = path.join(__dirname, `locales/${lang}.json`);
 

@@ -13,8 +13,6 @@ class Server extends EventEmitter {
 
 		this.options = options;
 
-		this.name = 'Server';
-
 		Server.Server = this;
 	}
 

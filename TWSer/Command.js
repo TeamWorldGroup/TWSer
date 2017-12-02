@@ -12,8 +12,6 @@ class Command {
 
 		this.cmd = cmd;
 		this.func = func;
-
-		this.name = 'Command';
 	}
 
 	run() {
