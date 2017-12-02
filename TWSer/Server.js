@@ -47,6 +47,7 @@ class Server extends EventEmitter {
 	}
 
 	stop() {
+		this.emit('stop');
 		// TODO: Save
 		Logger.warn(lang.translate('server-shutdown'));
 		// TODO: Save logs
