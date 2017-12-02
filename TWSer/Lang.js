@@ -1,36 +1,40 @@
 'use strict';
 
-const fs = require('fs');
+const path = require('path');
 
 class Lang {
-	constructor(lang){
+	constructor(lang) {
 		this.lang = lang;
 		this.err = false;
-		try{
-			this.file = require(`./locals/${lang}.dir`); // TODO: normalize 
-		}case(e){
+		try {
+			const path_ = path.join(__dirname, `locales/${lang}.json`);
+
+			this.file = require(path_);
+		} catch (e) {
 			this.err = e;
-			throw new Error('Failed to open lang file;');
+			throw new Error(`Failed to open lang file: ${e}`);
 		}
 	}
 
-	translate(id = null){
+	translate(id = null) {
+		if (typeof id !== 'string') throw new Error('id must be a string!');
+
 		return this.file[id] || id;
 	}
 
-	idExist(id){
-		if(typeof id !== 'string') throw new Error('id must be a string!');
+	idExist(id) {
+		if (typeof id !== 'string') throw new Error('id must be a string!');
 
-		return !!this.file[id];
+		return Boolean(this.file[id]);
 	}
 
-	static translate(id, lang){
+	static translate(id, lang) {
 		return (new Lang(lang)).translate(id);
 	}
 
-	static idExist(id, lang){
-		if(typeof id !== 'string') throw new Error('id must be a string!');
-		if(typeof lang !== 'string') throw new Error('lang must be a string!');
+	static idExist(id, lang) {
+		if (typeof id !== 'string') throw new Error('id must be a string!');
+		if (typeof lang !== 'string') throw new Error('lang must be a string!');
 
 		return (new Lang(lang)).idExist(id);
 	}
