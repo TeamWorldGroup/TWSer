@@ -43,8 +43,8 @@ class Achievement {
 	}
 
 	/*void*/ broadcast(/*Player*/ player) {
-		let /*String*/ translation = Server.getInstance().getLanguage().
-			translateString("chat.type.achievement", player.getDisplayName(), TextFormat.GREEN + this.getMessage(), null);
+		let /*String*/ translation = Server.getInstance().getLanguage()
+			.translateString("chat.type.achievement", player.getDisplayName(), TextFormat.GREEN + this.getMessage(), null);
 
 		if (Server.getInstance().getPropertyBoolean("announce-player-achievements", true)) {
 			Server.getInstance().broadcastMessage(translation);
@@ -67,3 +67,5 @@ Achievement.achievements = {
 	"buildSword": new Achievement("Time to Strike!", "buildWorkBench"),
 	"diamonds": new Achievement("DIAMONDS!", "acquireIron")
 };
+
+module.exports = Achievement;
