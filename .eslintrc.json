@@ -38,7 +38,7 @@
         "consistent-this": "error",
         "curly": "off",
         "default-case": "error",
-        "dot-location": "error",
+        "dot-location": ["error", "before"],
         "dot-notation": "error",
         "eol-last": [
             "error",
